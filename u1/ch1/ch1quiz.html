@@ -94,18 +94,19 @@
                 </div>
                 <h2 class="text-3xl font-black mb-4 text-white">Cardiovascular Systems Assessment</h2>
                 <p class="text-slate-400 mb-8 max-w-lg leading-relaxed text-lg">
-                    This progressive simulator tests your mastery of the heart and vasculature. It begins with basic anatomical structures and progressively scales in difficulty to test hemodynamics, ECG interpretation, and clinical diagnostics.
+                    This progressive simulator pulls from a deep medical databank to generate a unique 15-question evaluation. You must navigate through three tiers of increasing clinical difficulty.
                 </p>
                 <div class="grid grid-cols-3 gap-4 mb-10 w-full max-w-md text-sm text-slate-300">
-                    <div class="bg-slate-800/50 p-3 rounded-lg border border-slate-700"><span class="text-emerald-400 font-bold block mb-1">Tier 1</span>Anatomy</div>
-                    <div class="bg-slate-800/50 p-3 rounded-lg border border-slate-700"><span class="text-amber-400 font-bold block mb-1">Tier 2</span>Physiology</div>
-                    <div class="bg-slate-800/50 p-3 rounded-lg border border-slate-700"><span class="text-rose-400 font-bold block mb-1">Tier 3</span>Diagnostics</div>
+                    <div class="bg-slate-800/50 p-3 rounded-lg border border-slate-700 flex flex-col items-center text-center"><span class="text-emerald-400 font-bold block mb-1">Tier 1</span>8 Questions<br><span class="text-xs opacity-70">Anatomy</span></div>
+                    <div class="bg-slate-800/50 p-3 rounded-lg border border-slate-700 flex flex-col items-center text-center"><span class="text-amber-400 font-bold block mb-1">Tier 2</span>5 Questions<br><span class="text-xs opacity-70">Physiology</span></div>
+                    <div class="bg-slate-800/50 p-3 rounded-lg border border-slate-700 flex flex-col items-center text-center"><span class="text-rose-400 font-bold block mb-1">Tier 3</span>2 Questions<br><span class="text-xs opacity-70">Diagnostics</span></div>
                 </div>
                 <button id="start-btn" class="bg-gradient-to-r from-rose-600 to-orange-500 hover:from-rose-500 hover:to-orange-400 text-white font-black uppercase tracking-widest py-4 px-12 rounded-xl transition-all hover:scale-105 shadow-lg shadow-rose-900/50 focus:outline-none focus:ring-4 focus:ring-rose-500/50 glow-effect">
                     Initiate Sim
                 </button>
             </div>
 
+            <!-- Quiz Screen -->
             <div id="quiz-screen" class="hidden flex-col h-full p-4 md:p-8">
                 <div class="bg-slate-800/40 rounded-2xl p-6 border border-slate-700/50 mb-6 shadow-inner">
                     <h2 id="question-text" class="text-xl md:text-2xl font-bold text-white leading-relaxed">
@@ -132,6 +133,7 @@
                 </div>
             </div>
 
+            <!-- Tier Transition Screen -->
             <div id="tier-screen" class="hidden flex-col items-center justify-center h-full p-8 text-center animate-pop">
                 <div class="w-32 h-32 bg-slate-800 rounded-full flex items-center justify-center mb-6 border-4 border-slate-700 shadow-2xl glow-effect" id="tier-icon-container">
                     <!-- Icon injected via JS -->
@@ -143,19 +145,20 @@
                 </button>
             </div>
 
+            <!-- Final Results Screen -->
             <div id="results-screen" class="hidden flex-col items-center justify-center h-full p-8 text-center animate-pop overflow-y-auto">
                 <div class="w-28 h-28 bg-slate-800 rounded-full flex items-center justify-center mb-4 border-4 border-slate-700 shadow-2xl relative">
                     <svg class="w-14 h-14 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    <div class="absolute -bottom-2 -right-2 bg-emerald-500 text-white text-xs font-black px-2 py-1 rounded-lg border-2 border-slate-900 shadow-lg" id="final-multiplier"></div>
+                    <div class="absolute -bottom-2 -right-2 bg-emerald-500 text-white text-xs font-black px-2 py-1 rounded-lg border-2 border-slate-900 shadow-lg">END</div>
                 </div>
                 <h2 class="text-3xl md:text-4xl font-black mb-2 text-white">Assessment Concluded</h2>
                 
                 <div class="bg-slate-800/80 rounded-2xl p-6 border border-slate-700 w-full max-w-md my-6 shadow-inner">
-                    <p class="text-slate-400 mb-2 uppercase tracking-widest font-bold text-sm">Final Score</p>
-                    <p class="font-black text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-orange-400 text-6xl mb-4" id="final-score">0</p>
+                    <p class="text-slate-400 mb-2 uppercase tracking-widest font-bold text-sm">Gamified Points Score</p>
+                    <p class="font-black text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-orange-400 text-5xl mb-4" id="final-score">0</p>
                     
-                    <p class="text-slate-400 mb-1 uppercase tracking-widest font-bold text-sm">Accuracy</p>
-                    <p class="text-white text-2xl font-bold mb-4"><span id="correct-count">0</span> / <span id="total-questions">0</span> Correct</p>
+                    <p class="text-slate-400 mb-1 uppercase tracking-widest font-bold text-sm">Academic Mark</p>
+                    <p class="text-white text-3xl font-bold mb-4"><span id="correct-count" class="text-emerald-400">0</span> / <span id="total-questions">15</span> Marks</p>
 
                     <div class="pt-4 border-t border-slate-700">
                         <p class="text-slate-400 mb-1 uppercase tracking-widest font-bold text-sm">Clinical Rank Achieved</p>
@@ -166,203 +169,116 @@
                 <p id="performance-message" class="text-slate-300 mb-8 max-w-lg leading-relaxed text-lg"></p>
                 
                 <button id="restart-btn" class="bg-slate-700 hover:bg-slate-600 text-white font-bold py-3 px-8 rounded-xl transition-all shadow-lg border border-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-400 uppercase tracking-widest">
-                    Restart Simulator
+                    Run New Simulation
                 </button>
             </div>
         </main>
     </div>
 
     <script>
-        // Array of questions strictly aligned with Saskatchewan Curriculum HS20-HB1 & HB2
-        const quizData = [
-            // --- TIER 1: ANATOMY (EASY) ---
-            {
-                tier: 1,
-                question: "In the pulmonary circuit, which chamber of the heart pumps deoxygenated blood to the lungs?",
-                options: [
-                    "Left Atrium",
-                    "Right Atrium",
-                    "Left Ventricle",
-                    "Right Ventricle"
-                ],
-                correctIndex: 3,
-                explanation: "The right ventricle is the discharging chamber for the pulmonary circuit. It pumps deoxygenated blood through the pulmonary trunk to the lungs to pick up oxygen."
-            },
-            {
-                tier: 1,
-                question: "Form dictates function. Based on microscopic histology, why are capillaries only one cell layer thick?",
-                options: [
-                    "To withstand massive, pulsatile pressure from the heart.",
-                    "To allow for the rapid and efficient diffusion of gases and nutrients.",
-                    "To house specialized one-way valves that fight gravity.",
-                    "To prevent blood cells from escaping into the lymphatic system."
-                ],
-                correctIndex: 1,
-                explanation: "Capillaries are the site of exchange. Their extreme thinness ensures that oxygen, carbon dioxide, and nutrients can rapidly diffuse between the blood and surrounding tissues."
-            },
-            {
-                tier: 1,
-                question: "What is the primary characteristic of the unique cardiac tissue known as 'syncytium'?",
-                options: [
-                    "It lacks typical cellular divisions, allowing multi-nucleated regions to contract in perfect unison.",
-                    "It acts as a fluid-filled protective sac to reduce friction against the lungs.",
-                    "It consists of highly elastic rings of smooth muscle that control blood pressure.",
-                    "It filters bacteria and viruses out of the bloodstream before they reach the brain."
-                ],
-                correctIndex: 0,
-                explanation: "The atrial and ventricular syncytiums are networks of multi-nucleated protoplasm. Because cell barriers are missing, the electrical impulse spreads instantly, causing the entire chamber community to contract together."
-            },
-            {
-                tier: 1,
-                question: "Venous blood pressure is nearly zero. How does blood in the veins successfully fight gravity to return to the heart?",
-                options: [
-                    "Veins have incredibly thick, muscular walls that actively pump the blood.",
-                    "The heart's suction creates a powerful vacuum that pulls the blood upward.",
-                    "Veins contain structural one-way valves and rely on the squeezing action of surrounding skeletal muscles.",
-                    "The lungs hyper-inflate during breathing to draw blood upward."
-                ],
-                correctIndex: 2,
-                explanation: "Veins rely on the 'skeletal muscle pump'. As you move, muscles squeeze the veins. One-way valves lock shut to prevent the blood from falling backward down the leg, 'milking' it up to the heart."
-            },
-            
-            // --- TIER 2: PHYSIOLOGY (MEDIUM) ---
-            {
-                tier: 2,
-                question: "Which component of the cardiac conduction system acts as the primary 'pacemaker', initiating the heartbeat?",
-                options: [
-                    "Atrioventricular (AV) Node",
-                    "Purkinje Fibers",
-                    "Sinoatrial (SA) Node",
-                    "Bundle of His"
-                ],
-                correctIndex: 2,
-                explanation: "The Sinoatrial (SA) node, located in the right atrium, is self-stimulating. It fires the initial electrical charge that causes the atria to depolarize and contract."
-            },
-            {
-                tier: 2,
-                question: "During clinical auscultation with a stethoscope, what mechanical event creates the second heart sound, or 'DUB' ($S_2$)?",
-                options: [
-                    "The AV valves snapping shut as ventricular pressure rises.",
-                    "The Semilunar (aortic and pulmonary) valves snapping shut as ventricular pressure drops.",
-                    "The rush of blood filling the atria.",
-                    "The electrical firing of the Purkinje fibers."
-                ],
-                correctIndex: 1,
-                explanation: "The 'DUB' occurs at the beginning of ventricular diastole. As the ventricles relax, blood in the aorta and pulmonary trunk tries to flow backward, slamming the pocket-like Semilunar valves shut."
-            },
-            {
-                tier: 2,
-                question: "The cardiac cycle is divided into two main phases. What physically occurs during 'ventricular systole'?",
-                options: [
-                    "The ventricles relax and passively refill with blood from the atria.",
-                    "The atria contract to push the final 30% of blood into the ventricles.",
-                    "The entire heart rests and repolarizes its electrical gradients.",
-                    "The ventricular myocardium contracts, forcing blood out into the systemic and pulmonary circuits."
-                ],
-                correctIndex: 3,
-                explanation: "Systole means contraction. Ventricular systole is the high-pressure phase where the massive ventricular syncytium contracts to forcefully eject blood out of the heart."
-            },
-            {
-                tier: 2,
-                question: "When observing a normal Electrocardiogram (ECG), what does the large QRS complex represent?",
-                options: [
-                    "Atrial depolarization",
-                    "Ventricular repolarization",
-                    "Ventricular depolarization",
-                    "The closing of the AV valves"
-                ],
-                correctIndex: 2,
-                explanation: "The QRS complex maps the electrical signal shooting down the Bundle of His and up the Purkinje fibers. It represents ventricular depolarization (the electrical trigger for ventricular contraction)."
-            },
+        // Massive 55-question pool based specifically on "07b The Cardiovascular Systemno blanks.pdf"
+        const questionPool = [
+            // --- TIER 1: ANATOMY (22 Questions) ---
+            { tier: 1, question: "Humans have what type of circulatory system, meaning blood stays inside vessels as it travels?", options: ["Open", "Closed", "Semi-permeable", "Bifurcated"], correctIndex: 1, explanation: "Humans have a closed circulatory system, meaning blood is confined to tubes (vessels) rather than washing freely over organs." },
+            { tier: 1, question: "The human heart is the strongest continuously working muscle in the body. What is the average resting heart rate for a healthy human adult?", options: ["40-50 beats/min", "60-75 beats/min", "100-120 beats/min", "120-140 beats/min"], correctIndex: 1, explanation: "An average adult has a heart rate of 60-75 beats per minute. Athletes may have lower rates, while babies have much higher rates." },
+            { tier: 1, question: "The heart is composed of a special tissue made up of multi-nucleated protoplasm where normal cellular divisions are missing. What is this called?", options: ["Myelin", "Epithelium", "Syncytium", "Endocardium"], correctIndex: 2, explanation: "The heart muscle is called syncytium, which is self-stimulating and acts as a unified community." },
+            { tier: 1, question: "Which upper chamber of the heart collects deoxygenated blood returning from the body?", options: ["Right Atrium", "Left Atrium", "Right Ventricle", "Left Ventricle"], correctIndex: 0, explanation: "The right atrium (top right) receives deoxygenated blood returning from the systemic circuit (the body)." },
+            { tier: 1, question: "Which chamber of the heart is responsible for sending oxygenated blood out to the entire body?", options: ["Right Atrium", "Left Atrium", "Right Ventricle", "Left Ventricle"], correctIndex: 3, explanation: "The left ventricle (bottom left) has massive muscular walls designed to pump blood through the aorta to the entire body." },
+            { tier: 1, question: "Which chamber of the heart receives newly oxygenated blood returning directly from the lungs?", options: ["Right Atrium", "Left Atrium", "Right Ventricle", "Left Ventricle"], correctIndex: 1, explanation: "The left atrium (top left) receives oxygenated blood from the pulmonary veins." },
+            { tier: 1, question: "Which lower chamber of the heart pumps deoxygenated blood to the lungs?", options: ["Right Atrium", "Left Atrium", "Right Ventricle", "Left Ventricle"], correctIndex: 2, explanation: "The right ventricle (bottom right) pumps blood through the pulmonary trunk directly to the lungs for oxygenation." },
+            { tier: 1, question: "What is the primary function of the valves located at the entrances and exits of the heart chambers?", options: ["To oxygenate the blood", "To ensure blood flows in only one direction", "To generate the electrical impulse", "To create red blood cells"], correctIndex: 1, explanation: "Valves act as mechanical doors, snapping shut to prevent the dangerous backward flow of blood." },
+            { tier: 1, question: "The tissue of the heart is made of three layers. What is the smooth inner layer called?", options: ["Epicardium", "Pericardium", "Myocardium", "Endocardium"], correctIndex: 3, explanation: "The endocardium is the smooth inner layer, which is also continuous with the lining of the blood vessels." },
+            { tier: 1, question: "What is the strong middle muscular layer of the heart called?", options: ["Epicardium", "Pericardium", "Myocardium", "Endocardium"], correctIndex: 2, explanation: "The myocardium is the thick, functional muscle layer of the heart that performs the pumping action." },
+            { tier: 1, question: "The heart is contained in its own fluid-filled sac to reduce friction. What is this sac called?", options: ["Pleura", "Pericardium", "Myocardium", "Meninges"], correctIndex: 1, explanation: "The pericardium is the protective fluid-filled sac enclosing the heart." },
+            { tier: 1, question: "Which type of blood vessel carries blood away from the heart and features thick, elastic muscular walls?", options: ["Veins", "Arteries", "Venules", "Capillaries"], correctIndex: 1, explanation: "Arteries carry blood away from the heart and must be thick and elastic to withstand the high, pulsatile pressure." },
+            { tier: 1, question: "Which microscopic blood vessels form networks designed for the exchange of gases and nutrients with tissues?", options: ["Veins", "Arteries", "Venules", "Capillaries"], correctIndex: 3, explanation: "Capillaries have extremely thin walls, allowing for efficient diffusion between the blood and surrounding cells." },
+            { tier: 1, question: "Which blood vessels carry blood back toward the heart and feature thin, elastic muscular walls?", options: ["Veins", "Arteries", "Arterioles", "Capillaries"], correctIndex: 0, explanation: "Veins return blood to the heart. Because pressure is low, they have thinner walls and specialized one-way valves." },
+            { tier: 1, question: "What is the name of the largest artery in the human body, which springs directly from the left ventricle?", options: ["Vena Cava", "Pulmonary Artery", "Aorta", "Carotid Artery"], correctIndex: 2, explanation: "The aorta is about the size of a garden hose and is the primary vessel feeding the systemic circuit." },
+            { tier: 1, question: "Which specific arteries branch off the aorta first in order to feed the heart muscle itself?", options: ["Carotid Arteries", "Subclavian Arteries", "Renal Arteries", "Coronary Arteries"], correctIndex: 3, explanation: "The coronary arteries feed the myocardium. If these are blocked, a myocardial infarction (heart attack) occurs." },
+            { tier: 1, question: "What are the massive main veins that empty deoxygenated blood from the body back into the heart?", options: ["Jugular Veins", "Hepatic Veins", "Vena Cavae (Superior/Inferior)", "Pulmonary Veins"], correctIndex: 2, explanation: "The Superior and Inferior Vena Cava collect blood from the upper and lower body to dump into the right atrium." },
+            { tier: 1, question: "In the pulmonary circuit, which vessels carry deoxygenated blood away from the heart to the lungs?", options: ["Pulmonary Veins", "Pulmonary Arteries", "Aorta", "Vena Cava"], correctIndex: 1, explanation: "Uniquely, the pulmonary arteries carry deoxygenated blood. Arteries are defined by direction (away from heart), not oxygen content." },
+            { tier: 1, question: "What is the iron-carrying protein found in red blood cells that transports oxygen?", options: ["Plasma", "Leukocytes", "Hemoglobin", "Myelin"], correctIndex: 2, explanation: "Hemoglobin is the specialized protein inside erythrocytes (red blood cells) that binds to oxygen molecules." },
+            { tier: 1, question: "Which vessels drain the digestive tract and pass the blood through the liver for cleaning before it reaches the heart?", options: ["Renal Vein", "Hepatic Portal Vein", "Iliac Vein", "Jugular Vein"], correctIndex: 1, explanation: "The hepatic portal vein ensures blood from the gut is filtered and processed by the liver before entering general circulation." },
+            { tier: 1, question: "Which major artery supplies blood to the kidneys?", options: ["Renal Artery", "Celiac Trunk", "Femoral Artery", "Mesenteric Artery"], correctIndex: 0, explanation: "The renal arteries branch off the abdominal aorta to supply the kidneys for blood filtration." },
+            { tier: 1, question: "What forms the outer protective smooth layer of the heart wall itself?", options: ["Endocardium", "Myocardium", "Epicardium", "Septum"], correctIndex: 2, explanation: "The epicardium is the outermost layer of the heart wall, lying just beneath the pericardial sac." },
 
-            // --- TIER 3: CLINICAL DIAGNOSTICS (HARD) ---
-            {
-                tier: 3,
-                question: "A patient presents with a blood pressure of 120/90 mmHg. Calculate their Mean Arterial Pressure (MAP). Formula: MAP = DP + 1/3(SP - DP)",
-                options: [
-                    "90 mmHg",
-                    "100 mmHg",
-                    "105 mmHg",
-                    "110 mmHg"
-                ],
-                correctIndex: 1,
-                explanation: "MAP = 90 + 1/3(120 - 90). The pulse pressure (SP-DP) is 30. One-third of 30 is 10. DP (90) + 10 = 100 mmHg. This patient has adequate tissue perfusion."
-            },
-            {
-                tier: 3,
-                question: "A patient's ECG monitor displays a chaotic, rapid shuddering of the baseline with no distinct P, QRS, or T waves, and their pulse is absent. What is the clinical diagnosis?",
-                options: [
-                    "Sinus Bradycardia",
-                    "Ventricular Fibrillation",
-                    "Myocardial Infarction",
-                    "Atherosclerosis"
-                ],
-                correctIndex: 1,
-                explanation: "Fibrillation is an uncontrolled shuddering of the myocardium, making the heart a useless pump. An automated external defibrillator (AED) is required to shock the heart back to a normal rhythm."
-            },
-            {
-                tier: 3,
-                question: "A lab technician performs a blood typing assay. The patient's blood sample clumps (agglutinates) when mixed with Anti-A serum and Anti-Rh serum, but remains smooth with Anti-B serum. What is the diagnosis?",
-                options: [
-                    "B Positive (B+)",
-                    "A Negative (A-)",
-                    "A Positive (A+)",
-                    "AB Positive (AB+)"
-                ],
-                correctIndex: 2,
-                explanation: "Agglutination indicates the *presence* of that specific antigen on the red blood cells. Clumping with Anti-A and Anti-Rh means the patient has A antigens and Rh factors, making them A Positive."
-            },
-            {
-                tier: 3,
-                question: "Differentiate between systemic cardiovascular pathologies: How does a thrombosis differ from hemophilia?",
-                options: [
-                    "Thrombosis is a hereditary lack of clotting factors; hemophilia is an abnormal clot in an unbroken vessel.",
-                    "Thrombosis is an abnormal blood clot in an unbroken vessel; hemophilia is a hereditary inability to form clots.",
-                    "Thrombosis destroys red blood cells; hemophilia destroys white blood cells.",
-                    "Thrombosis causes hypertension; hemophilia causes hypotension."
-                ],
-                correctIndex: 1,
-                explanation: "A thrombosis is a dangerous clot that can block blood flow, potentially breaking off to cause a stroke (embolus). Hemophilia is the dangerous inability to form clots, leading to severe bleeding from minor traumas."
-            },
-            {
-                tier: 3,
-                question: "In leukemia, the bone marrow becomes cancerous and produces massive amounts of white blood cells (leukocytes). Why are these patients highly susceptible to severe infections?",
-                options: [
-                    "The excess white blood cells attack the body's own healthy tissues.",
-                    "The white blood cells produced are immature, improperly formed, and cannot perform their immune functions.",
-                    "The white blood cells consume all the oxygen, starving the immune system.",
-                    "The excess white blood cells cause massive agglutination in the capillary beds."
-                ],
-                correctIndex: 1,
-                explanation: "Even though leukocyte numbers are incredibly high, the rapid cancerous production results in immature, defective cells. They take up space but cannot fight off pathogens, leaving the body unprotected."
-            },
-            {
-                tier: 3,
-                question: "During the cardiac cycle, the atria must repolarize (recover their electrical charge) just like the ventricles do. Why is atrial repolarization NOT visible as a distinct wave on a standard ECG?",
-                options: [
-                    "The atria do not require an electrical charge to contract; they rely on gravity.",
-                    "It occurs so slowly that the ECG electrodes cannot detect the voltage change.",
-                    "It occurs simultaneously with ventricular depolarization, so its small signal is completely hidden within the massive QRS complex.",
-                    "It occurs during the flat segment between the T wave and the next P wave."
-                ],
-                correctIndex: 2,
-                explanation: "The ventricles are massive compared to the atria. Because atrial repolarization happens at the exact same moment the massive ventricles are depolarizing, the tiny atrial electrical signal is drowned out by the QRS complex."
-            }
+            // --- TIER 2: PHYSIOLOGY & MECHANICS (19 Questions) ---
+            { tier: 2, question: "Even if cut out of the body, the heart can keep pumping if kept in the correct fluids. Why is this?", options: ["It absorbs oxygen directly from the air.", "The heart muscle has its own electrical system and is self-stimulating.", "Gravity pulls the blood through the chambers.", "The brain sends wireless signals to the muscle."], correctIndex: 1, explanation: "The cardiac conduction system is self-stimulating (myogenic), meaning it generates its own electrical impulses without requiring the brain." },
+            { tier: 2, question: "What is the main electrical regulator (the 'pacemaker') of the heart, located on the top right atrium?", options: ["AV Node", "Bundle of His", "Purkinje Fibers", "Sinoatrial (SA) Node"], correctIndex: 3, explanation: "The SA node initiates the electrical charge that causes the atrial syncytium to contract." },
+            { tier: 2, question: "After the atria contract, the electrical charge reaches the border of the right atrium and ventricle. Which node develops a charge here?", options: ["SA Node", "Atrioventricular (AV) Node", "Mitral Node", "Aortic Node"], correctIndex: 1, explanation: "The AV node briefly delays the signal to let the atria finish emptying, then fires the charge down toward the ventricles." },
+            { tier: 2, question: "On an Electrocardiogram (ECG), what does the small 'P wave' represent?", options: ["Ventricular Repolarization", "Ventricular Depolarization", "Atrial Depolarization", "The valves snapping shut"], correctIndex: 2, explanation: "The P wave shows the SA node firing and the atria depolarizing (contracting)." },
+            { tier: 2, question: "On an ECG, what does the large 'QRS-complex' peak represent?", options: ["Atrial Repolarization", "Ventricular Depolarization", "Ventricular Repolarization", "Atrial Depolarization"], correctIndex: 1, explanation: "The QRS complex maps the electrical signal shooting down the Bundle of His, causing the massive ventricles to depolarize (contract)." },
+            { tier: 2, question: "Why is the QRS wave on an ECG so much larger than the P wave?", options: ["The ventricles are physically much larger and have more muscle mass than the atria.", "It measures the physical closing of the valves.", "It happens closer to the skin surface.", "It includes the sound of the heartbeat."], correctIndex: 0, explanation: "Because the ventricular syncytium is so massive (especially the left ventricle), it generates a much larger electrical spike on the monitor." },
+            { tier: 2, question: "On an ECG, what does the 'T wave' represent?", options: ["Ventricular Depolarization", "Atrial Depolarization", "The AV valves closing", "Ventricular Repolarization"], correctIndex: 3, explanation: "The T wave represents the ventricles recharging their electrical gradients (repolarizing) in preparation for the next beat." },
+            { tier: 2, question: "During the cardiac cycle, you hear a 'LUB' sound. What mechanical event causes this?", options: ["The atria contracting.", "The AV valves (tricuspid and mitral) snapping closed.", "The Semilunar valves snapping closed.", "The electrical firing of the SA node."], correctIndex: 1, explanation: "As the ventricles contract, blood tries to flow backwards. The A-V valves snap shut to prevent this, creating the LUB sound." },
+            { tier: 2, question: "During the cardiac cycle, you hear a 'DUB' sound. What mechanical event causes this?", options: ["The Semilunar valves (aortic and pulmonary) snapping closed.", "The atria refilling with blood.", "The AV valves snapping closed.", "The ventricles contracting."], correctIndex: 0, explanation: "As the ventricles relax, blood in the aorta and pulmonary trunk tries to fall backward, slamming the Semilunar valves shut (DUB)." },
+            { tier: 2, question: "In the cardiac cycle, what term refers to the high-pressure contraction phase of the heart chambers?", options: ["Diastole", "Systole", "Repolarization", "Fibrillation"], correctIndex: 1, explanation: "Systole refers to the active contraction phase, such as ventricular systole where blood is forcefully ejected." },
+            { tier: 2, question: "In the cardiac cycle, what term refers to the relaxation phase where the chambers refill with blood?", options: ["Systole", "Depolarization", "Diastole", "Infarction"], correctIndex: 2, explanation: "Diastole is the resting phase. The heart actually spends the majority of its time in diastole, passively refilling." },
+            { tier: 2, question: "What is 'Stroke Volume'?", options: ["The total amount of blood in the human body.", "The number of times the heart beats per minute.", "The amount of blood pumped out of the heart per beat (approx. 70-80 mL).", "The speed of the electrical impulse down the Bundle of His."], correctIndex: 2, explanation: "Stroke volume is the specific volume of blood ejected by the ventricle during one systole (beat), typically measured in the aorta." },
+            { tier: 2, question: "Why might a highly trained endurance athlete have a resting heart rate as low as 45-50 beats per minute?", options: ["Their heart is weak and struggling to pump.", "Their blood contains fewer red blood cells.", "They have a stronger heart which can deliver more blood with fewer beats.", "Their SA node is damaged."], correctIndex: 2, explanation: "Athletes have higher stroke volumes due to cardiac hypertrophy (a stronger muscle), meaning their heart doesn't need to beat as often to supply the body." },
+            { tier: 2, question: "How does the electrical charge travel from the AV node down to the bottom of the ventricles?", options: ["Via the pulmonary veins", "Through the Bundle of His and Purkinje fibers", "Through the chordae tendineae", "Via the Vena Cava"], correctIndex: 1, explanation: "The Bundle of His conducts the charge down the septum, and the Purkinje fibers distribute it upward through the ventricular walls." },
+            { tier: 2, question: "If you are listening to someone's heart with a stethoscope, you are actually listening to:", options: ["The electrical impulses of the SA node.", "The physical flexing of the myocardium.", "The valves in the heart snapping closed.", "The blood rushing through the capillaries."], correctIndex: 2, explanation: "The myocardium itself is very quiet. The 'lub-dub' you hear is strictly the mechanical closing of the heart's valves." },
+            { tier: 2, question: "Calculate the Mean Arterial Pressure (MAP) for a patient with a blood pressure of 120/90 mmHg. Formula: MAP = DP + 1/3(SP - DP)", options: ["90", "100", "110", "120"], correctIndex: 1, explanation: "Pulse pressure = 120 - 90 = 30. One third of 30 is 10. Diastolic (90) + 10 = 100 mmHg." },
+            { tier: 2, question: "Calculate the Mean Arterial Pressure (MAP) for a patient with a blood pressure of 110/80 mmHg. Formula: MAP = DP + 1/3(SP - DP)", options: ["80", "90", "100", "110"], correctIndex: 1, explanation: "Pulse pressure = 110 - 80 = 30. One third of 30 is 10. Diastolic (80) + 10 = 90 mmHg." },
+            { tier: 2, question: "What is the mechanical purpose of the Atrioventricular (AV) valves (tricuspid and mitral)?", options: ["To prevent blood from flowing backward into the ventricles from the aorta.", "To push blood into the capillary beds.", "To prevent blood from flowing backwards into the atria during ventricular contraction.", "To regulate the electrical pacemaker."], correctIndex: 2, explanation: "The AV valves guard the junction between the atria and ventricles, snapping shut when the massive ventricles contract." },
+            { tier: 2, question: "What is the mechanical purpose of the Semilunar valves (aortic and pulmonary)?", options: ["To prevent blood from flowing back into the ventricles after they relax.", "To prevent blood from flowing backwards into the atria.", "To force blood into the venous system.", "To open the pathway to the coronary arteries."], correctIndex: 0, explanation: "When ventricular diastole begins, pressure drops. Blood in the great vessels tries to fall back, but fills the 'pockets' of the semilunar valves, forcing them shut." },
+
+            // --- TIER 3: CLINICAL DIAGNOSTICS & PATHOLOGIES (14 Questions) ---
+            { tier: 3, question: "Any disorder that decreases the oxygen-carrying capacity of blood is called:", options: ["Leukemia", "Anemia", "Thrombosis", "Hemophilia"], correctIndex: 1, explanation: "Anemia can be caused by a low red blood cell count or abnormal/deficient hemoglobin." },
+            { tier: 3, question: "What pathology occurs when abnormal hemoglobin is formed, creating sharp, oddly shaped red blood cells that can dam up inside small vessels?", options: ["Sickle Cell Anemia", "Leukemia", "Angina", "Fibrillation"], correctIndex: 0, explanation: "Sickle Cell Anemia alters the shape of erythrocytes, causing extreme pain when they block capillary beds during exercise." },
+            { tier: 3, question: "In this disease, the bone marrow becomes cancerous, producing massive amounts of immature, improperly formed white blood cells.", options: ["Hemophilia", "Thrombosis", "Leukemia", "Myocardial Infarction"], correctIndex: 2, explanation: "Leukemia results in high numbers of defective leukocytes, making the body easy prey for bacteria and causing severe anemia." },
+            { tier: 3, question: "What is a 'Thrombosis'?", options: ["A rapid, uncontrolled shuddering of the heart muscle.", "A genetic lack of clotting factors.", "A blood clot that forms in an unbroken blood vessel.", "A decrease in the oxygen carrying capacity of blood."], correctIndex: 2, explanation: "A thrombosis is an abnormal clot. If it dislodges and reaches the brain (a cerebral embolus), it can cause a stroke." },
+            { tier: 3, question: "What is 'Hemophilia'?", options: ["A hereditary disease where a person lacks clotting factors.", "A cancerous overproduction of white blood cells.", "A clot in an unbroken vessel.", "A severely low heart rate."], correctIndex: 0, explanation: "Hemophilia prevents blood from clotting. Even minor traumas can cause life-threatening bleeding into joints and tissues." },
+            { tier: 3, question: "If the myocardium is deprived of oxygen, it can result in a crushing chest pain that acts as a severe warning sign. What is this called?", options: ["Bradycardia", "Fibrillation", "Angina", "Thrombosis"], correctIndex: 2, explanation: "Angina is severe chest pain due to ischemia (lack of blood/oxygen to the heart muscle). If ignored, tissue death may follow." },
+            { tier: 3, question: "If lack of oxygen goes on too long, heart tissue will die. What is the clinical term for a 'heart attack'?", options: ["Myocardial Infarction", "Cerebral Embolus", "Tachycardia", "Angina"], correctIndex: 0, explanation: "An infarction means tissue death due to lack of blood supply. A myocardial infarction is the death of the heart muscle." },
+            { tier: 3, question: "A patient's ECG monitor displays an unusually rapid heart rate of 115 beats per minute. What is the clinical term for this?", options: ["Bradycardia", "Fibrillation", "Infarction", "Tachycardia"], correctIndex: 3, explanation: "Tachycardia is a rapid heart rate (generally over 100 bpm). Prolonged tachycardia can dangerously lead to fibrillation." },
+            { tier: 3, question: "A patient's ECG monitor displays an unusually slow heart rate of 45 beats per minute. What is the clinical term for this?", options: ["Bradycardia", "Tachycardia", "Fibrillation", "Angina"], correctIndex: 0, explanation: "Bradycardia is a slow heart rate (under 60 bpm). While normal in elite athletes, in average patients it can indicate pacemaker issues." },
+            { tier: 3, question: "A patient's ECG shows no distinct waves, just a chaotic, rapid shuddering of the baseline. The heart is a totally useless pump. What is this?", options: ["Sinus Tachycardia", "Fibrillation", "Sickle Cell Crisis", "Thrombosis"], correctIndex: 1, explanation: "Fibrillation is uncontrolled shuddering of the syncytium. An Automated External Defibrillator (AED) is needed to shock it back to a normal rhythm." },
+            { tier: 3, question: "A lab technician mixes a patient's blood with Anti-A serum and it clumps (agglutinates). It remains smooth with Anti-B, but clumps with Anti-Rh. What is the blood type?", options: ["B Positive", "A Negative", "A Positive", "AB Positive"], correctIndex: 2, explanation: "Agglutination reveals the presence of that antigen. Clumping with Anti-A and Anti-Rh means the blood has A and Rh antigens: A Positive." },
+            { tier: 3, question: "A patient's blood sample agglutinates (clumps) with Anti-A, Anti-B, and Anti-Rh serums. What is their blood type?", options: ["O Negative", "AB Positive", "O Positive", "AB Negative"], correctIndex: 1, explanation: "Because it clumps with all three serums, the red blood cells possess all three antigens: A, B, and Rh. They are AB Positive." },
+            { tier: 3, question: "A patient's blood sample does NOT agglutinate (remains completely smooth) with Anti-A, Anti-B, or Anti-Rh serums. What is their blood type?", options: ["O Negative", "AB Positive", "A Negative", "B Negative"], correctIndex: 0, explanation: "No clumping means the blood lacks A, B, and Rh antigens. This makes it O Negative, the universal donor type." },
+            { tier: 3, question: "Why were hemophiliacs in the past at high risk for contracting blood-borne diseases like hepatitis?", options: ["Their immune systems were destroyed by the disease.", "They required frequent transfusions of fresh plasma or purified clotting factors.", "Their abnormal red blood cells attracted viruses.", "They lacked white blood cells to fight infections."], correctIndex: 1, explanation: "Because they lack clotting factors, hemophiliacs require frequent transfusions. Before modern screening, donated blood carried high risks." }
         ];
 
-        // --- STREAMING_CHUNK: Initializing State Variables... ---
+        // --- STREAMING_CHUNK: State Variables & Shuffling Logic... ---
+        let currentQuizQueue = [];
         let currentQuestionIndex = 0;
-        let score = 0;
+        let score = 0; // Gamified points
         let streak = 0;
-        let basePoints = 100;
+        let correctAnswersCount = 0; // Academic marks out of 15
         let hasAnswered = false;
-        let correctAnswersCount = 0;
 
-        const tiers = [
-            { level: 1, name: "Tier 1: Anatomical Foundations", icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>', color: 'text-emerald-400' },
-            { level: 2, name: "Tier 2: Physiology & Mechanics", icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>', color: 'text-amber-400' },
-            { level: 3, name: "Tier 3: Clinical Diagnostics", icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>', color: 'text-rose-400' }
-        ];
+        function shuffleArray(array) {
+            let curId = array.length;
+            while (0 !== curId) {
+                let randId = Math.floor(Math.random() * curId);
+                curId -= 1;
+                let tmp = array[curId];
+                array[curId] = array[randId];
+                array[randId] = tmp;
+            }
+            return array;
+        }
+
+        function generateQuizQueue() {
+            // Filter pools
+            const t1Pool = questionPool.filter(q => q.tier === 1);
+            const t2Pool = questionPool.filter(q => q.tier === 2);
+            const t3Pool = questionPool.filter(q => q.tier === 3);
+
+            // Select random quantities (8, 5, 2)
+            const t1Selected = shuffleArray([...t1Pool]).slice(0, 8);
+            const t2Selected = shuffleArray([...t2Pool]).slice(0, 5);
+            const t3Selected = shuffleArray([...t3Pool]).slice(0, 2);
+
+            return [...t1Selected, ...t2Selected, ...t3Selected];
+        }
+
+        const tierMeta = {
+            1: { name: "Tier 1: Anatomical Foundations", icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>', color: 'text-emerald-400' },
+            2: { name: "Tier 2: Physiology & Mechanics", icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>', color: 'text-amber-400' },
+            3: { name: "Tier 3: Clinical Diagnostics", icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>', color: 'text-rose-400' }
+        };
 
         // --- DOM Elements ---
         const startScreen = document.getElementById('start-screen');
@@ -387,6 +303,7 @@
 
         // --- STREAMING_CHUNK: Core Game Logic Functions... ---
         function initQuiz() {
+            currentQuizQueue = generateQuizQueue();
             currentQuestionIndex = 0;
             score = 0;
             streak = 0;
@@ -406,24 +323,23 @@
             feedbackContainer.classList.add('hidden');
             optionsContainer.innerHTML = ''; 
             
-            // Re-trigger entry animation
             quizScreen.classList.remove('animate-pop');
             void quizScreen.offsetWidth; 
             quizScreen.classList.add('animate-pop');
 
-            const currentQ = quizData[currentQuestionIndex];
+            const currentQ = currentQuizQueue[currentQuestionIndex];
             
-            // Update Tier Badge UI based on question data
-            const currentTierData = tiers.find(t => t.level === currentQ.tier);
+            // Update Tier Badge UI
+            const currentTierData = tierMeta[currentQ.tier];
             tierBadge.className = `text-xs font-bold bg-slate-800 inline-block px-3 py-1 rounded-full mt-2 border shadow-inner ${currentTierData.color} border-${currentTierData.color.split('-')[1]}-700`;
             tierBadge.innerText = currentTierData.name;
 
             questionText.innerHTML = `<span class="text-slate-500 font-black mr-2">Q${currentQuestionIndex + 1}.</span> ${currentQ.question}`;
             
             // Update Progress
-            const progressPercentage = ((currentQuestionIndex) / quizData.length) * 100;
+            const progressPercentage = ((currentQuestionIndex) / 15) * 100;
             progressBar.style.width = `${progressPercentage}%`;
-            questionTracker.innerText = `Protocol ${currentQuestionIndex + 1} of ${quizData.length}`;
+            questionTracker.innerText = `Protocol ${currentQuestionIndex + 1} of 15`;
 
             // Create Option Buttons
             currentQ.options.forEach((option, index) => {
@@ -447,25 +363,26 @@
             if (hasAnswered) return;
             hasAnswered = true;
 
-            const currentQ = quizData[currentQuestionIndex];
+            const currentQ = currentQuizQueue[currentQuestionIndex];
             const isCorrect = selectedIndex === currentQ.correctIndex;
 
             // Handle Gamification / Scoring
             let multiplier = 1;
+            const basePoints = 100;
+
             if (isCorrect) {
-                correctAnswersCount++;
+                correctAnswersCount++; // Academic Mark
                 streak++;
                 if (streak >= 5) multiplier = 3;
                 else if (streak >= 3) multiplier = 2;
                 
                 const pointsEarned = basePoints * multiplier;
-                score += pointsEarned;
+                score += pointsEarned; // Gamified points
                 
                 if (streak > 1) {
                     streakContainer.classList.remove('hidden');
                     streakContainer.classList.add('flex');
                     streakMultiplier.innerText = `${multiplier}x`;
-                    // Animate multiplier
                     streakContainer.classList.remove('animate-pop');
                     void streakContainer.offsetWidth;
                     streakContainer.classList.add('animate-pop');
@@ -475,29 +392,25 @@
                 streakContainer.classList.add('hidden');
                 streakContainer.classList.remove('flex');
                 
-                // Shake screen on wrong answer
                 quizScreen.classList.remove('animate-shake');
                 void quizScreen.offsetWidth;
                 quizScreen.classList.add('animate-shake');
             }
             updateScoreDisplay();
 
-            // Disable all buttons and style correctness
+            // Disable buttons and style
             const allBtns = optionsContainer.querySelectorAll('button');
             allBtns.forEach((btn, index) => {
                 btn.disabled = true;
                 btn.classList.remove('hover:bg-slate-700', 'hover:border-slate-500', 'focus:ring-2', 'group');
                 
                 if (index === currentQ.correctIndex) {
-                    // Highlight correct
                     btn.classList.add('bg-emerald-900/40', 'border-emerald-500', 'text-white', 'shadow-[0_0_15px_rgba(16,185,129,0.2)]');
                     btn.querySelector('span').classList.add('bg-emerald-500', 'text-white', 'border-emerald-400');
                 } else if (index === selectedIndex && !isCorrect) {
-                    // Highlight selected wrong
                     btn.classList.add('bg-rose-900/40', 'border-rose-500', 'text-slate-300');
                     btn.querySelector('span').classList.add('bg-rose-600', 'text-white', 'border-rose-500');
                 } else {
-                    // Fade out others
                     btn.classList.add('opacity-30', 'grayscale');
                 }
             });
@@ -518,7 +431,6 @@
 
             feedbackText.innerHTML = `<strong class="uppercase text-xs tracking-widest opacity-80 block mb-1">Pedagogical Note:</strong> ${currentQ.explanation}`;
             
-            // Auto scroll to feedback on mobile
             setTimeout(() => {
                 feedbackContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }, 100);
@@ -526,11 +438,11 @@
 
         // --- STREAMING_CHUNK: Progression and Tier Management... ---
         function nextQuestion() {
-            const currentQ = quizData[currentQuestionIndex];
+            const currentQ = currentQuizQueue[currentQuestionIndex];
             currentQuestionIndex++;
             
-            if (currentQuestionIndex < quizData.length) {
-                const nextQ = quizData[currentQuestionIndex];
+            if (currentQuestionIndex < 15) {
+                const nextQ = currentQuizQueue[currentQuestionIndex];
                 
                 // Check if we leveled up a Tier
                 if (nextQ.tier > currentQ.tier) {
@@ -547,14 +459,14 @@
             quizScreen.classList.add('hidden');
             tierScreen.classList.remove('hidden');
             
-            const tierInfo = tiers.find(t => t.level === newTierLevel);
+            const tInfo = tierMeta[newTierLevel];
             
-            document.getElementById('tier-title').innerText = tierInfo.name;
-            document.getElementById('tier-icon-container').innerHTML = `<svg class="w-16 h-16 ${tierInfo.color}" fill="none" stroke="currentColor" viewBox="0 0 24 24">${tierInfo.icon}</svg>`;
+            document.getElementById('tier-title').innerText = tInfo.name;
+            document.getElementById('tier-icon-container').innerHTML = `<svg class="w-16 h-16 ${tInfo.color}" fill="none" stroke="currentColor" viewBox="0 0 24 24">${tInfo.icon}</svg>`;
             
             let msg = "";
-            if(newTierLevel === 2) msg = "You have mastered basic anatomy. Protocol escalating to Hemodynamics and Cardiac Physiology.";
-            if(newTierLevel === 3) msg = "Physiology complete. Initiating final clinical diagnostic scenarios. Expect complex data interpretation.";
+            if(newTierLevel === 2) msg = "Tier 1 Anatomical protocol complete. Escalating simulation difficulty to Hemodynamics and Physiology (5 Questions).";
+            if(newTierLevel === 3) msg = "Tier 2 Physiology protocol complete. Initiating final clinical diagnostic scenarios (2 Questions).";
             
             document.getElementById('tier-message').innerText = msg;
         }
@@ -567,7 +479,6 @@
 
         // --- STREAMING_CHUNK: Results and Ranking Logic... ---
         function updateScoreDisplay() {
-            // Animate score counter
             const startObj = { val: parseInt(scoreDisplay.innerText) || 0 };
             const endVal = score;
             const duration = 500;
@@ -576,7 +487,6 @@
             function animate(currentTime) {
                 const elapsed = currentTime - startTime;
                 const progress = Math.min(elapsed / duration, 1);
-                // Ease out cubic
                 const easeProgress = 1 - Math.pow(1 - progress, 3);
                 
                 const currentVal = Math.floor(startObj.val + (endVal - startObj.val) * easeProgress);
@@ -601,28 +511,27 @@
             
             document.getElementById('final-score').innerText = score;
             document.getElementById('correct-count').innerText = correctAnswersCount;
-            document.getElementById('total-questions').innerText = quizData.length;
 
-            const percentage = correctAnswersCount / quizData.length;
+            const percentage = correctAnswersCount / 15;
             const rankElement = document.getElementById('clinical-rank');
             const msgElement = document.getElementById('performance-message');
             
-            if (percentage === 1) {
+            if (correctAnswersCount === 15) {
                 rankElement.innerText = "Chief of Medicine";
                 rankElement.className = "text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 to-rose-400 uppercase tracking-widest";
-                msgElement.innerText = "Flawless execution! You demonstrated absolute mastery over form, function, and complex cardiovascular diagnostics. You are ready for the Endocrine System.";
-            } else if (percentage >= 0.8) {
+                msgElement.innerText = "Flawless execution! You demonstrated absolute mastery over form, function, and complex cardiovascular diagnostics. Perfect 15/15.";
+            } else if (correctAnswersCount >= 12) {
                 rankElement.innerText = "Attending Physician";
                 rankElement.className = "text-2xl font-black text-emerald-400 uppercase tracking-widest";
                 msgElement.innerText = "Outstanding performance. You have a highly sophisticated grasp of cardiovascular hemodynamics and pathology. Review your minor errors to achieve total mastery.";
-            } else if (percentage >= 0.6) {
+            } else if (correctAnswersCount >= 9) {
                 rankElement.innerText = "Medical Resident";
                 rankElement.className = "text-2xl font-black text-amber-400 uppercase tracking-widest";
-                msgElement.innerText = "Solid effort. You understand the foundational anatomy, but need to review the Tier 3 clinical application and diagnostic calculations (like MAP).";
+                msgElement.innerText = "Solid effort. You understand the foundational anatomy, but need to review the specific clinical and physiological terminology.";
             } else {
                 rankElement.innerText = "Pre-Med Student";
                 rankElement.className = "text-2xl font-black text-slate-400 uppercase tracking-widest";
-                msgElement.innerText = "This is a highly rigorous assessment. Return to the textbook, review the microscopic histology of the syncytium and valve mechanics, and re-initiate the simulation.";
+                msgElement.innerText = "This is a rigorous assessment. Return to the textbook, review the microscopic histology of the syncytium and the 'lub-dub' valve mechanics, and re-initiate the simulation.";
             }
         }
 

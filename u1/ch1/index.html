@@ -300,10 +300,22 @@
             <h3 class="text-xl font-semibold text-slate-800 mb-3">Blood Typing and Agglutination</h3>
             <p class="mb-6">The surfaces of erythrocytes contain genetically determined glycoproteins called <strong>antigens</strong>. The ABO blood group is based on the presence or absence of Type A and Type B antigens, while the Rh factor determines if blood is positive or negative. If a patient receives an incompatible blood transfusion, their immune system produces antibodies that attack the foreign antigens, causing dangerous <strong>agglutination</strong> (clumping) that can trigger systemic organ failure.</p>
 
-            <!-- Virtual Lab Placeholder 3 -->
-            <div id="interactive-widget-3" class="border-4 border-dashed border-red-400 p-8 text-center bg-red-50/50 rounded-2xl relative">
-                <h4 class="text-xl font-bold text-red-900">[Interactive Application: Blood Type Agglutination Assay]</h4>
-                <p class="text-sm text-red-700 mt-2 max-w-2xl mx-auto">Act as a lab technician. Drop Anti-A, Anti-B, and Anti-Rh serums into unknown patient blood samples. Analyze the clumping reactions to deduce the patient's blood type and determine safe donor matches.</p>
+            <!-- Embedded Blood Typing App with Pop-out Button -->
+            <div class="border border-slate-200 rounded-lg overflow-hidden bg-slate-50 p-4 mt-6 shadow-sm">
+                <div class="flex justify-between items-center mb-3">
+                    <h4 class="font-bold text-slate-800 flex items-center">
+                        <svg class="w-5 h-5 mr-2 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                        Interactive Lab: Blood Typing & Agglutination Assay
+                    </h4>
+                    <a href="https://scareysci.github.io/b30text/Unit3/ch5/blood.html" target="_blank" class="inline-flex items-center text-sm bg-red-600 hover:bg-red-700 text-white font-semibold py-1.5 px-3 rounded shadow-sm transition-colors">
+                        <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                        Open in New Window
+                    </a>
+                </div>
+                <p class="text-sm text-slate-600 mb-4">Act as a lab technician. Drop Anti-A, Anti-B, and Anti-Rh serums into unknown patient blood samples. Analyze the clumping reactions to deduce the patient's blood type and determine safe donor matches.</p>
+                <div class="relative w-full pb-[65%] h-0 rounded border border-slate-300 overflow-hidden bg-white">
+                     <iframe src="https://scareysci.github.io/b30text/Unit3/ch5/blood.html" class="absolute top-0 left-0 w-full h-full" frameborder="0" allowfullscreen></iframe>
+                </div>
             </div>
         </section>
 

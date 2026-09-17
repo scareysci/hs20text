@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardiovascular Formative Assessment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: transparent; /* Allows it to blend if embedded in an iframe */
+        }
+        /* Custom animations for gamified feel */
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.95) translateY(10px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        .animate-pop { animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        .animate-shake { animation: shake 0.4s ease-in-out; }
+        
+        /* Hide scrollbar for a cleaner widget look */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 h-screen w-screen overflow-hidden flex items-center justify-center p-4">
+
+    <div id="app-container" class="w-full max-w-2xl bg-slate-800 rounded-2xl shadow-2xl border border-slate-700 overflow-hidden flex flex-col max-h-full">
+        
+        <!-- Header & Progress Bar -->
+        <header class="bg-slate-900 p-4 border-b border-slate-700 flex flex-col gap-3 shrink-0">
+            <div class="flex justify-between items-center">
+                <h1 class="text-lg md:text-xl font-bold text-rose-400 flex items-center gap-2">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    Knowledge Check: Form & Function
+                </h1>
+                <div class="text-sm font-semibold text-slate-400 bg-slate-800 px-3 py-1 rounded-full shadow-inner border border-slate-700">
+                    Score: <span id="score-display" class="text-white">0</span>
+                </div>
+            </div>
+            
+            <!-- Progress Bar Background -->
+            <div class="w-full bg-slate-700 rounded-full h-2.5 overflow-hidden">
+                <!-- Progress Bar Fill -->
+                <div id="progress-bar" class="bg-rose-500 h-2.5 rounded-full transition-all duration-500 ease-out" style="width: 0%"></div>
+            </div>
+            <div class="text-xs text-slate-500 text-right w-full" id="question-tracker">Question 1 of 4</div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="p-6 overflow-y-auto grow flex flex-col relative" id="main-content">
+            
+            <!-- Quiz Screen -->
+            <div id="quiz-screen" class="flex flex-col h-full animate-pop">
+                <h2 id="question-text" class="text-xl md:text-2xl font-semibold mb-6 text-white leading-snug">
+                    Loading question...
+                </h2>
+                
+                <!-- Options Grid -->
+                <div id="options-container" class="flex flex-col gap-3 mb-6">
+                    <!-- Buttons injected via JS -->
+                </div>
+
+                <!-- Feedback Box (Hidden by default) -->
+                <div id="feedback-container" class="hidden rounded-xl p-5 border-l-4 mt-auto animate-pop shadow-lg">
+                    <h3 id="feedback-title" class="text-lg font-bold mb-2 flex items-center gap-2"></h3>
+                    <p id="feedback-text" class="text-sm leading-relaxed"></p>
+                    <button id="next-btn" class="mt-4 bg-slate-900 hover:bg-slate-950 text-white font-bold py-2 px-6 rounded-lg transition-colors border border-slate-700 shadow focus:outline-none focus:ring-2 focus:ring-slate-500 float-right">
+                        Next Question &rarr;
+                    </button>
+                    <div class="clear-both"></div>
+                </div>
+            </div>
+
+            <!-- Results Screen (Hidden by default) -->
+            <div id="results-screen" class="hidden flex-col items-center justify-center h-full animate-pop text-center">
+                <div class="w-24 h-24 bg-rose-900/50 rounded-full flex items-center justify-center mb-6 border-4 border-rose-500 shadow-[0_0_30px_rgba(244,63,94,0.3)]">
+                    <svg class="w-12 h-12 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                </div>
+                <h2 class="text-3xl font-bold mb-2 text-white">Assessment Complete!</h2>
+                <p class="text-slate-400 mb-6 text-lg">You scored <span id="final-score" class="font-bold text-rose-400 text-2xl"></span> out of <span id="total-questions" class="text-white"></span>.</p>
+                <p id="performance-message" class="text-slate-300 mb-8 max-w-md"></p>
+                <button id="restart-btn" class="bg-rose-600 hover:bg-rose-700 text-white font-bold py-3 px-8 rounded-xl transition-all hover:scale-105 shadow-lg border border-rose-500 focus:outline-none focus:ring-2 focus:ring-rose-400">
+                    Retry Assessment
+                </button>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        // --- Quiz Data ---
+        // Aligned strictly with Health Science 20 Curriculum and Chapter 1 text
+        const quizData = [
+            {
+                question: "What is the primary functional advantage of the heart's unique atrial and ventricular syncytium tissue?",
+                options: [
+                    "It generates the initial electrical pulse, completely replacing the need for a nervous system.",
+                    "It acts as a physical fluid-filled barrier to prevent friction between the heart and the lungs.",
+                    "It allows interconnected, multi-nucleated cells to communicate instantly and contract in unison.",
+                    "It passively opens and closes based on blood pressure gradients to prevent backflow."
+                ],
+                correctIndex: 2,
+                explanation: "The syncytium is a network of multi-nucleated protoplasm lacking typical cellular divisions. This structural form allows the entire atrial (or ventricular) community to communicate instantly and contract together as a single, highly efficient unit."
+            },
+            {
+                question: "How do the Atrioventricular (AV), Semilunar, and Venous valves synergize to maintain healthy hemodynamics?",
+                options: [
+                    "They actively flex and contract to pump blood through the vascular system.",
+                    "They operate passively in response to pressure gradients to ensure one-way blood flow.",
+                    "They produce electrical impulses that regulate the pace of the sinoatrial (SA) node.",
+                    "They filter deoxygenated blood and prevent pathogens from entering the myocardium."
+                ],
+                correctIndex: 1,
+                explanation: "Valves are not muscles; they are mechanical flaps of tissue. They rely entirely on the passive rise and fall of blood pressure (and gravity) to snap shut, locking out backflow and forcing blood to move continuously in one direction."
+            },
+            {
+                question: "During clinical auscultation with a stethoscope, what exact mechanical events create the characteristic \"LUB-DUB\" ($S_1$ and $S_2$) heart sounds?",
+                options: [
+                    "The contraction of the atrial syncytium (LUB) and the ventricular syncytium (DUB).",
+                    "Blood rushing into the aorta (LUB) and pulmonary trunk (DUB).",
+                    "The sinoatrial node firing (LUB) and the atrioventricular node firing (DUB).",
+                    "The snapping shut of the AV valves (LUB) followed by the snapping shut of the Semilunar valves (DUB)."
+                ],
+                correctIndex: 3,
+                explanation: "Heart sounds are acoustic vibrations caused by valves slamming shut. As ventricular pressure rises, AV valves snap shut (LUB). As ventricular pressure drops, backflowing blood slams the Semilunar valves shut (DUB)."
+            },
+            {
+                question: "In the context of systemic cardiovascular pathologies, how does a thrombosis clinically differ from hemophilia?",
+                options: [
+                    "Thrombosis is an abnormal blood clot in an unbroken vessel, whereas hemophilia is a genetic inability to form clots.",
+                    "Thrombosis causes excessive bleeding, whereas hemophilia causes blood to clot too rapidly.",
+                    "Thrombosis is a viral infection of the blood, whereas hemophilia is a bacterial infection.",
+                    "Thrombosis only affects the lymphatic system, whereas hemophilia only affects the pulmonary circuit."
+                ],
+                correctIndex: 0,
+                explanation: "A thrombosis is a dangerous blockage caused by a clot forming where it shouldn't (potentially leading to a stroke or MI). Hemophilia is the opposite problem: a hereditary lack of clotting factors, making even minor injuries life-threatening due to continuous bleeding."
+            }
+        ];
+
+        // --- State Variables ---
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let hasAnswered = false;
+
+        // --- DOM Elements ---
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const feedbackContainer = document.getElementById('feedback-container');
+        const feedbackTitle = document.getElementById('feedback-title');
+        const feedbackText = document.getElementById('feedback-text');
+        const nextBtn = document.getElementById('next-btn');
+        const progressBar = document.getElementById('progress-bar');
+        const questionTracker = document.getElementById('question-tracker');
+        const scoreDisplay = document.getElementById('score-display');
+        
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const finalScore = document.getElementById('final-score');
+        const totalQuestions = document.getElementById('total-questions');
+        const performanceMessage = document.getElementById('performance-message');
+        const restartBtn = document.getElementById('restart-btn');
+
+        // --- STREAMING_CHUNK:Core Game Logic Functions... ---
+        function initQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            updateScoreDisplay();
+            quizScreen.classList.remove('hidden');
+            resultsScreen.classList.add('hidden');
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            hasAnswered = false;
+            feedbackContainer.classList.add('hidden');
+            optionsContainer.innerHTML = ''; // Clear previous options
+            
+            // Re-trigger animation
+            quizScreen.classList.remove('animate-pop');
+            void quizScreen.offsetWidth; // Trigger reflow
+            quizScreen.classList.add('animate-pop');
+
+            const currentQ = quizData[currentQuestionIndex];
+            questionText.innerHTML = `<span class="text-rose-400 font-bold mr-2">Q${currentQuestionIndex + 1}.</span> ${currentQ.question}`;
+            
+            // Update Progress
+            const progressPercentage = ((currentQuestionIndex) / quizData.length) * 100;
+            progressBar.style.width = `${progressPercentage}%`;
+            questionTracker.innerText = `Question ${currentQuestionIndex + 1} of ${quizData.length}`;
+
+            // Create option buttons
+            currentQ.options.forEach((option, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'w-full text-left p-4 rounded-xl border-2 border-slate-600 bg-slate-700/50 hover:bg-slate-700 hover:border-slate-500 transition-all text-slate-200 font-medium focus:outline-none focus:ring-2 focus:ring-rose-500 shadow-sm';
+                
+                // Add a span for the letter (A, B, C, D)
+                const letter = String.fromCharCode(65 + index); // 65 is 'A' in ASCII
+                btn.innerHTML = `<span class="inline-block bg-slate-800 text-slate-400 w-8 h-8 text-center leading-8 rounded-lg mr-3 font-bold border border-slate-600 shadow-inner">${letter}</span> ${option}`;
+                
+                btn.onclick = () => selectAnswer(index, btn);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        // --- STREAMING_CHUNK:Handling Answer Selection & Feedback... ---
+        function selectAnswer(selectedIndex, selectedBtn) {
+            if (hasAnswered) return; // Prevent multiple clicks
+            hasAnswered = true;
+
+            const currentQ = quizData[currentQuestionIndex];
+            const isCorrect = selectedIndex === currentQ.correctIndex;
+
+            // Disable all buttons and style them based on correctness
+            const allBtns = optionsContainer.querySelectorAll('button');
+            allBtns.forEach((btn, index) => {
+                btn.disabled = true;
+                btn.classList.remove('hover:bg-slate-700', 'hover:border-slate-500', 'focus:ring-2');
+                
+                if (index === currentQ.correctIndex) {
+                    // Highlight correct answer
+                    btn.classList.add('bg-emerald-900/30', 'border-emerald-500', 'text-white');
+                    btn.querySelector('span').classList.add('bg-emerald-600', 'text-white', 'border-emerald-500');
+                } else if (index === selectedIndex && !isCorrect) {
+                    // Highlight wrong selected answer
+                    btn.classList.add('bg-red-900/30', 'border-red-500', 'text-slate-300', 'opacity-70');
+                    btn.querySelector('span').classList.add('bg-red-600', 'text-white', 'border-red-500');
+                } else {
+                    // Fade out unselected wrong answers
+                    btn.classList.add('opacity-40');
+                }
+            });
+
+            // Update Score and Feedback UI
+            feedbackContainer.classList.remove('hidden', 'bg-emerald-100', 'border-emerald-500', 'bg-red-100', 'border-red-500', 'text-emerald-900', 'text-red-900');
+            
+            if (isCorrect) {
+                score++;
+                updateScoreDisplay();
+                feedbackContainer.classList.add('bg-emerald-100', 'border-emerald-500', 'text-emerald-900');
+                feedbackTitle.innerHTML = `<svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> Correct!`;
+            } else {
+                // Add shake animation to the quiz screen on wrong answer
+                quizScreen.classList.remove('animate-shake');
+                void quizScreen.offsetWidth;
+                quizScreen.classList.add('animate-shake');
+                
+                feedbackContainer.classList.add('bg-red-100', 'border-red-500', 'text-red-900');
+                feedbackTitle.innerHTML = `<svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> Incorrect`;
+            }
+
+            feedbackText.innerHTML = `<strong>Why?</strong> ${currentQ.explanation}`;
+            
+            // Scroll to feedback
+            setTimeout(() => {
+                feedbackContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 100);
+        }
+
+        // --- STREAMING_CHUNK:Navigation and End Screen... ---
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function updateScoreDisplay() {
+            scoreDisplay.innerText = score;
+            // Little bump animation for score
+            scoreDisplay.parentElement.classList.remove('animate-pop');
+            void scoreDisplay.parentElement.offsetWidth;
+            scoreDisplay.parentElement.classList.add('animate-pop');
+        }
+
+        function showResults() {
+            quizScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+            
+            progressBar.style.width = '100%';
+            questionTracker.innerText = `Assessment Complete`;
+            
+            finalScore.innerText = score;
+            totalQuestions.innerText = quizData.length;
+
+            const percentage = score / quizData.length;
+            if (percentage === 1) {
+                performanceMessage.innerText = "Outstanding! You have mastered the anatomy and hemodynamics of the Cardiovascular System. Ready for the Endocrine System!";
+            } else if (percentage >= 0.75) {
+                performanceMessage.innerText = "Great job! You have a strong grasp of the concepts. Review the feedback on any missed questions to solidify your knowledge.";
+            } else if (percentage >= 0.5) {
+                performanceMessage.innerText = "Good effort! You're on the right track, but consider reviewing the structural differences in the heart and the cardiac cycle before moving forward.";
+            } else {
+                performanceMessage.innerText = "Don't worry, these are complex concepts! Re-read the chapter sections on structural anatomy and valve synergy, then try this assessment again.";
+            }
+        }
+
+        // --- Event Listeners ---
+        nextBtn.addEventListener('click', nextQuestion);
+        restartBtn.addEventListener('click', initQuiz);
+
+        // --- Start App ---
+        window.onload = initQuiz;
+    </script>
+</body>
+</html>

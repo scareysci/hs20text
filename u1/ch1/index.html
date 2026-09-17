@@ -16,6 +16,19 @@
     <style>
         body { font-family: 'Inter', sans-serif; }
         html { scroll-behavior: smooth; }
+
+        /* Print Styles to ensure clean PDF generation */
+        @media print {
+            body { background-color: white !important; color: black !important; }
+            .no-print { display: none !important; }
+            iframe { display: none !important; }
+            .print-only { display: block !important; }
+            .shadow-md, .shadow-xl, .shadow-inner, .shadow-2xl { box-shadow: none !important; }
+            .bg-slate-900, .bg-slate-800, .bg-rose-900 { background-color: #f8fafc !important; color: #0f172a !important; border: 1px solid #cbd5e1; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            figure { page-break-inside: avoid; }
+        }
+        .print-only { display: none; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 leading-relaxed tracking-wide">
@@ -42,8 +55,11 @@
         
         <!-- Chapter Introduction Video -->
         <section class="mb-8">
-            <div class="bg-slate-900 rounded-2xl overflow-hidden shadow-2xl border-4 border-slate-800">
+            <div class="bg-slate-900 rounded-2xl overflow-hidden shadow-2xl border-4 border-slate-800 no-print">
                 <iframe class="w-full h-[300px] sm:h-[400px] md:h-[550px]" src="https://www.youtube.com/embed/1_22fZdI_vA?si=zxRFbTNj_IeaEFWh" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+            <div class="print-only border-2 border-dashed border-slate-300 p-8 text-center rounded-xl bg-slate-50 text-slate-500 italic mb-4">
+                [Chapter Introduction Video omitted for print. Access the digital version to view.]
             </div>
             <p class="text-center text-sm text-slate-500 mt-4 italic">An introduction to the incredible engineering and continuous work of the human cardiovascular system.</p>
         </section>
@@ -67,7 +83,7 @@
             </figure>
 
             <!-- Table 1: Heart Anatomy -->
-            <div class="mb-10">
+            <div class="mb-10 page-break-inside-avoid">
                 <h3 class="text-xl font-bold text-rose-800 mb-3 flex items-center">
                     <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>
                     Structural Analysis: Anatomy of the Heart
@@ -119,20 +135,25 @@
 
             <!-- H5P Interactive Labeling Widget -->
             <div class="mb-10 bg-white p-6 rounded-xl shadow-md border border-slate-200">
-                <h3 class="text-xl font-bold text-slate-800 mb-2 flex items-center">
-                    <svg class="w-6 h-6 mr-2 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path></svg>
-                    Practice: Label the Anatomy of the Heart
-                </h3>
+                <div class="flex justify-between items-center mb-2">
+                    <h3 class="text-xl font-bold text-slate-800 flex items-center">
+                        <svg class="w-6 h-6 mr-2 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path></svg>
+                        Practice: Label the Anatomy of the Heart
+                    </h3>
+                </div>
                 <p class="text-sm text-slate-600 mb-6">Test your knowledge of the macroscopic structures of the heart. Drag and drop the labels to their correct anatomical locations below.</p>
                 
-                <div class="w-full relative rounded-lg overflow-hidden bg-slate-50 border border-slate-100 p-2">
+                <div class="w-full relative rounded-lg overflow-hidden bg-slate-50 border border-slate-100 p-2 no-print">
                     <iframe class="w-full" src="https://h5pstudio.ecampusontario.ca/h5p/191/embed" width="964" height="659" frameborder="0" allowfullscreen="allowfullscreen" lang="en" title="Label the Heart"></iframe>
                     <script src="https://h5pstudio.ecampusontario.ca/modules/contrib/h5p/vendor/h5p/h5p-core/js/h5p-resizer.js" charset="UTF-8"></script>
+                </div>
+                <div class="print-only border-2 border-dashed border-slate-300 p-8 text-center rounded-xl bg-slate-50 text-slate-500 italic mt-4">
+                    [Interactive labeling activity omitted for print. Access the digital version to complete this practice exercise.]
                 </div>
             </div>
 
             <!-- Indigenous Ways of Knowing Callout Box (Green) -->
-            <aside class="bg-emerald-50 border-l-4 border-emerald-600 p-6 rounded-r-xl shadow-sm mb-10 flex flex-col justify-center">
+            <aside class="bg-emerald-50 border-l-4 border-emerald-600 p-6 rounded-r-xl shadow-sm mb-10 flex flex-col justify-center page-break-inside-avoid">
                 <div class="flex items-center space-x-2 mb-3">
                     <svg class="w-6 h-6 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     <h3 class="text-lg font-bold text-emerald-900">Indigenous Ways of Knowing [CP]</h3>
@@ -146,7 +167,7 @@
             <p class="mb-6">Humans have a <strong>closed circulatory system</strong>, meaning blood stays inside of tubes as it travels. Blood leaves the heart and navigates three primary circulatory pathways: <strong>systemic</strong> (to the body), <strong>pulmonary</strong> (to the lungs for oxygenation), and <strong>coronary</strong> (to the heart muscle itself). The vessels carrying this blood are dynamic, living organs whose microscopic layered structures vary wildly based on their physiological role.</p>
 
             <!-- Figure 1.2: Blood Vessels Diagram -->
-            <figure class="mb-10 bg-white p-6 rounded-xl shadow-md border border-slate-200">
+            <figure class="mb-10 bg-white p-6 rounded-xl shadow-md border border-slate-200 page-break-inside-avoid">
                 <img src="https://scareysci.github.io/hs20text/u1/ch1/img/fig1_2.jpg" alt="Anatomy and transition of blood vessels" class="w-full max-w-3xl mx-auto rounded-lg mb-5 border border-slate-100">
                 <figcaption class="text-sm text-slate-700 leading-relaxed px-4 border-l-4 border-rose-500 bg-rose-50/50 py-3 rounded-r">
                     <strong>Figure 1.2: Structural Anatomy of the Vasculature.</strong> This diagram highlights the continuous loop of our closed circulatory system. Notice the thick, elastic muscular walls of the artery designed to handle high pulsatile pressure from the heart. Blood moves into smaller arterioles and then into the microscopic capillary network, where the walls are extremely thin to allow for rapid gas and nutrient exchange. Finally, deoxygenated blood drains into venules and larger veins, which have thinner walls suited for low-pressure return flow.
@@ -154,7 +175,7 @@
             </figure>
 
             <!-- Table 2: Blood Vessels -->
-            <div class="mb-10">
+            <div class="mb-10 page-break-inside-avoid">
                 <div class="overflow-x-auto shadow-md rounded-xl border border-slate-200">
                     <table class="w-full text-left border-collapse">
                         <thead>
@@ -198,7 +219,7 @@
             
             <p class="mb-4">While the myocardium is muscular tissue, its rhythm is dictated by its own self-stimulating electrical pathway called the <strong>cardiac pacemaker</strong>. Even if the heart is cut out of the body, it will keep pumping if kept in the correct fluids and salts!</p>
             
-            <div class="bg-slate-100 p-6 rounded-xl border border-slate-300 mb-8">
+            <div class="bg-slate-100 p-6 rounded-xl border border-slate-300 mb-8 page-break-inside-avoid">
                 <h3 class="text-lg font-bold text-slate-800 mb-3">The Conduction Pathway</h3>
                 <ol class="list-decimal pl-6 space-y-2 text-sm text-slate-700">
                     <li><strong>Sinoatrial (SA) Node:</strong> Located on the top right atrium, this is the main regulator. It develops a charge, causing the <em>atrial syncytium</em> to contract (depolarization).</li>
@@ -224,7 +245,7 @@
             </ul>
 
             <!-- Laboratory Link Box -->
-            <aside class="bg-sky-50 border-l-4 border-sky-500 p-6 rounded-r-xl shadow-sm mb-8 mt-6">
+            <aside class="bg-sky-50 border-l-4 border-sky-500 p-6 rounded-r-xl shadow-sm mb-8 mt-6 page-break-inside-avoid">
                 <div class="flex items-center space-x-2 mb-3">
                     <svg class="w-6 h-6 text-sky-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
                     <h3 class="text-lg font-bold text-sky-900">Laboratory Link: Virtual Blood Pressure Auscultation</h3>
@@ -233,12 +254,15 @@
                     When performing an <strong>auscultation</strong> (listening with a stethoscope) to measure blood pressure, clinicians listen for Korotkoff sounds while releasing pressure from a sphygmomanometer.
                 </p>
 
-                <div class="bg-white p-5 rounded-lg mt-4 border border-sky-200 text-center">
+                <div class="bg-white p-5 rounded-lg mt-4 border border-sky-200 text-center no-print">
                     <h4 class="font-bold text-slate-800 mb-2">Practice Taking Blood Pressure</h4>
                     <p class="text-sm text-slate-600 mb-4">Test your clinical skills in identifying systolic and diastolic pressures using this interactive virtual patient simulator.</p>
                     <a href="https://www.practicalclinicalskills.com/taking-blood-pressure-practice" target="_blank" rel="noopener noreferrer" class="inline-block bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 px-6 rounded-lg transition-colors shadow-sm">
                         Launch Virtual BP Lab
                     </a>
+                </div>
+                <div class="print-only text-sm text-slate-500 italic text-center mt-2">
+                    [Access the digital version of this textbook to launch the Virtual BP Lab.]
                 </div>
 
                 <div class="bg-white p-4 rounded-lg mt-4 border border-sky-200">
@@ -251,7 +275,7 @@
             </aside>
 
             <!-- Electrocardiogram (ECG) Section -->
-            <div class="mb-10 bg-white p-6 rounded-xl shadow-md border border-slate-200 mt-8">
+            <div class="mb-10 bg-white p-6 rounded-xl shadow-md border border-slate-200 mt-8 page-break-inside-avoid">
                 <h3 class="text-2xl font-semibold text-slate-800 mb-4">Electrocardiogram (ECG)</h3>
                 <p class="mb-4 text-slate-700">An <strong>electrocardiogram (ECG)</strong> is a medical test that detects and records the electrical activity of the heart. The characteristic waves on an ECG correspond to the specific electrical events of the cardiac cycle, which precede the mechanical contractions of the heart chambers.</p>
                 <ul class="list-disc pl-8 mb-6 space-y-2 text-slate-700">
@@ -262,7 +286,7 @@
                 <p class="mb-6 text-sm text-slate-500 italic">Note: The repolarization of the atria occurs at the same time as ventricular depolarization, so its signal is hidden within the massive QRS complex.</p>
 
                 <!-- Figure 1.3: ECG Diagram -->
-                <figure class="mb-8">
+                <figure class="mb-8 page-break-inside-avoid">
                     <img src="https://scareysci.github.io/hs20text/u1/ch1/img/fig1_3.jpg" alt="A normal Electrocardiogram (ECG) tracing showing P, QRS, and T waves." class="w-full max-w-2xl mx-auto rounded-lg border border-slate-100">
                     <figcaption class="text-center text-sm text-slate-600 mt-3">
                         <strong>Figure 1.3:</strong> A normal Electrocardiogram (ECG) showing the correlation between electrical potential and time during a cardiac cycle.
@@ -270,7 +294,7 @@
                 </figure>
                 
                 <!-- Embedded ECG HTML with Pop-out Button -->
-                <div class="border border-slate-200 rounded-lg overflow-hidden bg-slate-50 p-4">
+                <div class="border border-slate-200 rounded-lg overflow-hidden bg-slate-50 p-4 no-print">
                     <div class="flex justify-between items-center mb-3">
                         <h4 class="font-bold text-slate-800">Interactive ECG Visualization</h4>
                         <a href="https://scareysci.github.io/hs20text/u1/ch1/ecg.html" target="_blank" class="inline-flex items-center text-sm bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-3 rounded shadow-sm transition-colors">
@@ -281,6 +305,9 @@
                     <div class="relative w-full pb-[56.25%] h-0">
                          <iframe src="https://scareysci.github.io/hs20text/u1/ch1/ecg.html" class="absolute top-0 left-0 w-full h-full rounded" frameborder="0" allowfullscreen></iframe>
                     </div>
+                </div>
+                <div class="print-only text-sm text-slate-500 italic p-4 border border-slate-300 rounded text-center mt-4">
+                    [Interactive ECG visualization omitted for print. Access the digital version to use this tool.]
                 </div>
             </div>
 
@@ -297,11 +324,11 @@
                 <li><strong>Thrombocytes (Platelets):</strong> Cell fragments essential for hemostasis (blood clotting) when vessels are ruptured.</li>
             </ul>
 
-            <h3 class="text-xl font-semibold text-slate-800 mb-3">Blood Typing and Agglutination</h3>
+            <h3 class="text-xl font-semibold text-slate-800 mb-3 mt-8">Blood Typing and Agglutination</h3>
             <p class="mb-6">The surfaces of erythrocytes contain genetically determined glycoproteins called <strong>antigens</strong>. The ABO blood group is based on the presence or absence of Type A and Type B antigens, while the Rh factor determines if blood is positive or negative. If a patient receives an incompatible blood transfusion, their immune system produces antibodies that attack the foreign antigens, causing dangerous <strong>agglutination</strong> (clumping) that can trigger systemic organ failure.</p>
 
             <!-- Embedded Blood Typing App with Pop-out Button -->
-            <div class="border border-slate-200 rounded-lg overflow-hidden bg-slate-50 p-4 mt-6 shadow-sm">
+            <div class="border border-slate-200 rounded-lg overflow-hidden bg-slate-50 p-4 mt-6 shadow-sm no-print">
                 <div class="flex justify-between items-center mb-3">
                     <h4 class="font-bold text-slate-800 flex items-center">
                         <svg class="w-5 h-5 mr-2 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
@@ -317,6 +344,9 @@
                      <iframe src="https://scareysci.github.io/b30text/Unit3/ch5/blood.html" class="absolute top-0 left-0 w-full h-full" frameborder="0" allowfullscreen></iframe>
                 </div>
             </div>
+            <div class="print-only text-sm text-slate-500 italic p-4 border border-slate-300 rounded text-center mt-4 page-break-inside-avoid">
+                [Interactive Blood Typing Lab omitted for print. Access the digital version to complete this laboratory assay.]
+            </div>
         </section>
 
         <!-- Section 1.4 -->
@@ -326,7 +356,7 @@
             <p class="mb-6 text-lg">Maintaining homeostasis requires perfect synergy. When the structural integrity of the cardiovascular system is compromised by lifestyle, genetics, or infectious agents, systemic diseases emerge.</p>
 
             <!-- Clinical Vignette Box (Blue) -->
-            <aside class="bg-blue-50 border-l-4 border-blue-600 p-6 rounded-r-xl shadow-sm mb-12">
+            <aside class="bg-blue-50 border-l-4 border-blue-600 p-6 rounded-r-xl shadow-sm mb-12 page-break-inside-avoid">
                 <div class="flex items-center space-x-2 mb-4">
                     <svg class="w-6 h-6 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
                     <h3 class="text-lg font-bold text-blue-900">Clinical Vignette: Systemic Pathologies</h3>
@@ -340,23 +370,42 @@
             </aside>
 
             <!-- Check Your Understanding (Quiz Embedded) -->
-            <div class="bg-slate-800 text-white p-8 rounded-2xl shadow-xl">
-                <h3 class="text-2xl font-bold mb-3 flex items-center text-rose-400">
-                    <svg class="w-7 h-7 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    Check Your Understanding: Form & Function
-                </h3>
+            <div class="bg-slate-800 text-white p-8 rounded-2xl shadow-xl mt-12 page-break-inside-avoid">
+                <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-4 gap-4">
+                    <h3 class="text-2xl font-bold flex items-center text-rose-400">
+                        <svg class="w-7 h-7 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        Check Your Understanding: Form & Function
+                    </h3>
+                    <a href="https://scareysci.github.io/hs20text/u1/ch1/ch1quiz.html" target="_blank" class="no-print inline-flex items-center justify-center text-sm bg-rose-600 hover:bg-rose-500 text-white font-semibold py-2 px-5 rounded-xl transition-colors border border-rose-500 shadow-lg">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                        Pop-Out Simulator
+                    </a>
+                </div>
                 <p class="mb-6 text-slate-300">Evaluate your mastery of cardiovascular anatomy, hemodynamics, and pathology before progressing.</p>
                 
                 <!-- Embedded Quiz Widget -->
-                <div class="w-full relative rounded-xl overflow-hidden shadow-inner border border-slate-700 bg-slate-900">
+                <div class="w-full relative rounded-xl overflow-hidden shadow-inner border border-slate-700 bg-slate-900 no-print">
                     <iframe src="https://scareysci.github.io/hs20text/u1/ch1/ch1quiz.html" class="w-full h-[600px] border-0" title="Cardiovascular Quiz"></iframe>
                 </div>
+                <div class="print-only text-slate-400 italic p-6 border border-slate-600 rounded-xl text-center">
+                    [Interactive Progressive Assessment omitted for print. Access the digital textbook to launch the Clinical Simulator.]
+                </div>
             </div>
+            
+            <!-- Print to PDF Button -->
+            <div class="text-center mt-16 no-print">
+                <button id="print-btn" onclick="window.print()" class="bg-slate-700 hover:bg-slate-800 text-white font-bold py-4 px-8 rounded-xl shadow-lg transition-all flex items-center justify-center mx-auto space-x-3 border border-slate-600 focus:outline-none focus:ring-4 focus:ring-slate-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                    <span>Save Chapter as PDF / Print</span>
+                </button>
+                <p class="text-xs text-slate-400 mt-3">Interactive widgets will be automatically hidden to save ink.</p>
+            </div>
+
         </section>
 
     </main>
     
-    <footer class="bg-slate-900 text-slate-400 py-10 mt-12 border-t-4 border-rose-900">
+    <footer class="bg-slate-900 text-slate-400 py-10 mt-12 border-t-4 border-rose-900 no-print">
         <div class="max-w-5xl mx-auto px-6 text-center text-sm">
             <p>&copy; 2026 Health Science 20 Digital Textbook. Aligned with Saskatchewan Curriculum HS20 Outcomes. Built for GitHub Pages.</p>
         </div>

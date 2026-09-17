@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive ECG Educational Widget</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a; /* Slate 900 */
+            color: #e2e8f0; /* Slate 200 */
+        }
+
+        .ecg-grid {
+            background-image: 
+                linear-gradient(rgba(239, 68, 68, 0.2) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(239, 68, 68, 0.2) 1px, transparent 1px),
+                linear-gradient(rgba(239, 68, 68, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(239, 68, 68, 0.1) 1px, transparent 1px);
+            background-size: 25px 25px, 25px 25px, 5px 5px, 5px 5px;
+            background-color: #ffe4e6; /* Rose 50 for realistic paper color */
+        }
+
+        .ecg-line {
+            fill: none;
+            stroke: #0f172a; /* Dark stroke for contrast on light grid */
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: drop-shadow(0px 1px 1px rgba(0,0,0,0.3));
+        }
+
+        .highlight-line {
+            fill: none;
+            stroke: #3b82f6; /* Blue 500 */
+            stroke-width: 4;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .animating-path {
+            stroke-dasharray: 2000;
+            stroke-dashoffset: 2000;
+            animation: drawLine 3s linear infinite;
+        }
+
+        .svg-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            fill: #f8fafc;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            filter: drop-shadow(0px 2px 2px rgba(0,0,0,0.8));
+        }
+
+        .svg-label-active {
+            opacity: 1;
+        }
+
+        @keyframes drawLine {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        .tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid #334155;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 10;
+            max-width: 250px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .btn-active {
+            background-color: #3b82f6 !important; /* Blue 500 */
+            color: white !important;
+            border-color: #2563eb !important; /* Blue 600 */
+        }
+        
+        .part-btn-active {
+            background-color: #f59e0b !important; /* Amber 500 */
+            color: white !important;
+            border-color: #d97706 !important;
+        }
+
+        /* Custom scrollbar for info section */
+        .info-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .info-scroll::-webkit-scrollbar-track {
+            background: #1e293b; 
+            border-radius: 4px;
+        }
+        .info-scroll::-webkit-scrollbar-thumb {
+            background: #475569; 
+            border-radius: 4px;
+        }
+        .info-scroll::-webkit-scrollbar-thumb:hover {
+            background: #64748b; 
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4 sm:p-8">
+
+    <div class="max-w-6xl w-full bg-slate-800 rounded-2xl shadow-2xl overflow-hidden border border-slate-700 flex flex-col md:flex-row">
+        
+        <!-- Left Panel: Controls & Information -->
+        <div class="w-full md:w-1/3 p-6 flex flex-col border-b md:border-b-0 md:border-r border-slate-700 bg-slate-800/50">
+            <h1 class="text-2xl font-bold text-white mb-2 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                ECG Explorer
+            </h1>
+            <p class="text-slate-400 text-sm mb-6">Interactive guide to reading electrocardiograms.</p>
+
+            <!-- Mode Switcher -->
+            <div class="flex rounded-lg overflow-hidden mb-6 border border-slate-600">
+                <button id="mode-learn" class="flex-1 py-2 text-sm font-medium transition-colors bg-slate-700 text-slate-200 hover:bg-slate-600 btn-active" onclick="setMode('learn')">Learn Components</button>
+                <button id="mode-compare" class="flex-1 py-2 text-sm font-medium transition-colors bg-slate-700 text-slate-200 hover:bg-slate-600" onclick="setMode('compare')">Compare Rhythms</button>
+            </div>
+
+            <!-- Learn Mode Controls -->
+            <div id="learn-controls" class="flex flex-col gap-2 mb-6">
+                <h2 class="text-sm font-semibold text-slate-300 uppercase tracking-wider mb-2">Select a Component:</h2>
+                <button class="part-btn w-full text-left px-4 py-2 rounded-md border border-slate-600 bg-slate-700 hover:bg-slate-600 transition-colors" data-part="p-wave">P Wave</button>
+                <button class="part-btn w-full text-left px-4 py-2 rounded-md border border-slate-600 bg-slate-700 hover:bg-slate-600 transition-colors" data-part="pr-interval">PR Interval</button>
+                <button class="part-btn w-full text-left px-4 py-2 rounded-md border border-slate-600 bg-slate-700 hover:bg-slate-600 transition-colors" data-part="qrs-complex">QRS Complex</button>
+                <button class="part-btn w-full text-left px-4 py-2 rounded-md border border-slate-600 bg-slate-700 hover:bg-slate-600 transition-colors" data-part="st-segment">ST Segment</button>
+                <button class="part-btn w-full text-left px-4 py-2 rounded-md border border-slate-600 bg-slate-700 hover:bg-slate-600 transition-colors" data-part="t-wave">T Wave</button>
+                <button class="part-btn w-full text-left px-4 py-2 rounded-md border border-slate-600 bg-slate-700 hover:bg-slate-600 transition-colors" data-part="qt-interval">QT Interval</button>
+            </div>
+
+            <!-- Compare Mode Controls -->
+            <div id="compare-controls" class="flex flex-col gap-2 mb-6 hidden">
+                <h2 class="text-sm font-semibold text-slate-300 uppercase tracking-wider mb-2">Select Rhythm:</h2>
+                <button class="rhythm-btn w-full text-left px-4 py-2 rounded-md border border-slate-600 bg-slate-700 hover:bg-slate-600 transition-colors btn-active" data-rhythm="normal">Normal Sinus Rhythm</button>
+                <button class="rhythm-btn w-full text-left px-4 py-2 rounded-md border border-slate-600 bg-slate-700 hover:bg-slate-600 transition-colors" data-rhythm="bradycardia">Sinus Bradycardia</button>
+                <button class="rhythm-btn w-full text-left px-4 py-2 rounded-md border border-slate-600 bg-slate-700 hover:bg-slate-600 transition-colors" data-rhythm="tachycardia">Sinus Tachycardia</button>
+                <button class="rhythm-btn w-full text-left px-4 py-2 rounded-md border border-slate-600 bg-slate-700 hover:bg-slate-600 transition-colors" data-rhythm="afib">Atrial Fibrillation</button>
+                <button class="rhythm-btn w-full text-left px-4 py-2 rounded-md border border-slate-600 bg-slate-700 hover:bg-slate-600 transition-colors" data-rhythm="vtech">Ventricular Tachycardia</button>
+                <button class="rhythm-btn w-full text-left px-4 py-2 rounded-md border border-slate-600 bg-slate-700 hover:bg-slate-600 transition-colors" data-rhythm="st-elev">ST Elevation (STEMI)</button>
+            </div>
+
+            <!-- Information Display -->
+            <div class="mt-auto flex-1 flex flex-col min-h-[150px]">
+                <h3 id="info-title" class="text-lg font-bold text-blue-400 mb-2">Welcome</h3>
+                <div class="info-scroll overflow-y-auto flex-1 pr-2">
+                    <p id="info-desc" class="text-sm text-slate-300 leading-relaxed">
+                        Select "Learn Components" to explore the different waves and intervals of a standard normal ECG. 
+                        Select "Compare Rhythms" to see how different heart conditions affect the ECG tracing.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel: Visualization -->
+        <div class="w-full md:w-2/3 p-6 flex flex-col relative bg-slate-900">
+            
+            <div class="flex justify-between items-center mb-4">
+                <h2 id="viz-title" class="text-xl font-semibold text-white">Normal Sinus Rhythm</h2>
+                <div class="flex items-center gap-2">
+                    <span class="text-xs text-slate-400">Animation:</span>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" id="animation-toggle" class="sr-only peer" checked>
+                        <div class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-500"></div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- ECG Grid Container -->
+            <div class="relative w-full aspect-[2/1] min-h-[300px] ecg-grid rounded-lg border-2 border-slate-600 overflow-hidden shadow-inner">
+                
+                <!-- Overlay for hover interactions in learn mode -->
+                <svg id="ecg-svg" viewBox="0 0 1000 500" preserveAspectRatio="none" class="absolute top-0 left-0 w-full h-full cursor-crosshair">
+                    
+                    <!-- Definition for highlights -->
+                    <defs>
+                        <filter id="glow">
+                            <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+                            <feMerge>
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                    </defs>
+
+                    <!-- Background Base Path (Faint) -->
+                    <path id="base-path" class="ecg-line" stroke-opacity="0.2" d=""></path>
+                    
+                    <!-- Highlight Path (for Learn Mode) -->
+                    <path id="highlight-path" class="highlight-line" d="" style="display: none;"></path>
+
+                    <!-- Active Animated Path -->
+                    <path id="active-path" class="ecg-line animating-path" d=""></path>
+
+                    <!-- Labels Group (Learn Mode) -->
+                    <g id="labels-group"></g>
+
+                    <!-- Invisible hit areas for components (Learn Mode) -->
+                    <g id="hit-areas" style="opacity: 0;"></g>
+                </svg>
+
+                <div id="tooltip" class="tooltip"></div>
+            </div>
+
+            <!-- Metrics display (changes based on rhythm) -->
+            <div class="mt-6 grid grid-cols-3 gap-4 text-center">
+                <div class="bg-slate-800 p-3 rounded-lg border border-slate-700">
+                    <div class="text-xs text-slate-400 uppercase tracking-wide">Heart Rate</div>
+                    <div id="metric-hr" class="text-xl font-bold text-white">60-100 bpm</div>
+                </div>
+                <div class="bg-slate-800 p-3 rounded-lg border border-slate-700">
+                    <div class="text-xs text-slate-400 uppercase tracking-wide">Rhythm</div>
+                    <div id="metric-rhythm" class="text-xl font-bold text-white">Regular</div>
+                </div>
+                <div class="bg-slate-800 p-3 rounded-lg border border-slate-700">
+                    <div class="text-xs text-slate-400 uppercase tracking-wide">P Waves</div>
+                    <div id="metric-pwaves" class="text-xl font-bold text-white">Normal</div>
+                </div>
+            </div>
+            
+            <div class="mt-4 text-center">
+                <p class="text-xs text-slate-500">Grid scale: 1 small square = 0.04s (horizontal) x 0.1mV (vertical). 1 large square = 0.2s x 0.5mV.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Data Definitions ---
+        
+        // Base normal ECG waveform points (Simplified mathematical representation)
+        // Format: [x, y] where x is time, y is voltage. Baseline is Y=250.
+        // A full cardiac cycle.
+        const normalCycle = [
+            [0, 250],    // Start
+            [40, 250],   // Before P
+            // P wave (Atrial depolarization)
+            [60, 240], [80, 220], [100, 240], [120, 250], 
+            // PR segment
+            [160, 250],
+            // QRS Complex (Ventricular depolarization)
+            [170, 260],  // Q wave (down)
+            [190, 100],  // R wave (up high)
+            [210, 270],  // S wave (down low)
+            [220, 250],  // J point
+            // ST Segment
+            [300, 250],
+            // T wave (Ventricular repolarization)
+            [340, 245], [380, 210], [420, 245], [460, 250],
+            [500, 250]   // End cycle
+        ];
+
+        // Define component segments for the normal cycle (Learn Mode)
+        const components = {
+            "p-wave": {
+                name: "P Wave",
+                desc: "Represents atrial depolarization (activation). The electrical signal starts in the SA node and spreads through the atria, causing them to contract and pump blood into the ventricles. Normally upright and rounded.",
+                startIndex: 1, // index in normalCycle
+                endIndex: 5,
+                color: "#fbbf24", // bright amber
+                labelXOffset: 80,
+                labelYOffset: 200
+            },
+            "pr-interval": {
+                name: "PR Interval",
+                desc: "Measured from the beginning of the P wave to the beginning of the QRS complex. Represents the time it takes for the electrical impulse to travel from the atria, through the AV node, to the ventricles. Normal is 0.12 to 0.20 seconds.",
+                startIndex: 1,
+                endIndex: 7,
+                color: "#c084fc", // bright purple
+                labelXOffset: 105,
+                labelYOffset: 170
+            },
+            "qrs-complex": {
+                name: "QRS Complex",
+                desc: "Represents ventricular depolarization. The electrical signal spreads through the Purkinje network, causing the large ventricular muscle mass to contract. It's much larger than the P wave because the ventricles have more muscle. Normal duration is < 0.12 seconds.",
+                startIndex: 6,
+                endIndex: 10,
+                color: "#f87171", // bright red
+                labelXOffset: 195,
+                labelYOffset: 80
+            },
+            "st-segment": {
+                name: "ST Segment",
+                desc: "The flat line between the end of the QRS complex and the beginning of the T wave. Represents the early phase of ventricular repolarization. It should normally be isoelectric (flat on the baseline). Elevation or depression can indicate ischemia or infarction.",
+                startIndex: 10,
+                endIndex: 11,
+                color: "#2dd4bf", // bright teal
+                labelXOffset: 260,
+                labelYOffset: 220
+            },
+            "t-wave": {
+                name: "T Wave",
+                desc: "Represents ventricular repolarization (recovery). The ventricles are resetting electrically to prepare for the next beat. Normally upright and slightly asymmetrical.",
+                startIndex: 11,
+                endIndex: 15,
+                color: "#60a5fa", // bright blue
+                labelXOffset: 380,
+                labelYOffset: 180
+            },
+            "qt-interval": {
+                name: "QT Interval",
+                desc: "Measured from the start of the QRS complex to the end of the T wave. Represents the total time for ventricular depolarization and repolarization. Varies with heart rate.",
+                startIndex: 6,
+                endIndex: 15,
+                color: "#f472b6", // bright pink
+                labelXOffset: 310,
+                labelYOffset: 320
+            }
+        };
+
+        // --- Rhythm Definitions ---
+        // Generates path strings based on repeating cycles
+        
+        function generatePath(cyclePoints, repetitions, scaleX = 1, offsetY = 0, noise = 0) {
+            let path = "";
+            let currentX = 0;
+            const cycleWidth = cyclePoints[cyclePoints.length - 1][0] * scaleX;
+
+            for (let i = 0; i < repetitions; i++) {
+                cyclePoints.forEach((point, index) => {
+                    let x = currentX + (point[0] * scaleX);
+                    let y = point[1] + offsetY;
+                    
+                    // Add slight baseline wander/noise if requested
+                    if (noise > 0) {
+                        y += (Math.random() - 0.5) * noise;
+                    }
+
+                    if (index === 0 && i === 0) {
+                        path += `M ${x} ${y} `;
+                    } else {
+                        // Use simple lines for crispness on ECG, curves can look messy if points are sparse
+                        path += `L ${x} ${y} `; 
+                    }
+                });
+                currentX += cycleWidth;
+            }
+            return path;
+        }
+
+        const rhythms = {
+            "normal": {
+                title: "Normal Sinus Rhythm",
+                desc: "The normal electrical activity of the heart. Characterized by regular intervals, a normal heart rate (60-100 bpm), and a P wave preceding every QRS complex.",
+                metrics: { hr: "60-100 bpm", rhythm: "Regular", pwaves: "Normal, 1 per QRS" },
+                generate: () => generatePath(normalCycle, 3, 1, 0, 2)
+            },
+            "bradycardia": {
+                title: "Sinus Bradycardia",
+                desc: "A normal rhythm but slower than usual (less than 60 bpm). Can be normal in athletes, during sleep, or caused by medications/disease. Notice the longer flat segments between beats.",
+                metrics: { hr: "< 60 bpm", rhythm: "Regular", pwaves: "Normal" },
+                // Scale X to spread it out (slower), only fit ~2 beats
+                generate: () => {
+                    let bradyCycle = normalCycle.map(p => [p[0], p[1]]);
+                    bradyCycle[bradyCycle.length-1][0] = 750; // Extend the baseline at the end
+                    return generatePath(bradyCycle, 2, 1, 0, 2);
+                }
+            },
+            "tachycardia": {
+                title: "Sinus Tachycardia",
+                desc: "A normal rhythm but faster than usual (greater than 100 bpm). Common during exercise, stress, or fever. The cycles are squished closer together.",
+                metrics: { hr: "> 100 bpm", rhythm: "Regular", pwaves: "Normal (often hidden)" },
+                // Scale X down to speed it up, fit ~4-5 beats
+                generate: () => {
+                    let tachyCycle = normalCycle.map(p => [p[0], p[1]]);
+                    tachyCycle[tachyCycle.length-1][0] = 350; // Shorten baseline
+                    return generatePath(tachyCycle, 4, 0.8, 0, 2);
+                }
+            },
+            "afib": {
+                title: "Atrial Fibrillation",
+                desc: "Irregular and often rapid heart rate. The atria quiver instead of contracting normally. Distinguishing features: No distinct P waves (wavy baseline) and an irregularly irregular QRS rhythm.",
+                metrics: { hr: "Variable", rhythm: "Irregularly Irregular", pwaves: "Absent (Fibrillatory)" },
+                generate: () => {
+                    let path = "";
+                    let currentX = 0;
+                    for (let i = 0; i < 4; i++) {
+                        // Random interval between QRS complexes
+                        let interval = 200 + Math.random() * 200; 
+                        
+                        // Fibrillatory baseline (no clear P wave)
+                        for(let bx = 0; bx < interval; bx += 10) {
+                            let y = 250 + (Math.random() - 0.5) * 15;
+                            if(i===0 && bx===0) path += `M ${currentX} ${y} `;
+                            else path += `L ${currentX + bx} ${y} `;
+                        }
+                        currentX += interval;
+
+                        // QRS Complex
+                        path += `L ${currentX+10} 260 L ${currentX+30} 100 L ${currentX+50} 270 L ${currentX+60} 250 `;
+                        
+                        // T wave
+                        path += `L ${currentX+120} 250 Q ${currentX+160} 210 ${currentX+200} 250 `;
+                        currentX += 200;
+                    }
+                    return path;
+                }
+            },
+            "vtech": {
+                title: "Ventricular Tachycardia",
+                desc: "A fast, abnormal heart rate that starts in the ventricles. Potentially life-threatening. Characterized by wide, bizarre QRS complexes and absent P waves. Often looks like a 'sawtooth' pattern.",
+                metrics: { hr: "100-250 bpm", rhythm: "Regular (usually)", pwaves: "Absent" },
+                generate: () => {
+                    // Wide bizarre complexes
+                    const vtCycle = [
+                        [0, 250], [50, 100], [100, 300], [150, 250]
+                    ];
+                    return generatePath(vtCycle, 8, 1, 0, 0);
+                }
+            },
+            "st-elev": {
+                title: "ST Elevation (STEMI)",
+                desc: "Indicates an acute myocardial infarction (heart attack). The ST segment, normally flat, is elevated above the baseline, indicating heart muscle injury due to lack of blood flow.",
+                metrics: { hr: "Variable", rhythm: "Regular/Irregular", pwaves: "Normal" },
+                generate: () => {
+                    // Modify normal cycle to elevate ST segment
+                    const stCycle = JSON.parse(JSON.stringify(normalCycle));
+                    stCycle[10][1] = 150; // J point elevated
+                    stCycle[11][1] = 160; // ST segment elevated
+                    // Smooth transition to T wave
+                    stCycle[12][1] = 170; 
+                    return generatePath(stCycle, 3, 1, 0, 2);
+                }
+            }
+        };
+
+        // --- State and DOM Elements ---
+        let currentMode = 'learn';
+        let activeComponent = null;
+        let activeRhythm = 'normal';
+        let isAnimating = true;
+
+        const ecgSvg = document.getElementById('ecg-svg');
+        const basePath = document.getElementById('base-path');
+        const activePath = document.getElementById('active-path');
+        const highlightPath = document.getElementById('highlight-path');
+        const hitAreasGroup = document.getElementById('hit-areas');
+        const labelsGroup = document.getElementById('labels-group');
+        const tooltip = document.getElementById('tooltip');
+        
+        const infoTitle = document.getElementById('info-title');
+        const infoDesc = document.getElementById('info-desc');
+        const vizTitle = document.getElementById('viz-title');
+        
+        const modeLearnBtn = document.getElementById('mode-learn');
+        const modeCompareBtn = document.getElementById('mode-compare');
+        const learnControls = document.getElementById('learn-controls');
+        const compareControls = document.getElementById('compare-controls');
+
+        // Metrics elements
+        const metricHr = document.getElementById('metric-hr');
+        const metricRhythm = document.getElementById('metric-rhythm');
+        const metricPwaves = document.getElementById('metric-pwaves');
+
+        // --- Functions ---
+
+        function updateDisplay() {
+            if (currentMode === 'learn') {
+                // Render 3 normal beats
+                const fullPath = generatePath(normalCycle, 3, 1, 0, 1);
+                activePath.setAttribute('d', fullPath);
+                basePath.setAttribute('d', fullPath);
+                
+                vizTitle.textContent = "Normal Electrocardiogram Components";
+                updateMetrics(rhythms['normal'].metrics);
+                
+                if(!activeComponent) {
+                    infoTitle.textContent = "ECG Components";
+                infoDesc.textContent = "Select a component from the list or hover over the waveform to learn about the different waves and intervals that make up a normal heartbeat.";
+                infoTitle.style.color = '#60a5fa'; // Default blue
+            }
+
+            highlightPath.style.display = activeComponent ? 'block' : 'none';
+            updateLabelsVisibility();
+
+        } else {
+            // Compare Mode
+            const rhythmData = rhythms[activeRhythm];
+                const fullPath = rhythmData.generate();
+                activePath.setAttribute('d', fullPath);
+                basePath.setAttribute('d', fullPath);
+                
+                vizTitle.textContent = rhythmData.title;
+                infoTitle.textContent = rhythmData.title;
+                infoTitle.style.color = '#ef4444'; // Red for pathology mode
+                infoDesc.textContent = rhythmData.desc;
+            
+            updateMetrics(rhythmData.metrics);
+            
+            highlightPath.style.display = 'none';
+            clearHitAreas();
+            clearLabels();
+        }
+
+        updateAnimationState();
+        }
+
+        function updateMetrics(metrics) {
+            metricHr.textContent = metrics.hr;
+            metricRhythm.textContent = metrics.rhythm;
+            metricPwaves.textContent = metrics.pwaves;
+        }
+
+        function setMode(mode) {
+            currentMode = mode;
+            
+            // Toggle Buttons
+            if(mode === 'learn') {
+                modeLearnBtn.classList.add('btn-active');
+                modeCompareBtn.classList.remove('btn-active');
+                learnControls.classList.remove('hidden');
+                compareControls.classList.add('hidden');
+                activeComponent = null; // Reset selection
+                
+                // Remove active classes from part buttons
+                document.querySelectorAll('.part-btn').forEach(b => b.classList.remove('part-btn-active'));
+                
+                createHitAreas(); // Recreate interactive areas
+            } else {
+                modeCompareBtn.classList.add('btn-active');
+                modeLearnBtn.classList.remove('btn-active');
+            compareControls.classList.remove('hidden');
+            learnControls.classList.add('hidden');
+            clearHitAreas();
+            clearLabels();
+        }
+        
+        updateDisplay();
+        }
+
+        function selectComponent(partId) {
+            if (currentMode !== 'learn') return;
+            activeComponent = partId;
+            
+            // Update UI buttons
+            document.querySelectorAll('.part-btn').forEach(b => {
+                if(b.dataset.part === partId) {
+                    b.classList.add('part-btn-active');
+                } else {
+                    b.classList.remove('part-btn-active');
+                }
+            });
+
+            const compData = components[partId];
+            infoTitle.textContent = compData.name;
+            infoTitle.style.color = compData.color;
+            infoDesc.textContent = compData.desc;
+
+            // Generate highlight path (highlighting middle beat of 3)
+            const middleBeatOffset = normalCycle[normalCycle.length-1][0]; // width of one beat
+            
+            let hPath = "";
+            for (let i = compData.startIndex; i <= compData.endIndex; i++) {
+                let p = normalCycle[i];
+                let x = p[0] + middleBeatOffset;
+                let y = p[1];
+                if (i === compData.startIndex) hPath += `M ${x} ${y} `;
+                else hPath += `L ${x} ${y} `;
+            }
+            
+        highlightPath.setAttribute('d', hPath);
+        highlightPath.style.stroke = compData.color;
+        highlightPath.style.display = 'block';
+
+        updateLabelsVisibility();
+    }
+
+    function selectRhythm(rhythmId) {
+            if (currentMode !== 'compare') return;
+            activeRhythm = rhythmId;
+            
+            document.querySelectorAll('.rhythm-btn').forEach(b => {
+                if(b.dataset.rhythm === rhythmId) {
+                    b.classList.add('btn-active');
+                } else {
+                    b.classList.remove('btn-active');
+                }
+            });
+
+            updateDisplay();
+    }
+
+    function createLabels() {
+        clearLabels();
+        const middleBeatOffset = normalCycle[normalCycle.length-1][0];
+
+        Object.keys(components).forEach(key => {
+            const comp = components[key];
+            
+            const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            text.setAttribute('x', comp.labelXOffset + middleBeatOffset);
+            text.setAttribute('y', comp.labelYOffset);
+            text.setAttribute('text-anchor', 'middle');
+            text.setAttribute('class', 'svg-label');
+            text.setAttribute('id', `label-${key}`);
+            text.textContent = comp.name;
+            text.style.fill = comp.color;
+            
+            labelsGroup.appendChild(text);
+        });
+    }
+
+    function clearLabels() {
+        while (labelsGroup.firstChild) {
+            labelsGroup.removeChild(labelsGroup.firstChild);
+        }
+    }
+
+    function updateLabelsVisibility() {
+        Object.keys(components).forEach(key => {
+            const label = document.getElementById(`label-${key}`);
+            if (label) {
+                if (activeComponent === key) {
+                    label.classList.add('svg-label-active');
+                } else {
+                    label.classList.remove('svg-label-active');
+                }
+            }
+        });
+    }
+
+    function createHitAreas() {
+        clearHitAreas();
+        createLabels();
+        const middleBeatOffset = normalCycle[normalCycle.length-1][0];
+        const svgWidth = 1000;
+            const svgHeight = 500;
+
+            // Create invisible rects over the components of the middle beat for hovering
+            Object.keys(components).forEach(key => {
+                const comp = components[key];
+                const startX = normalCycle[comp.startIndex][0] + middleBeatOffset;
+                const endX = normalCycle[comp.endIndex][0] + middleBeatOffset;
+                const width = endX - startX;
+                
+                // Add some padding to hit areas
+                const padding = 10;
+                
+                const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                rect.setAttribute('x', startX - padding);
+                rect.setAttribute('y', 0);
+                rect.setAttribute('width', width + (padding * 2));
+                rect.setAttribute('height', svgHeight);
+                rect.setAttribute('fill', 'red'); // Color doesn't matter, it's invisible
+                rect.style.cursor = 'pointer';
+                
+                rect.addEventListener('mouseenter', (e) => {
+                    if(!activeComponent) { // Only show hover if nothing is actively selected via button
+                        showTooltip(e, comp.name);
+                        // Temporarily highlight
+                        let hPath = "";
+                        for (let i = comp.startIndex; i <= comp.endIndex; i++) {
+                            let p = normalCycle[i];
+                            let x = p[0] + middleBeatOffset;
+                            let y = p[1];
+                            if (i === comp.startIndex) hPath += `M ${x} ${y} `;
+                            else hPath += `L ${x} ${y} `;
+                        }
+                        highlightPath.setAttribute('d', hPath);
+                    highlightPath.style.stroke = comp.color;
+                    highlightPath.style.display = 'block';
+
+                    // Show temporary label
+                    const label = document.getElementById(`label-${key}`);
+                    if(label) label.classList.add('svg-label-active');
+                }
+            });
+
+            rect.addEventListener('mousemove', (e) => {
+                    if(!activeComponent) positionTooltip(e);
+                });
+
+                rect.addEventListener('mouseleave', () => {
+                hideTooltip();
+                if(!activeComponent) {
+                    highlightPath.style.display = 'none';
+                    // Hide temporary label
+                    const label = document.getElementById(`label-${key}`);
+                    if(label) label.classList.remove('svg-label-active');
+                } else {
+                    // Restore active component highlight and labels
+                    selectComponent(activeComponent); 
+                }
+            });
+
+                rect.addEventListener('click', () => {
+                    hideTooltip();
+                    selectComponent(key);
+                });
+
+                hitAreasGroup.appendChild(rect);
+            });
+        }
+
+        function clearHitAreas() {
+            while (hitAreasGroup.firstChild) {
+                hitAreasGroup.removeChild(hitAreasGroup.firstChild);
+            }
+        }
+
+        function showTooltip(e, text) {
+            tooltip.textContent = text;
+            tooltip.style.opacity = 1;
+            positionTooltip(e);
+        }
+
+        function positionTooltip(e) {
+            // Get position relative to the SVG container
+            const svgRect = ecgSvg.getBoundingClientRect();
+            let x = e.clientX - svgRect.left + 15;
+            let y = e.clientY - svgRect.top + 15;
+            
+            tooltip.style.left = `${x}px`;
+            tooltip.style.top = `${y}px`;
+        }
+
+        function hideTooltip() {
+            tooltip.style.opacity = 0;
+        }
+
+        function updateAnimationState() {
+            const toggle = document.getElementById('animation-toggle');
+            isAnimating = toggle.checked;
+            
+            if (isAnimating) {
+                activePath.style.animationPlayState = 'running';
+                basePath.style.strokeOpacity = '0.2';
+            } else {
+                activePath.style.animationPlayState = 'paused';
+                // When paused, show full trace by removing dash array or simulating full draw
+                activePath.style.strokeDashoffset = '0'; 
+                basePath.style.strokeOpacity = '0.5'; // Make base slightly more visible as fallback
+            }
+        }
+
+        // --- Event Listeners ---
+        document.querySelectorAll('.part-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => selectComponent(e.target.dataset.part));
+        });
+
+        document.querySelectorAll('.rhythm-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => selectRhythm(e.target.dataset.rhythm));
+        });
+
+        document.getElementById('animation-toggle').addEventListener('change', (e) => {
+            updateAnimationState();
+        });
+
+        // Initialize
+        createHitAreas();
+        updateDisplay();
+
+    </script>
+</body>
+</html>

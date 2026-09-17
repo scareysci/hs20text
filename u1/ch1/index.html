@@ -43,7 +43,7 @@
         <!-- Chapter Introduction Video -->
         <section class="mb-8">
             <div class="bg-slate-900 rounded-2xl overflow-hidden shadow-2xl border-4 border-slate-800">
-                <iframe class="w-full h-[300px] sm:h-[400px] md:h-[550px]" src="https://www.youtube.com/embed/1_22fZdI_vA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                <iframe class="w-full h-[300px] sm:h-[400px] md:h-[550px]" src="https://www.youtube.com/embed/1_22fZdI_vA?si=zxRFbTNj_IeaEFWh" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
             <p class="text-center text-sm text-slate-500 mt-4 italic">An introduction to the incredible engineering and continuous work of the human cardiovascular system.</p>
         </section>
@@ -190,15 +190,6 @@
                 </div>
             </div>
 
-            <!-- Virtual Lab Placeholder 1 -->
-            <div id="interactive-widget-1" class="border-4 border-dashed border-indigo-400 p-8 text-center bg-indigo-50/50 rounded-2xl relative overflow-hidden group">
-                <div class="absolute inset-0 bg-indigo-100 opacity-0 group-hover:opacity-30 transition-opacity"></div>
-                <div class="flex justify-center mb-4 text-indigo-500">
-                    <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                </div>
-                <h4 class="text-xl font-bold text-indigo-900 relative z-10">[Virtual Lab: 3D Heart Anatomy & Histology Explorer]</h4>
-                <p class="text-sm text-indigo-700 mt-2 relative z-10 max-w-2xl mx-auto">Click on macroscopic structures (like the myocardium, AV valves, or Semilunar valves) to zoom into microscopic histological views, revealing the "form dictates function" relationship at a cellular level.</p>
-            </div>
         </section>
 
         <!-- Section 1.2 -->
@@ -232,6 +223,40 @@
                 <li><strong>Venous Valves:</strong> Once blood navigates the capillary beds, it enters the veins at near-zero pressure. Structural valves in the veins lock shut like rungs on a ladder, preventing blood from falling backward as skeletal muscles squeeze and "milk" the blood upward against gravity back to the heart.</li>
             </ul>
 
+            <!-- Electrocardiogram (ECG) Section -->
+            <div class="mb-10 bg-white p-6 rounded-xl shadow-md border border-slate-200 mt-8">
+                <h3 class="text-2xl font-semibold text-slate-800 mb-4">Electrocardiogram (ECG)</h3>
+                <p class="mb-4 text-slate-700">An <strong>electrocardiogram (ECG)</strong> is a medical test that detects and records the electrical activity of the heart. The characteristic waves on an ECG correspond to the specific electrical events of the cardiac cycle, which precede the mechanical contractions of the heart chambers.</p>
+                <ul class="list-disc pl-8 mb-6 space-y-2 text-slate-700">
+                    <li><strong>P wave:</strong> Represents atrial depolarization (the SA node firing and the atria contracting).</li>
+                    <li><strong>QRS complex:</strong> Represents ventricular depolarization (the electrical signal spreading through the AV node, Bundle of His, and Purkinje fibers, causing the ventricles to contract). The QRS complex is larger because the ventricles have much more muscle mass than the atria.</li>
+                    <li><strong>T wave:</strong> Represents ventricular repolarization (the ventricles recovering and preparing for the next heartbeat).</li>
+                </ul>
+                <p class="mb-6 text-sm text-slate-500 italic">Note: The repolarization of the atria occurs at the same time as ventricular depolarization, so its signal is hidden within the massive QRS complex.</p>
+
+                <!-- Figure 1.3: ECG Diagram -->
+                <figure class="mb-8">
+                    <img src="https://scareysci.github.io/hs20text/u1/ch1/img/fig1_3.jpg" alt="A normal Electrocardiogram (ECG) tracing showing P, QRS, and T waves." class="w-full max-w-2xl mx-auto rounded-lg border border-slate-100">
+                    <figcaption class="text-center text-sm text-slate-600 mt-3">
+                        <strong>Figure 1.3:</strong> A normal Electrocardiogram (ECG) showing the correlation between electrical potential and time during a cardiac cycle.
+                    </figcaption>
+                </figure>
+                
+                <!-- Embedded ECG HTML with Pop-out Button -->
+                <div class="border border-slate-200 rounded-lg overflow-hidden bg-slate-50 p-4">
+                    <div class="flex justify-between items-center mb-3">
+                        <h4 class="font-bold text-slate-800">Interactive ECG Visualization</h4>
+                        <a href="https://scareysci.github.io/hs20text/u1/ch1/ecg.html" target="_blank" class="inline-flex items-center text-sm bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 px-3 rounded shadow-sm transition-colors">
+                            <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            Open in New Window
+                        </a>
+                    </div>
+                    <div class="relative w-full pb-[56.25%] h-0">
+                         <iframe src="https://scareysci.github.io/hs20text/u1/ch1/ecg.html" class="absolute top-0 left-0 w-full h-full rounded" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+
             <!-- Laboratory Link Box -->
             <aside class="bg-sky-50 border-l-4 border-sky-500 p-6 rounded-r-xl shadow-sm mb-8 mt-6">
                 <div class="flex items-center space-x-2 mb-3">
@@ -259,11 +284,6 @@
                 </div>
             </aside>
 
-            <!-- Virtual Lab Placeholder 2 -->
-            <div id="interactive-widget-2" class="border-4 border-dashed border-teal-400 p-8 text-center bg-teal-50/50 rounded-2xl relative">
-                <h4 class="text-xl font-bold text-teal-900">[Interactive Hemodynamics: Wiggers Diagram Slider]</h4>
-                <p class="text-sm text-teal-700 mt-2 max-w-2xl mx-auto">Use the slider to move through 0.8 seconds of a single cardiac cycle. Observe how the ECG electrical signal, ventricular pressure, and chamber volume map perfectly to the closing of the AV and Semilunar valves, creating the $S_1$ ("LUB") and $S_2$ ("DUB") heart sounds.</p>
-            </div>
         </section>
 
         <!-- Section 1.3 -->

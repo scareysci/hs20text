@@ -1,1 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 2: The Endocrine System | Health Science 20</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+          }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        html { scroll-behavior: smooth; }
 
+        /* Print Styles to ensure clean PDF generation */
+        @media print {
+            body { background-color: white !important; color: black !important; }
+            .no-print { display: none !important; }
+            iframe { display: none !important; }
+            .print-only { display: block !important; }
+            .shadow-md, .shadow-xl, .shadow-inner, .shadow-2xl { box-shadow: none !important; }
+            .bg-slate-900, .bg-slate-800, .bg-violet-900 { background-color: #f8fafc !important; color: #0f172a !important; border: 1px solid #cbd5e1; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            figure { page-break-inside: avoid; }
+        }
+        .print-only { display: none; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 leading-relaxed tracking-wide">
+
+    <!-- Learning Outcome Anchor (Header Banner) -->
+    <header class="bg-violet-900 text-white py-12 px-6 shadow-md border-b-8 border-violet-600">
+        <div class="max-w-5xl mx-auto">
+            <div class="flex items-center space-x-3 mb-3">
+                <span class="bg-violet-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow-sm">Unit 1</span>
+                <span class="text-violet-200 font-medium tracking-wide">The Human Body — Anatomy, Physiology, and Pathology</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight">Chapter 2: The Endocrine System</h1>
+            <div class="inline-block bg-violet-950/50 rounded-lg px-5 py-4 text-sm border border-violet-700/50 shadow-inner backdrop-blur-sm">
+                <strong class="text-violet-300 block mb-2 text-base">Target Outcomes (HS20):</strong> 
+                <ul class="list-disc pl-5 space-y-1 text-violet-100">
+                    <li><strong>HS20-HB1:</strong> Analyze the anatomy and physiology of a healthy human.</li>
+                    <li><strong>HS20-HB2:</strong> Investigate the effects of various injuries, disorders and diseases on human systems.</li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto py-12 px-6 space-y-16">
+        
+        <!-- Section 2.1 -->
+        <section>
+            <h2 class="text-3xl font-bold text-slate-900 border-b-2 border-violet-200 pb-2 mb-6">2.1 Organization of Chemical Signaling</h2>
+            
+            <p class="mb-4 text-lg">If the nervous system is the body's high-speed internet—sending rapid electrical impulses via a direct wired connection—the <strong>endocrine system</strong> is its global broadcast network. It relies on chemical messengers called <strong>hormones</strong> to coordinate complex, long-term processes like growth, metabolism, and reproduction.</p>
+            
+            <p class="mb-4">Hormones are secreted directly into the bloodstream by ductless <strong>endocrine glands</strong>, allowing them to travel throughout the entire body to reach specific target cells. This is in direct contrast to <em>exocrine glands</em> (like sweat or salivary glands), which secrete their products through specific ducts to the body's exterior or into the digestive tract.</p>
+
+            <!-- Table 1: Classes of Hormones -->
+            <div class="mb-10 mt-8 page-break-inside-avoid">
+                <h3 class="text-xl font-bold text-violet-800 mb-3 flex items-center">
+                    <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                    Biochemical Classification of Hormones
+                </h3>
+                <div class="overflow-x-auto shadow-md rounded-xl border border-slate-200">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-violet-100 text-violet-950">
+                                <th class="p-4 font-bold border-b w-1/4">Hormone Class</th>
+                                <th class="p-4 font-bold border-b w-1/3">Structure & Examples</th>
+                                <th class="p-4 font-bold border-b">Mechanism of Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm">
+                            <tr class="bg-white border-b hover:bg-slate-50 transition-colors">
+                                <td class="p-4 font-semibold text-slate-900">Steroid Hormones</td>
+                                <td class="p-4">Lipid-soluble molecules derived from cholesterol.<br><em>Examples: Testosterone, Estrogen, Cortisol.</em></td>
+                                <td class="p-4">Because they are lipids, they can easily slip through the cell's lipid bilayer membrane. They bind to <strong>intracellular receptors</strong> inside the nucleus, directly interacting with DNA to alter gene expression.</td>
+                            </tr>
+                            <tr class="bg-slate-50 border-b hover:bg-white transition-colors">
+                                <td class="p-4 font-semibold text-slate-900">Peptide / Protein Hormones</td>
+                                <td class="p-4">Water-soluble chains of amino acids.<br><em>Examples: Insulin, Growth Hormone (GH).</em></td>
+                                <td class="p-4">Cannot pass through the lipid bilayer. They must bind to receptors on the <em>surface</em> of the target cell. This triggers a cascading <strong>second-messenger system</strong> (like cAMP) inside the cell to create a physiological response.</td>
+                            </tr>
+                            <tr class="bg-white border-b hover:bg-slate-50 transition-colors">
+                                <td class="p-4 font-semibold text-slate-900">Amine Hormones</td>
+                                <td class="p-4">Derived from a single amino acid (usually tyrosine or tryptophan).<br><em>Examples: Epinephrine, Melatonin, Thyroxine ($T_4$).</em></td>
+                                <td class="p-4">Depending on their specific chemistry, they may act like peptides (binding to the surface, e.g., epinephrine) or like steroids (entering the cell, e.g., thyroxine).</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Indigenous Ways of Knowing Callout Box (Green) -->
+            <aside class="bg-emerald-50 border-l-4 border-emerald-600 p-6 rounded-r-xl shadow-sm mb-10 flex flex-col justify-center page-break-inside-avoid">
+                <div class="flex items-center space-x-2 mb-3">
+                    <svg class="w-6 h-6 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <h3 class="text-lg font-bold text-emerald-900">Indigenous Ways of Knowing [CP]</h3>
+                </div>
+                <p class="text-sm text-emerald-900 leading-relaxed">
+                    Western reductionist biology often isolates the endocrine system to study individual hormones. However, many Indigenous health paradigms—such as the Medicine Wheel—view health as the holistic equilibrium of the physical, mental, emotional, and spiritual dimensions. The endocrine system perfectly illustrates this interconnectedness. When an individual experiences chronic emotional trauma or cultural disconnection, the brain signals the adrenal glands to continuously pump out the steroid hormone <strong>cortisol</strong>. This chronic stress (allostatic load) physically degrades the immune system and cardiovascular health. It is profound physiological proof that emotional and spiritual distress manifests directly as physical pathology.
+                </p>
+            </aside>
+
+        </section>
+
+        <!-- Section 2.2 -->
+        <section>
+            <h2 class="text-3xl font-bold text-slate-900 border-b-2 border-violet-200 pb-2 mb-6">2.2 Major Endocrine Glands and Hormonal Actions</h2>
+            
+            <p class="mb-4">The human body contains a complex network of glands that orchestrate almost every cellular function. The <strong>Hypothalamus-Pituitary Axis</strong> serves as the "Master Control" center. The hypothalamus (a region of the brain) acts as the bridge between the nervous and endocrine systems, analyzing environmental data and directing the pituitary gland to release <strong>trophic hormones</strong>—hormones whose sole purpose is to travel to <em>other</em> glands and command them to secrete their own hormones.</p>
+
+            <!-- Table 2: Major Glands -->
+            <div class="mb-10 page-break-inside-avoid mt-8">
+                <div class="overflow-x-auto shadow-md rounded-xl border border-slate-200">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-200 text-slate-900">
+                                <th class="p-4 font-bold border-b w-1/4">Gland / Axis</th>
+                                <th class="p-4 font-bold border-b w-1/3">Key Hormones Secreted</th>
+                                <th class="p-4 font-bold border-b">Primary Physiological Function</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm">
+                            <tr class="bg-white border-b hover:bg-slate-50 transition-colors">
+                                <td class="p-4 font-semibold text-slate-800">Hypothalamus & Pituitary Gland</td>
+                                <td class="p-4">Trophic Hormones (TSH, ACTH, FSH, LH), Growth Hormone (GH), Anti-diuretic Hormone (ADH).</td>
+                                <td class="p-4">The master regulators. They dictate the actions of the thyroid, adrenals, and gonads, while also directly regulating water balance and overall cellular growth.</td>
+                            </tr>
+                            <tr class="bg-slate-50 border-b hover:bg-white transition-colors">
+                                <td class="p-4 font-semibold text-slate-800">Thyroid & Parathyroid Glands</td>
+                                <td class="p-4">Thyroxine ($T_4$), Calcitonin, Parathyroid Hormone (PTH).</td>
+                                <td class="p-4">$T_4$ regulates the body's basal metabolic rate (how fast cells burn energy). Calcitonin and PTH act as antagonists to maintain precise Calcium ($Ca^{2+}$) homeostasis in the blood.</td>
+                            </tr>
+                            <tr class="bg-white border-b hover:bg-slate-50 transition-colors">
+                                <td class="p-4 font-semibold text-slate-800">Adrenal Glands (Cortex & Medulla)</td>
+                                <td class="p-4">Cortisol, Aldosterone, Epinephrine (Adrenaline), Norepinephrine.</td>
+                                <td class="p-4">The medulla mediates rapid "fight or flight" sympathetic responses. The cortex manages long-term stress adaptations and sodium/water balance in the kidneys.</td>
+                            </tr>
+                            <tr class="bg-slate-50 border-b hover:bg-white transition-colors">
+                                <td class="p-4 font-semibold text-slate-800">Pancreatic Islets of Langerhans</td>
+                                <td class="p-4">Insulin (from Beta cells), Glucagon (from Alpha cells).</td>
+                                <td class="p-4">Crucial for blood glycemic homeostasis. They ensure cells receive adequate glucose for ATP production without letting blood sugar reach toxic levels.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Placeholder 1: Interactive Endocrine Map -->
+            <div id="widget-placeholder-1" class="border-4 border-dashed border-violet-400 p-8 text-center bg-violet-50 rounded-xl my-8 no-print">
+                <h4 class="text-xl font-bold text-violet-800 mb-2">[Placeholder: Interactive Endocrine System Anatomy Explorer]</h4>
+                <p class="text-sm text-slate-600">HTML/React Drag-and-Drop widget code will be injected here.</p>
+            </div>
+            <div class="print-only border-2 border-dashed border-slate-300 p-8 text-center rounded-xl bg-slate-50 text-slate-500 italic mt-4 mb-8">
+                [Interactive Anatomical Labeling activity omitted for print. Access the digital version to complete this practice exercise.]
+            </div>
+
+        </section>
+
+        <!-- Section 2.3 -->
+        <section>
+            <h2 class="text-3xl font-bold text-slate-900 border-b-2 border-violet-200 pb-2 mb-6">2.3 Endocrine Feedback Loops and Homeostasis</h2>
+            
+            <p class="mb-4">The maintenance of a stable, internal physiological environment is called <strong>homeostasis</strong>. The endocrine system achieves this primarily through <strong>negative feedback loops</strong>. Similar to a thermostat in a house, a negative feedback loop detects a deviation from a biological set-point and triggers a hormonal response to <em>reverse</em> the change.</p>
+            
+            <div class="bg-slate-100 p-6 rounded-xl border border-slate-300 mb-8 page-break-inside-avoid">
+                <h3 class="text-lg font-bold text-slate-800 mb-3">Example: Blood Glucose Regulation</h3>
+                <p class="text-sm text-slate-700 mb-3">The pancreatic Islets of Langerhans continuously monitor blood sugar. They utilize two antagonistic hormones to maintain homeostasis:</p>
+                <ul class="list-disc pl-6 space-y-2 text-sm text-slate-700">
+                    <li><strong>High Blood Sugar (After a meal):</strong> <em>Beta cells</em> release <strong>insulin</strong>. Insulin binds to cell surface receptors, commanding tissues to absorb glucose from the blood and commanding the liver to store it as glycogen. Blood sugar falls.</li>
+                    <li><strong>Low Blood Sugar (Fasting):</strong> <em>Alpha cells</em> release <strong>glucagon</strong>. Glucagon commands the liver to break down stored glycogen and release glucose back into the blood. Blood sugar rises.</li>
+                </ul>
+            </div>
+
+            <p class="mb-4">While rare, <strong>positive feedback loops</strong> also exist in the human body. Instead of reversing a change to maintain stability, positive feedback loops <em>amplify</em> the change, driving a process to a distinct completion event. A classic example is the release of <strong>oxytocin</strong> during childbirth: uterine contractions stimulate the pituitary to release oxytocin, which causes stronger contractions, which releases more oxytocin, continuing until the baby is delivered.</p>
+
+            <!-- Placeholder 2: Glucose-Insulin Balance Simulator -->
+            <div id="widget-placeholder-2" class="border-4 border-dashed border-sky-400 p-8 text-center bg-sky-50 rounded-xl my-8 no-print">
+                <h4 class="text-xl font-bold text-sky-800 mb-2">[Placeholder: Interactive Glucose-Insulin Feedback Loop Simulator]</h4>
+                <p class="text-sm text-slate-600">HTML/React Dynamic Chart widget code will be injected here.</p>
+            </div>
+            <div class="print-only border-2 border-dashed border-slate-300 p-8 text-center rounded-xl bg-slate-50 text-slate-500 italic mt-4 mb-8">
+                [Interactive Feedback Loop Simulator omitted for print. Access the digital version to complete this laboratory simulation.]
+            </div>
+
+        </section>
+
+        <!-- Section 2.4 -->
+        <section>
+            <h2 class="text-3xl font-bold text-slate-900 border-b-2 border-violet-200 pb-2 mb-6">2.4 Pathologies of the Endocrine System</h2>
+            
+            <p class="mb-6 text-lg">Because hormones are so powerful, even microscopic imbalances can cause severe systemic ailments. Endocrine pathologies generally arise from either <strong>hypersecretion</strong> (too much hormone) or <strong>hyposecretion</strong> (too little hormone), or from target cells losing their sensitivity to the hormone.</p>
+
+            <!-- Clinical Vignette Box (Blue) -->
+            <aside class="bg-blue-50 border-l-4 border-blue-600 p-6 rounded-r-xl shadow-sm mb-12 page-break-inside-avoid">
+                <div class="flex items-center space-x-2 mb-4">
+                    <svg class="w-6 h-6 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                    <h3 class="text-lg font-bold text-blue-900">Clinical Vignette: Systemic Pathologies</h3>
+                </div>
+                <ul class="list-disc pl-6 space-y-4 text-sm text-blue-900 leading-relaxed">
+                    <li><strong>Diabetes Mellitus (Type 1):</strong> An autoimmune disease where the body destroys its own pancreatic beta cells, resulting in severe hyposecretion of insulin. Patients require lifelong insulin administration.</li>
+                    <li><strong>Diabetes Mellitus (Type 2):</strong> A metabolic disorder characterized by <em>insulin resistance</em>. The pancreas produces insulin, but the cellular receptors fail to respond effectively. Dangerous amounts of glucose remain in the blood, damaging vasculature and nerves. Often linked to lifestyle and genetic factors.</li>
+                    <li><strong>Hyperthyroidism (e.g., Graves' Disease):</strong> Hypersecretion of thyroxine ($T_4$). Causes an elevated metabolic rate, rapid heartbeat, extreme weight loss, and nervous agitation.</li>
+                    <li><strong>Addison's Disease:</strong> Severe hyposecretion of all adrenal cortex hormones (cortisol and aldosterone). Results in profound fatigue, low blood pressure, and inability to handle physical stress. Left untreated, minor infections can cause a fatal systemic crisis.</li>
+                </ul>
+            </aside>
+
+            <!-- Proactive Reflection Box -->
+            <div class="bg-amber-50 border border-amber-200 rounded-lg p-6 mt-8 shadow-sm page-break-inside-avoid">
+                <h3 class="text-xl font-bold text-amber-800 mb-3">See-Do-Get: Proactive Learning Check</h3>
+                <p class="mb-4 text-sm text-amber-900">Before attempting the final assessment, verify your understanding of form and function by retrieving the following from memory:</p>
+                <ul class="list-disc pl-8 text-sm text-amber-900 space-y-1">
+                    <li>Why can steroid hormones enter the cell nucleus directly, while peptide hormones must use surface receptors?</li>
+                    <li>Explain the mechanical difference between a negative and positive feedback loop.</li>
+                    <li>How does Type 1 Diabetes differ fundamentally from Type 2 Diabetes?</li>
+                </ul>
+            </div>
+
+            <!-- Check Your Understanding (Quiz Embedded) -->
+            <div class="bg-slate-800 text-white p-8 rounded-2xl shadow-xl mt-12 page-break-inside-avoid">
+                <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-4 gap-4">
+                    <h3 class="text-2xl font-bold flex items-center text-violet-400">
+                        <svg class="w-7 h-7 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        Check Your Understanding: Endocrine Protocols
+                    </h3>
+                </div>
+                <p class="mb-6 text-slate-300">Evaluate your mastery of endocrine anatomy, feedback loops, and pathology before progressing to Unit 2.</p>
+                
+                <!-- Placeholder 3: Formative Quiz Widget -->
+                <div id="widget-placeholder-3" class="w-full relative rounded-xl overflow-hidden shadow-inner border border-slate-700 bg-slate-900 no-print p-8 text-center">
+                    <h4 class="text-lg font-bold text-violet-400 mb-2">[Placeholder: Endocrine Progressive Assessment Quiz]</h4>
+                    <p class="text-sm text-slate-400">Gamified HTML assessment code will be injected here.</p>
+                </div>
+                <div class="print-only text-slate-400 italic p-6 border border-slate-600 rounded-xl text-center mt-4">
+                    [Interactive Progressive Assessment omitted for print. Access the digital textbook to launch the Clinical Simulator.]
+                </div>
+            </div>
+            
+            <!-- Print to PDF Button -->
+            <div class="text-center mt-16 no-print">
+                <button id="print-btn" onclick="window.print()" class="bg-slate-700 hover:bg-slate-800 text-white font-bold py-4 px-8 rounded-xl shadow-lg transition-all flex items-center justify-center mx-auto space-x-3 border border-slate-600 focus:outline-none focus:ring-4 focus:ring-slate-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                    <span>Save Chapter as PDF / Print</span>
+                </button>
+                <p class="text-xs text-slate-400 mt-3">Interactive widgets will be automatically hidden to save ink.</p>
+            </div>
+
+        </section>
+
+    </main>
+    
+    <footer class="bg-slate-900 text-slate-400 py-10 mt-12 border-t-4 border-violet-900 no-print">
+        <div class="max-w-5xl mx-auto px-6 text-center text-sm">
+            <p>&copy; 2026 Health Science 20 Digital Textbook. Aligned with Saskatchewan Curriculum HS20 Outcomes. Built for GitHub Pages.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

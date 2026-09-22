@@ -6,260 +6,241 @@
 <title>Homeostasis Challenge</title>
 
 <style>
-
 *{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, Helvetica, sans-serif;
 }
 
 body{
-    font-family:Arial, Helvetica, sans-serif;
-    background:linear-gradient(135deg,#eaf5ff,#f8fcff);
-    height:100vh;
-    overflow:hidden;
-    color:#222;
+height:100vh;
+overflow:hidden;
+background:linear-gradient(135deg,#eaf5ff,#f7fbff);
+color:#222;
 }
 
 .container{
-    width:100%;
-    height:100vh;
-    padding:12px;
-    display:flex;
-    flex-direction:column;
+height:100vh;
+padding:12px;
+display:flex;
+flex-direction:column;
 }
 
 h1{
-    text-align:center;
-    color:#14547d;
-    margin-bottom:10px;
-    font-size:2rem;
+text-align:center;
+color:#14547d;
+font-size:1.8rem;
+margin-bottom:10px;
 }
 
-.top-buttons{
-    display:flex;
-    justify-content:center;
-    gap:10px;
-    margin-bottom:12px;
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:10px;
+gap:10px;
+}
+
+.scenarios{
+display:flex;
+gap:8px;
 }
 
 button{
-    border:none;
-    border-radius:10px;
-    padding:10px 18px;
-    font-size:15px;
-    font-weight:bold;
-    cursor:pointer;
-    transition:0.2s;
+border:none;
+padding:10px 16px;
+border-radius:10px;
+font-weight:bold;
+cursor:pointer;
 }
 
-button:hover{
-    transform:translateY(-2px);
+.room{background:#90caf9;}
+.cold{background:#64b5f6;color:white;}
+.hot{background:#ff8a65;color:white;}
+.startBtn{background:#4caf50;color:white;}
+
+.mode-area{
+display:flex;
+align-items:center;
+gap:8px;
 }
 
-.room{
-    background:#90caf9;
-}
-
-.cold{
-    background:#5daeff;
-    color:white;
-}
-
-.hot{
-    background:#ff8b63;
-    color:white;
+select{
+padding:8px;
+border-radius:8px;
 }
 
 .main{
-    flex:1;
-    display:grid;
-    grid-template-columns: 1fr 2fr 1fr;
-    gap:15px;
-    min-height:0;
+flex:1;
+display:grid;
+grid-template-columns:1fr 2fr 1fr;
+gap:12px;
 }
 
 .panel{
-    background:white;
-    border-radius:18px;
-    padding:15px;
-    box-shadow:0 4px 12px rgba(0,0,0,0.1);
+background:white;
+border-radius:16px;
+padding:12px;
+box-shadow:0 4px 12px rgba(0,0,0,.1);
 }
 
 .left-panel{
-    display:flex;
-    flex-direction:column;
-    justify-content:space-between;
-}
-
-.center-panel{
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
+display:flex;
+flex-direction:column;
+gap:10px;
 }
 
 .right-panel{
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
+display:flex;
+flex-direction:column;
+justify-content:center;
 }
 
-.goal-box{
-    background:#eefbed;
-    border-left:6px solid #4caf50;
-    padding:12px;
-    border-radius:12px;
-    line-height:1.5;
+.info-box{
+background:#eef7ff;
+padding:12px;
+border-radius:12px;
+border-left:5px solid #2196f3;
+line-height:1.4;
 }
 
-.goal-box h3{
-    margin-bottom:8px;
-    color:#2d7c32;
+.stats{
+background:#f4f6f7;
+padding:12px;
+border-radius:12px;
 }
 
-.challenge-box{
-    background:#edf7ff;
-    border-left:6px solid #2196f3;
-    padding:12px;
-    border-radius:12px;
-    line-height:1.5;
+.stats h3{
+margin-bottom:8px;
+color:#14547d;
 }
 
-.challenge-box h3{
-    margin-bottom:8px;
-    color:#14547d;
+.stats p{
+margin:6px 0;
+font-weight:bold;
 }
 
-.body-state{
-    font-size:110px;
-    text-align:center;
+.center-panel{
+display:flex;
+flex-direction:column;
+justify-content:center;
+}
+
+.body{
+font-size:100px;
+text-align:center;
 }
 
 .temp{
-    text-align:center;
-    font-size:4rem;
-    font-weight:bold;
-    color:#14547d;
+font-size:4rem;
+font-weight:bold;
+text-align:center;
+color:#14547d;
 }
 
 .status{
-    text-align:center;
-    font-size:1.2rem;
-    font-weight:bold;
-    margin-bottom:20px;
-}
-
-.thermo-wrapper{
-    max-width:700px;
-    margin:auto;
-    width:100%;
+font-size:1.2rem;
+text-align:center;
+font-weight:bold;
+margin-bottom:15px;
 }
 
 .scale{
-    display:flex;
-    justify-content:space-between;
-    font-weight:bold;
-    margin-bottom:8px;
-    padding:0 2px;
+display:flex;
+justify-content:space-between;
+font-weight:bold;
+margin-bottom:6px;
 }
 
 .thermometer{
-    position:relative;
-    height:50px;
-    border-radius:30px;
-    overflow:hidden;
-    background:#ddd;
-    border:2px solid #666;
+height:48px;
+background:#ddd;
+border-radius:25px;
+overflow:hidden;
+position:relative;
+border:2px solid #666;
 }
 
 .fill{
-    height:100%;
-    width:58%;
-    transition:.3s;
+height:100%;
+width:58%;
+transition:.3s;
 }
 
 .target{
-    position:absolute;
-    top:0;
-    left:58.3%;
-    width:5px;
-    height:100%;
-    background:black;
+position:absolute;
+left:58.3%;
+top:0;
+width:4px;
+height:100%;
+background:black;
 }
 
 .feedback{
-    margin-top:18px;
-    background:#fff8dc;
-    border-radius:10px;
-    padding:12px;
-    text-align:center;
-    font-weight:bold;
-    min-height:65px;
-    line-height:1.4;
+margin-top:15px;
+background:#fff8dc;
+padding:10px;
+border-radius:10px;
+font-weight:bold;
+text-align:center;
+min-height:80px;
+display:flex;
+align-items:center;
+justify-content:center;
 }
 
 .control{
-    margin-bottom:30px;
+margin-bottom:25px;
 }
 
 .control h3{
-    margin-bottom:10px;
-}
-
-.slider-value{
-    color:#14547d;
+margin-bottom:8px;
 }
 
 input[type=range]{
-    width:100%;
-    margin-top:10px;
+width:100%;
 }
 
 .percent{
-    margin-top:8px;
-    font-weight:bold;
-    font-size:1.1rem;
-    color:#14547d;
+margin-top:6px;
+font-weight:bold;
+color:#14547d;
 }
 
-.legend{
-    display:flex;
-    justify-content:center;
-    gap:20px;
-    margin-top:12px;
-    font-size:.95rem;
-    font-weight:bold;
+.healthbar{
+height:20px;
+background:#ddd;
+border-radius:10px;
+overflow:hidden;
+margin-top:6px;
 }
 
-.cold-label{
-    color:#1976d2;
+.healthfill{
+height:100%;
+background:#4caf50;
+width:100%;
 }
 
-.normal-label{
-    color:#2e7d32;
+.footer-note{
+margin-top:10px;
+font-size:.9rem;
+line-height:1.4;
+background:#eefbed;
+padding:10px;
+border-radius:10px;
+border-left:5px solid #4caf50;
 }
 
-.hot-label{
-    color:#d84315;
+@media(max-width:950px){
+.main{
+grid-template-columns:1fr;
+overflow:auto;
 }
-
-.target37{
-    color:#2e7d32;
+body{
+overflow:auto;
 }
-
-@media (max-width:900px){
-
-    .main{
-        grid-template-columns:1fr;
-        overflow:auto;
-    }
-
-    body{
-        overflow:auto;
-    }
-
 }
-
 </style>
 </head>
 <body>
@@ -268,125 +249,160 @@ input[type=range]{
 
 <h1>🌡️ Homeostasis Challenge</h1>
 
-<div class="top-buttons">
-    <button class="room" onclick="roomScenario()">🏠 Room</button>
-    <button class="cold" onclick="coldScenario()">❄️ Freezing</button>
-    <button class="hot" onclick="hotScenario()">☀️ Heatwave</button>
+<div class="topbar">
+
+<div class="scenarios">
+<button class="room" onclick="roomScenario()">🏠 Room</button>
+<button class="cold" onclick="coldScenario()">❄️ Freezing</button>
+<button class="hot" onclick="hotScenario()">☀️ Heatwave</button>
+</div>
+
+<div class="mode-area">
+
+<label>Mode:</label>
+
+<select id="modeSelect">
+<option value="learning">Learning</option>
+<option value="challenge">Challenge</option>
+</select>
+
+<div id="challengeArea" style="display:none">
+
+<select id="challengeLength">
+<option value="30">30s</option>
+<option value="60">60s</option>
+</select>
+
+<button class="startBtn" onclick="startChallenge()">
+Start
+</button>
+
+</div>
+
+</div>
+
 </div>
 
 <div class="main">
 
-    <div class="panel left-panel">
+<div class="panel left-panel">
 
-        <div class="challenge-box">
-            <h3>🎯 Mission</h3>
-            Keep body temperature at
-            <strong>37°C</strong> by controlling
-            shivering and sweating.
-        </div>
+<div class="info-box">
+<b>Goal</b><br>
+Keep body temperature near
+<b>37°C</b>.
+Use shivering and sweating to
+oppose environmental changes.
+</div>
 
-        <div class="goal-box">
-            <h3>🧠 Negative Feedback</h3>
+<div class="stats">
 
-            If temperature falls:
-            <strong>Increase shivering.</strong>
+<h3>🎮 Challenge Stats</h3>
 
-            <br><br>
+<p>⏱ Time:
+<span id="timer">0</span>s</p>
 
-            If temperature rises:
-            <strong>Increase sweating.</strong>
+<p>⭐ Score:
+<span id="score">0</span></p>
 
-            <br><br>
+<p>🎯 Accuracy:
+<span id="accuracy">100</span>%</p>
 
-            Your actions should oppose the change
-            and return temperature toward 37°C.
-        </div>
+<p>❤️ Health:
+<span id="health">100</span></p>
 
-    </div>
+<div class="healthbar">
+<div id="healthFill" class="healthfill"></div>
+</div>
 
-    <div class="panel center-panel">
+</div>
 
-        <div id="bodyState" class="body-state">
-            🙂
-        </div>
+<div class="stats">
 
-        <div class="temp" id="tempDisplay">
-            37.0°C
-        </div>
+<h3>🧠 Hypothalamus</h3>
 
-        <div class="status" id="status">
-            Select a Scenario
-        </div>
+<div id="hypothalamus">
+Choose a scenario.
+</div>
 
-        <div class="thermo-wrapper">
+</div>
 
-            <div class="scale">
-                <span>30</span>
-                <span>32</span>
-                <span>34</span>
-                <span>36</span>
-                <span class="target37">37</span>
-                <span>38</span>
-                <span>40</span>
-                <span>42</span>
-            </div>
+</div>
 
-            <div class="thermometer">
-                <div class="fill" id="fill"></div>
-                <div class="target"></div>
-            </div>
+<div class="panel center-panel">
 
-        </div>
+<div class="body" id="bodyState">🙂</div>
 
-        <div class="feedback" id="feedback">
-            Choose a scenario to begin.
-        </div>
+<div class="temp" id="tempDisplay">37.0°C</div>
 
-        <div class="legend">
-            <span class="cold-label">🥶 Too Cold</span>
-            <span class="normal-label">🙂 Homeostasis</span>
-            <span class="hot-label">🥵 Too Hot</span>
-        </div>
+<div class="status" id="status">
+Choose a scenario
+</div>
 
-    </div>
+<div class="scale">
+<span>30</span>
+<span>32</span>
+<span>34</span>
+<span>36</span>
+<span style="color:green;">37</span>
+<span>38</span>
+<span>40</span>
+<span>42</span>
+</div>
 
-    <div class="panel right-panel">
+<div class="thermometer">
+<div id="fill" class="fill"></div>
+<div class="target"></div>
+</div>
 
-        <div class="control">
+<div class="feedback" id="feedback">
+Choose a scenario or start a challenge.
+</div>
 
-            <h3>🥶 Shivering</h3>
+</div>
 
-            <input
-                id="shiverSlider"
-                type="range"
-                min="0"
-                max="100"
-                value="0">
+<div class="panel right-panel">
 
-            <div class="percent">
-                <span id="shiverValue">0%</span>
-            </div>
+<div class="control">
 
-        </div>
+<h3>🥶 Shivering</h3>
 
-        <div class="control">
+<input type="range"
+id="shiverSlider"
+min="0"
+max="100"
+value="0">
 
-            <h3>💦 Sweating</h3>
+<div class="percent">
+<span id="shiverValue">0%</span>
+</div>
 
-            <input
-                id="sweatSlider"
-                type="range"
-                min="0"
-                max="100"
-                value="0">
+</div>
 
-            <div class="percent">
-                <span id="sweatValue">0%</span>
-            </div>
+<div class="control">
 
-        </div>
+<h3>💦 Sweating</h3>
 
-    </div>
+<input type="range"
+id="sweatSlider"
+min="0"
+max="100"
+value="0">
+
+<div class="percent">
+<span id="sweatValue">0%</span>
+</div>
+
+</div>
+
+<div class="footer-note">
+<b>Negative Feedback:</b><br>
+Cold → Increase shivering.<br>
+Hot → Increase sweating.<br>
+The response opposes the original change.
+</div>
+
+</div>
 
 </div>
 
@@ -397,144 +413,284 @@ input[type=range]{
 let temperature = 37;
 let environmentEffect = 0;
 
+let challengeActive = false;
+let score = 0;
+let health = 100;
+let remainingTime = 0;
+let totalDeviation = 0;
+let sampleCount = 0;
+let eventTimer = 0;
+
+const events = [
+{name:"🌬️ Cool Breeze", effect:-0.02},
+{name:"❄️ Winter Day", effect:-0.04},
+{name:"🥶 Arctic Blast", effect:-0.08},
+{name:"☀️ Warm Afternoon", effect:0.02},
+{name:"🔥 Summer Day", effect:0.04},
+{name:"🥵 Heatwave", effect:0.08}
+];
+
 const fill = document.getElementById("fill");
-const tempDisplay = document.getElementById("tempDisplay");
-const feedback = document.getElementById("feedback");
-const bodyState = document.getElementById("bodyState");
 
-const shiverSlider =
-document.getElementById("shiverSlider");
+document.getElementById("modeSelect")
+.addEventListener("change", function(){
 
-const sweatSlider =
-document.getElementById("sweatSlider");
+document.getElementById("challengeArea")
+.style.display =
+this.value === "challenge"
+? "block"
+: "none";
 
-shiverSlider.addEventListener("input",()=>{
-    document.getElementById("shiverValue")
-    .textContent = shiverSlider.value + "%";
 });
 
-sweatSlider.addEventListener("input",()=>{
-    document.getElementById("sweatValue")
-    .textContent = sweatSlider.value + "%";
+document.getElementById("shiverSlider")
+.addEventListener("input",e=>{
+document.getElementById("shiverValue")
+.innerHTML = e.target.value + "%";
 });
 
-function resetControls(){
+document.getElementById("sweatSlider")
+.addEventListener("input",e=>{
+document.getElementById("sweatValue")
+.innerHTML = e.target.value + "%";
+});
 
-    shiverSlider.value = 0;
-    sweatSlider.value = 0;
-
-    document.getElementById("shiverValue")
-    .textContent = "0%";
-
-    document.getElementById("sweatValue")
-    .textContent = "0%";
+function resetSliders(){
+shiverSlider.value=0;
+sweatSlider.value=0;
+shiverValue.innerHTML="0%";
+sweatValue.innerHTML="0%";
 }
 
 function roomScenario(){
-
-    temperature = 37;
-    environmentEffect = 0;
-
-    document.getElementById("status").innerHTML =
-    "Comfortable Room (22°C)";
-
-    feedback.innerHTML =
-    "Body temperature is already near its set point.";
-
-    resetControls();
-    updateDisplay();
+temperature=37;
+environmentEffect=0;
+status.innerHTML="Comfortable Room";
+feedback.innerHTML="Body temperature is stable.";
+resetSliders();
 }
 
 function coldScenario(){
-
-    temperature = 35;
-
-    environmentEffect = -0.04;
-
-    document.getElementById("status").innerHTML =
-    "Freezing Outside (-15°C)";
-
-    feedback.innerHTML =
-    "The environment is causing body temperature to fall.";
-
-    resetControls();
-    updateDisplay();
+temperature=35;
+environmentEffect=-0.04;
+status.innerHTML="Freezing Outside";
+feedback.innerHTML="Body temperature is falling.";
+resetSliders();
 }
 
 function hotScenario(){
+temperature=39;
+environmentEffect=0.04;
+status.innerHTML="Heatwave";
+feedback.innerHTML="Body temperature is rising.";
+resetSliders();
+}
 
-    temperature = 39;
+function generateEvent(){
 
-    environmentEffect = 0.04;
+let e =
+events[Math.floor(
+Math.random()*events.length)];
 
-    document.getElementById("status").innerHTML =
-    "Heatwave (40°C)";
+environmentEffect = e.effect;
 
-    feedback.innerHTML =
-    "The environment is causing body temperature to rise.";
+eventTimer =
+3 + Math.floor(Math.random()*6);
 
-    resetControls();
-    updateDisplay();
+status.innerHTML =
+e.name + " (" + eventTimer + "s)";
+}
+
+function startChallenge(){
+
+challengeActive = true;
+
+score = 0;
+health = 100;
+
+temperature = 37;
+
+totalDeviation = 0;
+sampleCount = 0;
+
+remainingTime =
+parseInt(
+document.getElementById(
+"challengeLength").value);
+
+resetSliders();
+
+generateEvent();
+
+feedback.innerHTML =
+"Challenge Started!";
+}
+
+function endChallenge(){
+
+challengeActive = false;
+
+let avg =
+totalDeviation /
+Math.max(sampleCount,1);
+
+let accuracy =
+Math.max(0,
+Math.round(
+100 - avg*20));
+
+let grade="D";
+
+if(accuracy>=95) grade="A+";
+else if(accuracy>=90) grade="A";
+else if(accuracy>=80) grade="B";
+else if(accuracy>=70) grade="C";
+
+feedback.innerHTML=
+`🏁 Challenge Complete!<br>
+⭐ Score: ${Math.round(score)}<br>
+🎯 Accuracy: ${accuracy}%<br>
+📘 Grade: ${grade}`;
 }
 
 function updateDisplay(){
 
-    tempDisplay.innerHTML =
-    temperature.toFixed(1) + "°C";
+tempDisplay.innerHTML =
+temperature.toFixed(1)+"°C";
 
-    let percent =
-    ((temperature - 30) / 12) * 100;
+let pct =
+((temperature-30)/12)*100;
 
-    percent = Math.max(0,
-              Math.min(100, percent));
+pct=Math.max(0,
+Math.min(100,pct));
 
-    fill.style.width = percent + "%";
+fill.style.width =
+pct+"%";
 
-    if(temperature < 36){
+if(temperature<36){
 
-        bodyState.innerHTML = "🥶";
+bodyState.innerHTML="🥶";
+fill.style.background=
+"linear-gradient(90deg,#4da6ff,#8fd3ff)";
 
-        fill.style.background =
-        "linear-gradient(90deg,#4da6ff,#8fd3ff)";
-    }
-    else if(temperature > 38){
+}
+else if(temperature>38){
 
-        bodyState.innerHTML = "🥵";
+bodyState.innerHTML="🥵";
+fill.style.background=
+"linear-gradient(90deg,#ff8a65,#ff5252)";
 
-        fill.style.background =
-        "linear-gradient(90deg,#ff8a65,#ff5252)";
-    }
-    else{
+}
+else{
 
-        bodyState.innerHTML = "🙂";
+bodyState.innerHTML="🙂";
+fill.style.background=
+"linear-gradient(90deg,#4caf50,#81c784)";
+}
 
-        fill.style.background =
-        "linear-gradient(90deg,#4caf50,#81c784)";
-    }
+if(document.getElementById("modeSelect")
+.value==="learning"){
 
-    if(Math.abs(temperature - 37) <= 0.25){
+if(temperature<37){
 
-        feedback.innerHTML =
-        "✅ Homeostasis Restored! Negative feedback has returned the body to its 37°C set point.";
-    }
+hypothalamus.innerHTML=
+"Temperature LOW<br><b>Increase Shivering</b>";
+
+}
+else if(temperature>37){
+
+hypothalamus.innerHTML=
+"Temperature HIGH<br><b>Increase Sweating</b>";
+
+}
+else{
+
+hypothalamus.innerHTML=
+"At the set point (37°C)";
+}
+
+}
+else{
+
+hypothalamus.innerHTML=
+"Challenge Mode<br>Hints Disabled";
+}
+
+document.getElementById("score")
+.innerHTML=Math.round(score);
+
+document.getElementById("health")
+.innerHTML=Math.round(health);
+
+document.getElementById("timer")
+.innerHTML=remainingTime;
+
+document.getElementById("healthFill")
+.style.width=health+"%";
+
 }
 
 setInterval(()=>{
 
-    const shiver =
-    (shiverSlider.value / 100) * 0.15;
+let shiver =
+(shiverSlider.value/100)*0.12;
 
-    const sweat =
-    (sweatSlider.value / 100) * 0.15;
+let sweat =
+(sweatSlider.value/100)*0.12;
 
-    temperature += environmentEffect;
-    temperature += shiver;
-    temperature -= sweat;
+temperature += environmentEffect;
+temperature += shiver;
+temperature -= sweat;
 
-    temperature =
-    Math.max(30, Math.min(42, temperature));
+temperature =
+Math.max(30,
+Math.min(42,temperature));
 
-    updateDisplay();
+if(challengeActive){
+
+eventTimer -= 0.2;
+
+if(eventTimer <= 0){
+generateEvent();
+}
+
+remainingTime -= 0.2;
+
+let deviation =
+Math.abs(temperature-37);
+
+totalDeviation += deviation;
+sampleCount++;
+
+if(deviation<=0.25){
+score+=5;
+}
+else if(deviation<=0.5){
+score+=3;
+}
+else if(deviation<=1){
+score+=1;
+}
+
+if(temperature<35 || temperature>39){
+health-=0.3;
+}
+
+if(temperature<34 || temperature>40){
+health-=1;
+}
+
+health=Math.max(0,health);
+
+if(health<=0 ||
+remainingTime<=0){
+
+endChallenge();
+}
+
+}
+
+updateDisplay();
 
 },200);
 

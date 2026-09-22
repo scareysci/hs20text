@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Endocrine System Map</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #e2e8f0; /* slate-200 */
+            /* Force exact viewport sizing to prevent scrolling */
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .gland-block {
+            cursor: grab;
+            transition: transform 0.1s, box-shadow 0.2s;
+            /* Trackpad friendly hit area */
+            min-height: 44px; 
+        }
+        
+        .gland-block:active {
+            cursor: grabbing;
+        }
+
+        .gland-block.dragging {
+            opacity: 0.4;
+            transform: scale(0.95);
+        }
+
+        .drop-zone {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            border: 2px dashed #94a3b8; /* slate-400 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s, border-color 0.2s;
+            background-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .drop-zone.drag-over {
+            background-color: #dbeafe; /* blue-100 */
+            border-color: #3b82f6; /* blue-500 */
+            border-style: solid;
+        }
+        
+        .success-flash {
+            animation: flashGreen 0.4s ease-out forwards;
+        }
+
+        @keyframes flashGreen {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1) translate(-50%, -50%); background-color: #22c55e; color: white; border-color: #16a34a; }
+        }
+        
+        /* Drop zone dynamic styling */
+        .dropped-item {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            line-height: 1.1;
+            text-align: center;
+            font-weight: 700;
+            border-radius: inherit;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            margin: 0;
+            padding: 2px;
+        }
+    </style>
+</head>
+<body class="p-2 sm:p-4 flex items-center justify-center">
+
+    <!-- Main Wrapper: Takes up available space minus padding, avoids scrolling -->
+    <div class="w-full h-full max-w-6xl bg-white rounded-xl shadow-2xl flex flex-col md:flex-row overflow-hidden border border-slate-300">
+        
+        <!-- Left Column: Controls & Information -->
+        <div class="w-full md:w-5/12 bg-slate-50 p-4 lg:p-6 flex flex-col border-b md:border-b-0 md:border-r border-slate-200 h-full">
+            
+            <!-- Header Section (Compact) -->
+            <div class="mb-4 shrink-0">
+                <h1 class="text-xl lg:text-2xl font-bold text-slate-800 tracking-tight mb-1">Endocrine System</h1>
+                <p class="text-slate-600 text-xs lg:text-sm leading-tight">
+                    Drag the glands to their anatomical locations. Dropping the Adrenal Gland populates both kidneys.
+                </p>
+            </div>
+            
+            <!-- Draggable Glands Container (Flex grow to distribute space) -->
+            <div class="flex-1 flex flex-col justify-center min-h-0" id="gland-container">
+                <div class="space-y-2 lg:space-y-3">
+                    <div class="gland-block bg-white border border-indigo-200 text-indigo-700 font-semibold px-3 py-2 rounded-lg shadow-sm flex items-center justify-center text-center text-sm hover:bg-indigo-50" 
+                         draggable="true" data-gland="pineal" id="gland-pineal">
+                        Pineal Gland
+                    </div>
+                    <div class="gland-block bg-white border border-indigo-200 text-indigo-700 font-semibold px-3 py-2 rounded-lg shadow-sm flex items-center justify-center text-center text-sm hover:bg-indigo-50" 
+                         draggable="true" data-gland="pituitary" id="gland-pituitary">
+                        Hypothalamus / Pituitary
+                    </div>
+                    <div class="gland-block bg-white border border-indigo-200 text-indigo-700 font-semibold px-3 py-2 rounded-lg shadow-sm flex items-center justify-center text-center text-sm hover:bg-indigo-50" 
+                         draggable="true" data-gland="thyroid" id="gland-thyroid">
+                        Thyroid
+                    </div>
+                    <div class="gland-block bg-white border border-indigo-200 text-indigo-700 font-semibold px-3 py-2 rounded-lg shadow-sm flex items-center justify-center text-center text-sm hover:bg-indigo-50" 
+                         draggable="true" data-gland="adrenal" id="gland-adrenal" data-dropped-label="Adrenal">
+                        Adrenal Glands
+                    </div>
+                    <div class="gland-block bg-white border border-indigo-200 text-indigo-700 font-semibold px-3 py-2 rounded-lg shadow-sm flex items-center justify-center text-center text-sm hover:bg-indigo-50" 
+                         draggable="true" data-gland="pancreas" id="gland-pancreas">
+                        Pancreas
+                    </div>
+                </div>
+            </div>
+
+            <!-- Message Box (Fixed height to prevent layout shifting) -->
+            <div class="mt-4 shrink-0 bg-white border border-dashed border-slate-300 rounded-lg p-3 h-28 lg:h-32 flex items-center justify-center overflow-y-auto">
+                <p id="feedback-message" class="text-slate-500 text-xs lg:text-sm text-center font-medium leading-relaxed">
+                    Awaiting action... Drop a gland correctly to see its function.
+                </p>
+            </div>
+        </div>
+
+        <!-- Right Column: Silhouette Area -->
+        <div class="w-full md:w-7/12 p-2 lg:p-4 flex items-center justify-center bg-white relative h-full">
+            
+            <!-- Scaled container for Silhouette. Height bound ensures it fits 13" laptop screens -->
+            <div class="relative h-full w-full max-h-full flex justify-center items-center">
+                
+                <!-- SVG Container with explicit aspect ratio binding -->
+                <div class="relative h-[95%] aspect-[1/2] max-w-full">
+                    
+                    <!-- SVG Silhouette -->
+                    <svg viewBox="0 0 200 400" class="w-full h-full text-slate-100 drop-shadow-sm" preserveAspectRatio="xMidYMid meet">
+                        <!-- Head -->
+                        <circle cx="100" cy="50" r="35" fill="currentColor" stroke="#cbd5e1" stroke-width="2" />
+                        <!-- Neck -->
+                        <rect x="85" y="80" width="30" height="25" fill="currentColor" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="0 60 0 60"/> <!-- Masking side strokes slightly conceptually -->
+                        <path d="M 85 80 L 85 105 M 115 80 L 115 105" stroke="#cbd5e1" stroke-width="2" />
+                        <!-- Shoulders & Torso -->
+                        <path d="M 100 100 C 40 100 30 130 35 180 C 40 240 50 350 50 350 L 150 350 C 150 350 160 240 165 180 C 170 130 160 100 100 100 Z" fill="currentColor" stroke="#cbd5e1" stroke-width="2" />
+                        <!-- Arms (Simplified) -->
+                        <path d="M 35 130 C 15 150 15 250 15 250 M 165 130 C 185 150 185 250 185 250" stroke="#cbd5e1" stroke-width="12" stroke-linecap="round" fill="none" />
+                    </svg>
+
+                    <!-- Pineal Gland Zone -->
+                    <div class="drop-zone rounded-full"
+                         style="top: 8%; left: 50%; width: 14%; height: 7%;" data-zone="pineal">
+                    </div>
+                    
+                    <!-- Pituitary Gland Zone -->
+                    <div class="drop-zone rounded-full"
+                         style="top: 19%; left: 50%; width: 14%; height: 7%;" data-zone="pituitary">
+                    </div>
+
+                    <!-- Thyroid Zone -->
+                    <div class="drop-zone rounded-full"
+                         style="top: 27%; left: 50%; width: 18%; height: 5.5%;" data-zone="thyroid">
+                    </div>
+
+                    <!-- Pancreas Zone (High placement) -->
+                    <div class="drop-zone rounded-md"
+                         style="top: 41%; left: 50%; width: 22%; height: 6%;" data-zone="pancreas">
+                    </div>
+
+                    <!-- Adrenal Glands Zones (Lower, sides over kidneys) -->
+                    <div class="drop-zone rounded-md"
+                         style="top: 56%; left: 35%; width: 15%; height: 5%;" data-zone="adrenal-left">
+                    </div>
+                    <div class="drop-zone rounded-md"
+                         style="top: 56%; left: 65%; width: 15%; height: 5%;" data-zone="adrenal-right">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const draggables = document.querySelectorAll('.gland-block');
+            const dropZones = document.querySelectorAll('.drop-zone');
+            const feedbackMessage = document.getElementById('feedback-message');
+            
+            // Anatomical functions dictionary
+            const glandFunctions = {
+                'pineal': '<strong class="text-slate-800 block mb-1">Pineal Gland:</strong> Produces melatonin, maintaining circadian rhythm and regulating reproductive hormones.',
+                'pituitary': '<strong class="text-slate-800 block mb-1">Hypothalamus & Pituitary:</strong> The "master control" center. Links nervous/endocrine systems and controls other glands.',
+                'thyroid': '<strong class="text-slate-800 block mb-1">Thyroid:</strong> Produces hormones regulating metabolic rate, heart/digestive function, muscle control, and bone maintenance.',
+                'adrenal': '<strong class="text-slate-800 block mb-1">Adrenal Glands:</strong> Produce adrenaline and cortisol controlling blood sugar, burning fat, reacting to stress, and regulating BP.',
+                'pancreas': '<strong class="text-slate-800 block mb-1">Pancreas:</strong> Regulates blood sugar levels by producing insulin (lowers) and glucagon (raises).'
+            };
+
+            // Setup Drag Start/End for blocks
+            draggables.forEach(draggable => {
+                draggable.addEventListener('dragstart', (e) => {
+                    e.dataTransfer.setData('text/plain', draggable.dataset.gland);
+                    draggable.classList.add('dragging');
+                    setTimeout(() => draggable.classList.add('invisible'), 0);
+                });
+
+                draggable.addEventListener('dragend', (e) => {
+                    draggable.classList.remove('dragging');
+                    draggable.classList.remove('invisible');
+                });
+            });
+
+            // Helper to style a successfully dropped element inside a zone
+            const createDroppedItem = (text) => {
+                const el = document.createElement('div');
+                el.className = 'success-flash dropped-item';
+                el.innerText = text;
+                return el;
+            };
+
+            // Setup Drop Zone events
+            dropZones.forEach(zone => {
+                zone.addEventListener('dragover', (e) => {
+                    e.preventDefault(); 
+                    // Only highlight if it's empty
+                    if(zone.children.length === 0) {
+                        zone.classList.add('drag-over');
+                    }
+                });
+
+                zone.addEventListener('dragleave', (e) => {
+                    zone.classList.remove('drag-over');
+                });
+
+                zone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    zone.classList.remove('drag-over');
+                    
+                    const draggedGlandId = e.dataTransfer.getData('text/plain');
+                    if (!draggedGlandId) return; // Ignore invalid drops
+
+                    const targetZoneId = zone.dataset.zone;
+                    
+                    // Match logic
+                    const isStandardMatch = draggedGlandId === targetZoneId;
+                    const isAdrenalMatch = draggedGlandId === 'adrenal' && (targetZoneId === 'adrenal-left' || targetZoneId === 'adrenal-right');
+
+                    if (isStandardMatch || isAdrenalMatch) {
+                        const originalDraggable = document.querySelector(`[data-gland="${draggedGlandId}"]`);
+                        
+                        if (isAdrenalMatch) {
+                            // Handle dual population for Adrenal glands
+                            const leftZone = document.querySelector('[data-zone="adrenal-left"]');
+                            const rightZone = document.querySelector('[data-zone="adrenal-right"]');
+                            
+                            // Hide the original block in the sidebar
+                            if (originalDraggable) {
+                                originalDraggable.style.display = 'none';
+                            }
+                            
+                            // Populate Left
+                            leftZone.innerHTML = ''; // clear zone
+                            leftZone.appendChild(createDroppedItem('Adrenal'));
+                            leftZone.classList.remove('border-dashed', 'bg-white/40');
+                            leftZone.classList.add('border-solid', 'border-transparent', 'bg-transparent');
+                            
+                            // Populate Right
+                            rightZone.innerHTML = '';
+                            rightZone.appendChild(createDroppedItem('Adrenal'));
+                            rightZone.classList.remove('border-dashed', 'bg-white/40');
+                            rightZone.classList.add('border-solid', 'border-transparent', 'bg-transparent');
+
+                        } else {
+                            // Standard 1-to-1 match
+                            if (originalDraggable) {
+                                originalDraggable.style.display = 'none';
+                            }
+                            
+                            zone.innerHTML = '';
+                            // Get the text from the original draggable to place in the zone
+                            let label = originalDraggable.innerText.trim();
+                            if(draggedGlandId === 'pituitary') label = 'Pituitary'; // shorten for fit
+                            
+                            zone.appendChild(createDroppedItem(label));
+                            zone.classList.remove('border-dashed', 'bg-white/40');
+                            zone.classList.add('border-solid', 'border-transparent', 'bg-transparent');
+                        }
+                        
+                        // Update feedback message with successful anatomical info
+                        feedbackMessage.innerHTML = glandFunctions[draggedGlandId];
+                        feedbackMessage.classList.remove('text-slate-500');
+                        feedbackMessage.classList.add('text-green-700');
+                        
+                        // Haptic feedback for touch devices
+                        if (navigator.vibrate) navigator.vibrate(50);
+                    } else {
+                        // Incorrect drop feedback
+                        feedbackMessage.innerHTML = `<span class="text-red-600 font-semibold block">Incorrect placement.</span> Try dragging to a different location!`;
+                        setTimeout(() => {
+                            if (feedbackMessage.innerText.includes('Incorrect')) {
+                                feedbackMessage.innerHTML = 'Awaiting action... Drop a gland correctly to see its function.';
+                                feedbackMessage.className = 'text-slate-500 text-xs lg:text-sm text-center font-medium leading-relaxed';
+                            }
+                        }, 2500);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

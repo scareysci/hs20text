@@ -1,0 +1,2013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leg 2 Lab Assistant: The Micro &amp; Phyto Vault | SK Health Science 20</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+    }
+    .emerald-gradient {
+      background: linear-gradient(135deg, #064e3b 0%, #1b4332 55%, #0f766e 100%);
+    }
+    .tab-btn-active {
+      background-color: #1b4332;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(27, 67, 50, 0.25);
+    }
+    .tab-btn-inactive {
+      background-color: #ffffff;
+      color: #334155;
+      border: 1px solid #cbd5e1;
+    }
+    .tab-btn-inactive:hover {
+      background-color: #f1f5f9;
+      color: #0f172a;
+    }
+    .q-badge {
+      background-color: #fef3c7;
+      color: #92400e;
+      border: 1px solid #f59e0b;
+    }
+    .smooth-bar {
+      transition: width 0.45s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- TOP NAVIGATION BAR -->
+  <header class="emerald-gradient text-white shadow-lg sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-400/40 flex items-center justify-center text-amber-300 font-extrabold text-lg">
+          L2
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-400/30">
+              SK Health Science 20 • Outcome HS20-NU1 (b, g)
+            </span>
+          </div>
+          <h1 class="text-lg sm:text-xl font-extrabold tracking-tight text-white">
+            Leg 2 Lab Assistant: The Micro &amp; Phyto Vault
+          </h1>
+        </div>
+      </div>
+
+      <!-- Workbook Q1-Q10 Progress Meter -->
+      <div class="flex items-center gap-3 bg-white/10 px-3.5 py-2 rounded-xl border border-white/15">
+        <div class="text-xs">
+          <div class="font-semibold text-emerald-100">Workbook Progress (Q1–Q10)</div>
+          <div class="w-36 sm:w-44 h-2 bg-emerald-950 rounded-full overflow-hidden mt-1">
+            <div id="headerProgressBar" class="h-full bg-amber-400 smooth-bar" style="width: 0%"></div>
+          </div>
+        </div>
+        <span id="headerProgressText" class="text-sm font-extrabold text-amber-300">0/10</span>
+      </div>
+
+      <!-- Quick External Links -->
+      <div class="flex items-center gap-2 text-xs font-semibold">
+        <a href="https://scareysci.github.io/hs20text/u2/index.html" target="_blank" rel="noopener noreferrer"
+           class="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 transition">
+          ← Race Hub
+        </a>
+        <a href="https://scareysci.github.io/hs20text/u2/leg1.html" target="_blank" rel="noopener noreferrer"
+           class="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 transition">
+          Leg 1 Lab
+        </a>
+        <a href="https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/dietary-reference-intakes/tables.html" target="_blank" rel="noopener noreferrer"
+           class="px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold transition">
+          Health Canada DRI Tables ↗
+        </a>
+      </div>
+    </div>
+
+    <!-- 6-TAB NAVIGATION BAR -->
+    <div class="bg-slate-900/40 border-t border-white/10">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex flex-wrap gap-1.5" role="tablist">
+        <button id="tabBtn-overview" data-tab="overview" class="tab-nav-btn tab-btn-active px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition flex items-center gap-1.5">
+          <span>1. Start Here &amp; Checklist</span>
+        </button>
+        <button id="tabBtn-vitamins" data-tab="vitamins" class="tab-nav-btn tab-btn-inactive px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition flex items-center gap-1.5">
+          <span>2. Route 2A: Vitamins (Q1–Q2)</span>
+        </button>
+        <button id="tabBtn-minerals" data-tab="minerals" class="tab-nav-btn tab-btn-inactive px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition flex items-center gap-1.5">
+          <span>3. Route 2B/2C: Minerals &amp; Phyto (Q3–Q5)</span>
+        </button>
+        <button id="tabBtn-roadblock" data-tab="roadblock" class="tab-nav-btn tab-btn-inactive px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition flex items-center gap-1.5">
+          <span>4. Roadblock #2: Clinical Triage (Q6–Q8)</span>
+        </button>
+        <button id="tabBtn-detour" data-tab="detour" class="tab-nav-btn tab-btn-inactive px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition flex items-center gap-1.5">
+          <span>5. The Detour (Q9)</span>
+        </button>
+        <button id="tabBtn-pitstop" data-tab="pitstop" class="tab-nav-btn tab-btn-inactive px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition flex items-center gap-1.5">
+          <span>6. Pit Stop #2 Architect (Q10)</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="max-w-7xl mx-auto w-full px-4 sm:px-6 py-6 flex-1 space-y-6">
+
+    <!-- =================================================================== -->
+    <!-- TAB 1: START HERE, WORKBOOK CHECKLIST & BODY SYSTEMS BRIDGE         -->
+    <!-- =================================================================== -->
+    <section id="panel-overview" class="tab-panel space-y-6">
+      <!-- Welcome Banner -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-100 pb-5">
+          <div>
+            <span class="inline-block text-xs font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-md bg-emerald-100 text-emerald-900 mb-2">
+              Step 1 of 5 • How to Use This Lab Assistant
+            </span>
+            <h2 class="text-2xl font-extrabold text-slate-900">
+              Welcome to Leg 2: Vitamins, Minerals &amp; Phytochemicals
+            </h2>
+            <p class="text-slate-600 mt-1 text-sm sm:text-base max-w-3xl">
+              In Leg 1, you built your supplement's fuel engine using <strong>carbohydrates, fats, and proteins</strong>.
+              In Leg 2, you will add the <strong>spark plugs and shields</strong>—the vitamins, minerals, and colourful plant phytochemicals that unlock cellular energy and protect tissues from damage.
+            </p>
+          </div>
+          <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 lg:w-80 shrink-0">
+            <div class="text-xs font-extrabold uppercase tracking-wider text-amber-900">Partner Roles in Leg 2</div>
+            <ul class="mt-2 space-y-1.5 text-xs sm:text-sm text-slate-800">
+              <li><strong>Both Partners:</strong> Complete Questions 1–5 (Route Info) &amp; Question 9–10 (Detour &amp; Pit Stop).</li>
+              <li><strong>Partner B (Specialist):</strong> Leads <strong>Roadblock #2 (Questions 6–8)</strong> on patient blood cases, then teaches Partner A!</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Linear Question Checklist (Q1 to Q10) -->
+        <div class="mt-5">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-base font-extrabold text-slate-900">
+              Your Linear Workbook Checklist (Check off each question as you write it in your Word booklet!)
+            </h3>
+            <button id="resetProgressBtn" class="text-xs font-semibold text-slate-500 hover:text-red-600 underline">
+              Reset Checkmarks
+            </button>
+          </div>
+          <div id="questionChecklistGrid" class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+            <!-- Populated dynamically by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Body Systems Bridge -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+          <div>
+            <span class="text-xs font-extrabold uppercase tracking-wider text-emerald-800">Prior Knowledge Bridge</span>
+            <h3 class="text-xl font-extrabold text-slate-900">
+              How Do Micronutrients Power the 6 Body Systems We Just Studied?
+            </h3>
+            <p class="text-sm text-slate-600">
+              Click any body system below to see which vitamins, minerals, and phytochemicals keep that system running.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 mb-4" id="systemSelectorGrid">
+          <button data-sys="circulatory" class="sys-btn px-3 py-3 rounded-xl border text-left transition bg-emerald-900 text-white border-emerald-900 shadow-sm">
+            <div class="text-xs font-bold opacity-80">System 1</div>
+            <div class="font-extrabold text-sm mt-0.5">🩸 Circulatory</div>
+          </button>
+          <button data-sys="skeletal" class="sys-btn px-3 py-3 rounded-xl border text-left transition bg-slate-50 hover:bg-slate-100 text-slate-800 border-slate-200">
+            <div class="text-xs font-bold text-slate-500">System 2</div>
+            <div class="font-extrabold text-sm mt-0.5">🦴 Skeletal</div>
+          </button>
+          <button data-sys="muscular" class="sys-btn px-3 py-3 rounded-xl border text-left transition bg-slate-50 hover:bg-slate-100 text-slate-800 border-slate-200">
+            <div class="text-xs font-bold text-slate-500">System 3</div>
+            <div class="font-extrabold text-sm mt-0.5">💪 Muscular</div>
+          </button>
+          <button data-sys="nervous" class="sys-btn px-3 py-3 rounded-xl border text-left transition bg-slate-50 hover:bg-slate-100 text-slate-800 border-slate-200">
+            <div class="text-xs font-bold text-slate-500">System 4</div>
+            <div class="font-extrabold text-sm mt-0.5">⚡ Nervous</div>
+          </button>
+          <button data-sys="digestive" class="sys-btn px-3 py-3 rounded-xl border text-left transition bg-slate-50 hover:bg-slate-100 text-slate-800 border-slate-200">
+            <div class="text-xs font-bold text-slate-500">System 5</div>
+            <div class="font-extrabold text-sm mt-0.5">🧪 Digestive</div>
+          </button>
+          <button data-sys="immune" class="sys-btn px-3 py-3 rounded-xl border text-left transition bg-slate-50 hover:bg-slate-100 text-slate-800 border-slate-200">
+            <div class="text-xs font-bold text-slate-500">System 6</div>
+            <div class="font-extrabold text-sm mt-0.5">🛡️ Immune</div>
+          </button>
+        </div>
+
+        <div id="systemDetailCard" class="bg-emerald-50/70 border border-emerald-200 rounded-xl p-5">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Next Step CTA -->
+      <div class="flex justify-end">
+        <button data-goto="vitamins" class="goto-btn px-5 py-3 rounded-xl bg-emerald-900 hover:bg-emerald-800 text-white font-bold text-sm shadow transition">
+          Go to Step 2A: Vitamins Lab (Questions 1 &amp; 2) →
+        </button>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- TAB 2: ROUTE INFO 2A — VITAMINS LAB (QUESTIONS 1 & 2)               -->
+    <!-- =================================================================== -->
+    <section id="panel-vitamins" class="tab-panel hidden space-y-6">
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+        <span class="inline-block text-xs font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-md bg-emerald-100 text-emerald-900 mb-2">
+          Step 2 of 5 • Route Info 2A • Helps Answer Workbook Questions 1 &amp; 2
+        </span>
+        <h2 class="text-2xl font-extrabold text-slate-900">
+          Vitamins Lab: Water-Soluble vs. Fat-Soluble Chemistry
+        </h2>
+        <p class="text-slate-600 mt-1 text-sm sm:text-base">
+          Vitamins are organic molecules (they contain carbon), but they provide <strong>0 kcal/g of energy</strong>. Instead, they act as <strong>coenzymes</strong>—tiny helper keys that unlock chemical reactions inside your cells.
+        </p>
+
+        <!-- Interactive Vitamin Solubility & Mega-Dose Simulator -->
+        <div class="mt-6 bg-slate-50 border border-slate-200 rounded-2xl p-5">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-4 border-b border-slate-200">
+            <div>
+              <h3 class="text-lg font-extrabold text-slate-900">
+                🔬 Interactive Simulator: What Happens When You Swallow a Vitamin?
+              </h3>
+              <p class="text-xs sm:text-sm text-slate-600">
+                Test different vitamins, doses, and meals below to see how your small intestine, kidneys, and liver handle them!
+              </p>
+            </div>
+            <span class="q-badge text-xs font-bold px-3 py-1 rounded-full shrink-0">
+              Use this to answer QUESTION 1!
+            </span>
+          </div>
+
+          <!-- Controls -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+            <!-- Control 1: Choose Vitamin -->
+            <div class="bg-white p-3.5 rounded-xl border border-slate-200">
+              <label class="block text-xs font-extrabold uppercase text-slate-500 mb-2">1. Pick a Vitamin to Test</label>
+              <div class="grid grid-cols-2 gap-1.5" id="simVitaminBtns">
+                <button data-vit="vitC" class="sim-vit-btn px-2.5 py-2 rounded-lg text-xs font-bold bg-emerald-900 text-white">
+                  Vitamin C (Water)
+                </button>
+                <button data-vit="vitB12" class="sim-vit-btn px-2.5 py-2 rounded-lg text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200">
+                  Vitamin B12 (Water)
+                </button>
+                <button data-vit="vitD" class="sim-vit-btn px-2.5 py-2 rounded-lg text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200">
+                  Vitamin D3 (Fat)
+                </button>
+                <button data-vit="vitA" class="sim-vit-btn px-2.5 py-2 rounded-lg text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200">
+                  Vitamin A (Fat)
+                </button>
+              </div>
+            </div>
+
+            <!-- Control 2: Choose Dose -->
+            <div class="bg-white p-3.5 rounded-xl border border-slate-200">
+              <label class="block text-xs font-extrabold uppercase text-slate-500 mb-2">2. Choose Supplement Dose</label>
+              <div class="grid grid-cols-2 gap-1.5" id="simDoseBtns">
+                <button data-dose="normal" class="sim-dose-btn px-2.5 py-2 rounded-lg text-xs font-bold bg-emerald-900 text-white">
+                  100% Daily RDA
+                </button>
+                <button data-dose="mega" class="sim-dose-btn px-2.5 py-2 rounded-lg text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200">
+                  10× Mega-Dose!
+                </button>
+              </div>
+            </div>
+
+            <!-- Control 3: Meal Fat Content -->
+            <div class="bg-white p-3.5 rounded-xl border border-slate-200">
+              <label class="block text-xs font-extrabold uppercase text-slate-500 mb-2">3. Lipid (Fat) in Meal/Product</label>
+              <div class="grid grid-cols-2 gap-1.5" id="simFatBtns">
+                <button data-fat="withFat" class="sim-fat-btn px-2.5 py-2 rounded-lg text-xs font-bold bg-emerald-900 text-white">
+                  With Healthy Fats (5g)
+                </button>
+                <button data-fat="zeroFat" class="sim-fat-btn px-2.5 py-2 rounded-lg text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200">
+                  0g Fat (Water Only)
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Simulation Output Visual Readout -->
+          <div id="vitSimOutput" class="mt-4 bg-white rounded-xl border border-slate-200 p-5">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Direct Scaffolding Cards for Workbook Q1 and Q2 -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- QUESTION 1 HELPER -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-2">
+              <span class="q-badge text-xs font-extrabold px-2.5 py-1 rounded-md">WORKBOOK QUESTION 1 GUIDE</span>
+              <span class="text-xs font-semibold text-slate-500">Water-Soluble vs. Fat-Soluble</span>
+            </div>
+            <h3 class="text-lg font-extrabold text-slate-900">
+              Why do fat-soluble vitamins (A, D, E, K) carry a higher risk of toxicity than water-soluble vitamins (B &amp; C)?
+            </h3>
+
+            <div class="mt-4 space-y-3 text-sm text-slate-700">
+              <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+                <strong class="text-emerald-900 block">a) Water-Soluble Fate (B-Complex &amp; C):</strong>
+                Dissolve directly in watery blood plasma. Your body only keeps what cells need right now; any extra mega-dose is filtered out by your <strong>kidneys (renal excretion)</strong> and leaves in your urine within hours.
+              </div>
+              <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+                <strong class="text-emerald-900 block">b) Fat-Soluble Storage (Vitamins A, D, E, K):</strong>
+                Stored inside your <strong>liver and adipose (fat) tissue</strong>. Because they cannot dissolve in watery urine, taking huge daily doses causes them to build up over weeks to toxic levels (called <strong>hypervitaminosis</strong>).
+              </div>
+              <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+                <strong class="text-emerald-900 block">c) Connection to Leg 1 Lipids:</strong>
+                Because Vitamins A, D, E, and K are non-polar (fat-loving), they require <strong>dietary lipids (fats) and bile salts</strong> in the small intestine to cross the intestinal villi into the body.
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+            <span class="text-xs font-bold text-amber-800">Keywords: water-soluble • fat-soluble • renal excretion • liver &amp; adipose storage • hypervitaminosis</span>
+          </div>
+        </div>
+
+        <!-- QUESTION 2 HELPER -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-2">
+              <span class="q-badge text-xs font-extrabold px-2.5 py-1 rounded-md">WORKBOOK QUESTION 2 GUIDE</span>
+              <span class="text-xs font-semibold text-slate-500">B-Complex vs. Vitamin C Jobs</span>
+            </div>
+            <h3 class="text-lg font-extrabold text-slate-900">
+              How do B-Complex vitamins and Vitamin C perform different jobs inside an active human body?
+            </h3>
+
+            <div class="mt-4 space-y-3 text-sm text-slate-700">
+              <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+                <strong class="text-emerald-900 block">a) B-Complex Vitamins = Energy Coenzymes:</strong>
+                Vitamins B1 (Thiamin), B2 (Riboflavin), B3 (Niacin), B6, and B12 act as <strong>metabolic coenzymes</strong> inside the mitochondria. They help enzymes break down the glucose, fatty acids, and amino acids from Leg 1 into <strong>ATP cellular energy</strong> (plus B12 and Folate help build red blood cells).
+              </div>
+              <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+                <strong class="text-emerald-900 block">b) Vitamin C (Ascorbic Acid) = Collagen &amp; Immune Shield:</strong>
+                1) Required to cross-link <strong>collagen fibers</strong> that keep blood vessels, tendons, skin, and gums strong.<br/>
+                2) Acts as a powerful water-soluble <strong>antioxidant</strong> that protects white blood cells during heavy exercise and boosts plant iron absorption in the gut.
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+            <span class="text-xs font-bold text-amber-800">Keywords: coenzyme • cellular respiration (ATP) • ascorbic acid • collagen synthesis • antioxidant</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Self-Check Quiz for Route 2A -->
+      <div class="bg-emerald-950 text-white rounded-2xl p-6 shadow-sm">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-amber-300">Instant Concept Check</span>
+            <h3 class="text-lg font-extrabold">Test Your Route Info 2A Knowledge Before Moving On</h3>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="bg-white/10 rounded-xl p-4 border border-white/15">
+            <p class="text-sm font-bold mb-2">1. An athlete takes 1,500 mg of Vitamin C (20× the RDA). What happens to most of the extra Vitamin C?</p>
+            <div class="space-y-1.5 text-xs">
+              <button data-quiz="q2a_1" data-correct="false" class="quiz-opt-btn w-full text-left px-3 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition">
+                A) It converts into 6,000 kcal of stored body fat.
+              </button>
+              <button data-quiz="q2a_1" data-correct="true" class="quiz-opt-btn w-full text-left px-3 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition">
+                B) Kidneys filter the excess out of the blood and excrete it in urine.
+              </button>
+              <button data-quiz="q2a_1" data-correct="false" class="quiz-opt-btn w-full text-left px-3 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition">
+                C) It builds up in the liver and causes acute liver failure overnight.
+              </button>
+            </div>
+            <div id="quizFeedback-q2a_1" class="mt-2 text-xs font-semibold hidden"></div>
+          </div>
+
+          <div class="bg-white/10 rounded-xl p-4 border border-white/15">
+            <p class="text-sm font-bold mb-2">2. Why does a fat-free sports drink (0 g fat) poorly absorb added Vitamin D3 if consumed on an empty stomach?</p>
+            <div class="space-y-1.5 text-xs">
+              <button data-quiz="q2a_2" data-correct="true" class="quiz-opt-btn w-full text-left px-3 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition">
+                A) Vitamin D3 is fat-soluble and needs dietary lipids &amp; bile salts for intestinal absorption.
+              </button>
+              <button data-quiz="q2a_2" data-correct="false" class="quiz-opt-btn w-full text-left px-3 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition">
+                B) Stomach acid destroys all Vitamin D unless protein is present.
+              </button>
+              <button data-quiz="q2a_2" data-correct="false" class="quiz-opt-btn w-full text-left px-3 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition">
+                C) Vitamin D only absorbs through the skin and cannot be absorbed in the gut.
+              </button>
+            </div>
+            <div id="quizFeedback-q2a_2" class="mt-2 text-xs font-semibold hidden"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-between">
+        <button data-goto="overview" class="goto-btn px-4 py-2.5 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold text-sm transition">
+          ← Back to Checklist
+        </button>
+        <button data-goto="minerals" class="goto-btn px-5 py-3 rounded-xl bg-emerald-900 hover:bg-emerald-800 text-white font-bold text-sm shadow transition">
+          Next: Minerals &amp; Phytochemicals Lab (Questions 3–5) →
+        </button>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- TAB 3: ROUTE INFO 2B & 2C — MINERALS & PHYTO LAB (QUESTIONS 3, 4, 5)-->
+    <!-- =================================================================== -->
+    <section id="panel-minerals" class="tab-panel hidden space-y-6">
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+        <span class="inline-block text-xs font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-md bg-emerald-100 text-emerald-900 mb-2">
+          Step 2 of 5 (Continued) • Route Info 2B &amp; 2C • Helps Answer Questions 3, 4 &amp; 5
+        </span>
+        <h2 class="text-2xl font-extrabold text-slate-900">
+          Minerals, Nutrient Synergy &amp; Plant Phytochemicals
+        </h2>
+        <p class="text-slate-600 mt-1 text-sm sm:text-base">
+          Unlike vitamins, <strong>minerals are inorganic elements</strong> from the periodic table (like Calcium, Iron, Magnesium, and Zinc). They are never destroyed by heat or cooking, and they work best when paired with synergistic partner nutrients!
+        </p>
+
+        <!-- QUESTION 3 GUIDE: MAJOR VS TRACE MINERALS -->
+        <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded bg-emerald-900 text-white">
+                Major Minerals (Need &gt; 100 mg/day)
+              </span>
+              <span class="q-badge text-xs font-bold px-2.5 py-0.5 rounded">Workbook Q3</span>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-600 mb-3">
+              Your body requires <strong>more than 100 milligrams per day</strong> of these minerals to build bone structure and run nerve/muscle electrical signals:
+            </p>
+            <ul class="space-y-2 text-xs sm:text-sm text-slate-800">
+              <li class="p-2.5 bg-white rounded-xl border border-slate-200">
+                <strong>🦴 Calcium (Ca<sup>2+</sup>) — RDA 1,000–1,300 mg/day:</strong> Hardens bone and tooth matrix (hydroxyapatite) and triggers <strong>actin-myosin muscle fiber contraction</strong> and blood clotting.
+              </li>
+              <li class="p-2.5 bg-white rounded-xl border border-slate-200">
+                <strong>⚡ Magnesium (Mg<sup>2+</sup>), Sodium (Na<sup>+</sup>) &amp; Potassium (K<sup>+</sup>):</strong> Stabilize ATP energy molecules, relax muscles after contraction, and fire nerve action potentials.
+              </li>
+            </ul>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded bg-amber-700 text-white">
+                Trace Minerals (Need &lt; 100 mg/day)
+              </span>
+              <span class="q-badge text-xs font-bold px-2.5 py-0.5 rounded">Workbook Q3</span>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-600 mb-3">
+              Your body requires <strong>less than 100 milligrams per day</strong>, but even a tiny shortage causes severe system failure:
+            </p>
+            <ul class="space-y-2 text-xs sm:text-sm text-slate-800">
+              <li class="p-2.5 bg-white rounded-xl border border-slate-200">
+                <strong>🩸 Iron (Fe) — RDA 11–18 mg/day:</strong> Sits at the core of <strong>hemoglobin</strong> in red blood cells (erythrocytes) and <strong>myoglobin</strong> in muscles to bind and carry oxygen (O<sub>2</sub>). Without iron, cells starve for O<sub>2</sub> and cannot make ATP!
+              </li>
+              <li class="p-2.5 bg-white rounded-xl border border-slate-200">
+                <strong>🛡️ Zinc (Zn) — RDA 8–11 mg/day:</strong> Essential cofactor for over 100 enzymes, DNA repair, wound healing, and immune T-cell production.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- INTERACTIVE SYNERGY SIMULATOR (WORKBOOK QUESTION 4) -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-slate-100">
+          <div>
+            <span class="q-badge text-xs font-extrabold px-2.5 py-1 rounded-md">WORKBOOK QUESTION 4 LAB</span>
+            <h3 class="text-xl font-extrabold text-slate-900 mt-1">
+              🤝 Interactive Nutrient Synergy Lab: Why Do Nutrients Work in Teams?
+            </h3>
+            <p class="text-sm text-slate-600">
+              <strong>Bioavailability</strong> means the percentage of a swallowed nutrient that actually crosses your gut wall into your bloodstream. Toggle the partner nutrients below to see how synergy multiplies absorption!
+            </p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-5">
+          <!-- Synergy Pair 1: Calcium + Vitamin D -->
+          <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200 flex flex-col justify-between">
+            <div>
+              <div class="text-xs font-extrabold uppercase text-emerald-800">Synergy Team #1 • Skeletal System</div>
+              <h4 class="text-base font-extrabold text-slate-900 mt-0.5">Calcium (Ca<sup>2+</sup>) + Vitamin D3</h4>
+              <p class="text-xs text-slate-600 mt-1">
+                Student drinks a shake with <strong>500 mg of Calcium</strong>. Toggle their Vitamin D status:
+              </p>
+
+              <div class="flex gap-2 mt-3">
+                <button id="synCaLowD" class="flex-1 py-2 px-3 rounded-xl text-xs font-bold bg-slate-200 text-slate-800 transition">
+                  ❌ Low Vitamin D (Winter Deficit)
+                </button>
+                <button id="synCaHighD" class="flex-1 py-2 px-3 rounded-xl text-xs font-bold bg-emerald-900 text-white shadow transition">
+                  ✅ Paired with 600 IU Vitamin D3
+                </button>
+              </div>
+
+              <div id="synCaReadout" class="mt-4 bg-white rounded-xl p-4 border border-slate-200">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Synergy Pair 2: Non-Heme Plant Iron + Vitamin C vs Tea Tannins -->
+          <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200 flex flex-col justify-between">
+            <div>
+              <div class="text-xs font-extrabold uppercase text-amber-800">Synergy Team #2 • Circulatory System</div>
+              <h4 class="text-base font-extrabold text-slate-900 mt-0.5">Plant Iron (Fe<sup>3+</sup>) + Vitamin C vs. Tea Tannins</h4>
+              <p class="text-xs text-slate-600 mt-1">
+                Student eats a plant-based bar with <strong>10 mg of Non-Heme Iron</strong> (from pumpkin seeds/lentils). Choose what they pair it with:
+              </p>
+
+              <div class="grid grid-cols-3 gap-1.5 mt-3">
+                <button data-iron-mode="alone" class="syn-iron-btn py-2 px-2 rounded-xl text-xs font-bold bg-slate-200 text-slate-800 transition">
+                  Iron Alone
+                </button>
+                <button data-iron-mode="vitc" class="syn-iron-btn py-2 px-2 rounded-xl text-xs font-bold bg-emerald-900 text-white shadow transition">
+                  + Vitamin C (75 mg)
+                </button>
+                <button data-iron-mode="tea" class="syn-iron-btn py-2 px-2 rounded-xl text-xs font-bold bg-slate-200 text-slate-800 transition">
+                  + Black Tea (Tannins)
+                </button>
+              </div>
+
+              <div id="synIronReadout" class="mt-4 bg-white rounded-xl p-4 border border-slate-200">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- INTERACTIVE PHYTOCHEMICALS EXPLORER (WORKBOOK QUESTION 5) -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-slate-100">
+          <div>
+            <span class="q-badge text-xs font-extrabold px-2.5 py-1 rounded-md">WORKBOOK QUESTION 5 LAB</span>
+            <h3 class="text-xl font-extrabold text-slate-900 mt-1">
+              🫐 Prairie Phytochemicals Explorer: Nature's Antioxidant Shield
+            </h3>
+            <p class="text-sm text-slate-600">
+              During heavy exercise or stress, mitochondria leak unstable molecules called <strong>free radicals (reactive oxygen species)</strong> that steal electrons and damage cell membranes (<strong>oxidative stress</strong>). Click each plant pigment family below to see how it defends human cells!
+            </p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mt-4" id="phytoSelectorGrid">
+          <button data-phyto="anthocyanin" class="phyto-btn p-3 rounded-xl border text-left transition bg-purple-900 text-white border-purple-900 shadow-sm">
+            <div class="text-xs font-bold opacity-80">Purple / Blue Pigment</div>
+            <div class="font-extrabold text-sm mt-0.5">🫐 Anthocyanins</div>
+          </button>
+          <button data-phyto="carotenoid" class="phyto-btn p-3 rounded-xl border text-left transition bg-slate-50 hover:bg-slate-100 text-slate-800 border-slate-200">
+            <div class="text-xs font-bold text-orange-600">Orange / Yellow Pigment</div>
+            <div class="font-extrabold text-sm mt-0.5">🥕 Beta-Carotene</div>
+          </button>
+          <button data-phyto="lycopene" class="phyto-btn p-3 rounded-xl border text-left transition bg-slate-50 hover:bg-slate-100 text-slate-800 border-slate-200">
+            <div class="text-xs font-bold text-red-600">Bright Red Pigment</div>
+            <div class="font-extrabold text-sm mt-0.5">🍅 Lycopene</div>
+          </button>
+          <button data-phyto="lutein" class="phyto-btn p-3 rounded-xl border text-left transition bg-slate-50 hover:bg-slate-100 text-slate-800 border-slate-200">
+            <div class="text-xs font-bold text-emerald-700">Dark Green / Gold</div>
+            <div class="font-extrabold text-sm mt-0.5">🥬 Lutein &amp; Flavonoids</div>
+          </button>
+        </div>
+
+        <div id="phytoDetailCard" class="mt-4 bg-purple-50/70 border border-purple-200 rounded-xl p-5">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <div class="flex justify-between">
+        <button data-goto="vitamins" class="goto-btn px-4 py-2.5 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold text-sm transition">
+          ← Back to Vitamins Lab
+        </button>
+        <button data-goto="roadblock" class="goto-btn px-5 py-3 rounded-xl bg-emerald-900 hover:bg-emerald-800 text-white font-bold text-sm shadow transition">
+          Next: Roadblock #2 Clinical Triage (Questions 6–8) →
+        </button>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- TAB 4: ROADBLOCK #2 — CLINICAL TRIAGE SIMULATOR (QUESTIONS 6, 7, 8) -->
+    <!-- =================================================================== -->
+    <section id="panel-roadblock" class="tab-panel hidden space-y-6">
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-5 border-b border-slate-100">
+          <div>
+            <span class="inline-block text-xs font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-md bg-amber-100 text-amber-900 mb-2">
+              Step 3 of 5 • Roadblock #2 • Partner B Clinical Specialist Lead (Questions 6, 7 &amp; 8)
+            </span>
+            <h2 class="text-2xl font-extrabold text-slate-900">
+              Clinical Triage Simulator: Diagnosing Deficiencies &amp; Overdoses
+            </h2>
+            <p class="text-slate-600 mt-1 text-sm sm:text-base">
+              <strong>Partner B:</strong> Use the interactive patient files and Health Canada DRI chart below to diagnose all 3 cases for <strong>Questions 6, 7, and 8</strong>. Once solved, use the <em>Peer Coaching Talking Points</em> to teach Partner A!
+            </p>
+          </div>
+          <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-3.5 text-xs text-emerald-950 lg:w-72 shrink-0">
+            <strong>Key DRI Definitions:</strong><br/>
+            • <strong>RDA:</strong> Daily target that meets 97–98% of healthy people's needs.<br/>
+            • <strong>UL (Tolerable Upper Intake Level):</strong> Highest safe daily intake. Going above the UL risks toxicity!
+          </div>
+        </div>
+
+        <!-- Case Selector Buttons -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-5" id="caseSelectorBtns">
+          <button data-case="case1" class="case-tab-btn p-4 rounded-xl border text-left transition bg-emerald-900 text-white border-emerald-900 shadow">
+            <div class="text-xs font-bold text-amber-300">WORKBOOK QUESTION 6</div>
+            <div class="font-extrabold text-base mt-0.5">Case #1: Fatigued Runner</div>
+            <div class="text-xs opacity-85 mt-1">16yo Female • Hb 98 g/L • Plant-Only + Black Tea</div>
+          </button>
+          <button data-case="case2" class="case-tab-btn p-4 rounded-xl border text-left transition bg-slate-50 hover:bg-slate-100 text-slate-800 border-slate-200">
+            <div class="text-xs font-bold text-amber-800">WORKBOOK QUESTION 7</div>
+            <div class="font-extrabold text-base mt-0.5">Case #2: Pre-Workout Stack</div>
+            <div class="text-xs text-slate-500 mt-1">22yo Lifter • 3× Supplement Mega-Dose Overdose</div>
+          </button>
+          <button data-case="case3" class="case-tab-btn p-4 rounded-xl border text-left transition bg-slate-50 hover:bg-slate-100 text-slate-800 border-slate-200">
+            <div class="text-xs font-bold text-amber-800">WORKBOOK QUESTION 8</div>
+            <div class="font-extrabold text-base mt-0.5">Case #3: Winter Hockey Player</div>
+            <div class="text-xs text-slate-500 mt-1">17yo Male • Indoor Rink Nov–Mar • Shin Fracture</div>
+          </button>
+        </div>
+
+        <!-- Active Case Interactive Diagnostic Workspace -->
+        <div id="activeCaseContainer" class="mt-6 bg-slate-50 rounded-2xl border border-slate-200 p-5">
+          <!-- Populated dynamically by JS -->
+        </div>
+      </div>
+
+      <!-- Health Canada DRI Quick Reference Table -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+          <div>
+            <h3 class="text-lg font-extrabold text-slate-900">
+              📋 Official Health Canada DRI Reference Table (Teens 14–18 y &amp; Adults 19–50 y)
+            </h3>
+            <p class="text-xs sm:text-sm text-slate-600">
+              Source: <a href="https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/dietary-reference-intakes/tables.html" target="_blank" rel="noopener noreferrer" class="text-emerald-800 underline font-semibold">Health Canada Dietary Reference Intakes Tables</a>
+            </p>
+          </div>
+          <input id="driSearchInput" type="text" placeholder="Filter nutrient (e.g. Iron, Vitamin D)..."
+                 class="px-3.5 py-2 rounded-xl border border-slate-300 text-xs sm:text-sm w-full sm:w-64 focus:outline-none focus:ring-2 focus:ring-emerald-700" />
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs sm:text-sm">
+            <thead>
+              <tr class="bg-emerald-900 text-white">
+                <th class="p-3 rounded-tl-xl">Micronutrient</th>
+                <th class="p-3">Type</th>
+                <th class="p-3">Teen RDA (14–18 y)</th>
+                <th class="p-3">Adult RDA (19–50 y)</th>
+                <th class="p-3">Safety UL (Upper Limit)</th>
+                <th class="p-3 rounded-tr-xl">Primary Body Function &amp; Pathology</th>
+              </tr>
+            </thead>
+            <tbody id="driTableBody" class="divide-y divide-slate-200">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="flex justify-between">
+        <button data-goto="minerals" class="goto-btn px-4 py-2.5 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold text-sm transition">
+          ← Back to Minerals &amp; Phyto Lab
+        </button>
+        <button data-goto="detour" class="goto-btn px-5 py-3 rounded-xl bg-emerald-900 hover:bg-emerald-800 text-white font-bold text-sm shadow transition">
+          Next: Step 4 The Detour (Question 9) →
+        </button>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- TAB 5: STEP 4 THE DETOUR EXPLORER (WORKBOOK QUESTION 9)             -->
+    <!-- =================================================================== -->
+    <section id="panel-detour" class="tab-panel hidden space-y-6">
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+        <span class="inline-block text-xs font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-md bg-emerald-100 text-emerald-900 mb-2">
+          Step 4 of 5 • Team Detour Choice • Helps Answer Workbook Question 9
+        </span>
+        <h2 class="text-2xl font-extrabold text-slate-900">
+          The Detour: Choose Your Supplement's Micronutrient Strategy
+        </h2>
+        <p class="text-slate-600 mt-1 text-sm sm:text-base">
+          Compare <strong>Option A (The Bio-Shield)</strong> and <strong>Option B (The Bone &amp; Oxygen Engine)</strong> below. Pick the ONE path that best matches your team's target client persona from Leg 1, then test whole-food ingredients to build your answer for <strong>Question 9</strong>!
+        </p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+          <!-- Option A Card -->
+          <div id="detourCardA" class="rounded-2xl border-2 border-emerald-800 bg-emerald-50/40 p-5 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-2">
+                <span class="px-3 py-1 rounded-full text-xs font-extrabold bg-emerald-900 text-white">
+                  OPTION A: THE "BIO-SHIELD"
+                </span>
+                <span class="text-xs font-bold text-emerald-900">Antioxidant &amp; Immune Focus</span>
+              </div>
+              <h3 class="text-lg font-extrabold text-slate-900 mt-3">
+                Cellular Antioxidant &amp; Immune Recovery Matrix
+              </h3>
+              <p class="text-xs sm:text-sm text-slate-600 mt-1">
+                <strong>Best For Client Personas:</strong> Cross-country endurance athletes, high-stress university students, healthcare shift workers, or post-illness recovery clients.
+              </p>
+
+              <div class="mt-4 space-y-2 text-xs sm:text-sm">
+                <div class="p-3 rounded-xl bg-white border border-emerald-200">
+                  <strong>1. Key Micronutrients:</strong> Vitamin C (90–200 mg), Vitamin E (15 mg alpha-tocopherol), Zinc (10 mg), and Selenium (55 mcg).
+                </div>
+                <div class="p-3 rounded-xl bg-white border border-emerald-200">
+                  <strong>2. Prairie Whole-Food Phytochemicals:</strong> Freeze-dried <strong>Saskatchewan Saskatoon Berry powder</strong> or wild blueberry extract (rich in purple <strong>anthocyanins</strong>), tart cherry powder, or ground flax hull lignans.
+                </div>
+                <div class="p-3 rounded-xl bg-white border border-emerald-200">
+                  <strong>3. Body-System Mechanism (For Q9b):</strong> Donates electrons to neutralize exercise-induced <strong>free radicals</strong>, stops lipid peroxidation of muscle cell membranes, and fuels white blood cell immune defense.
+                </div>
+              </div>
+            </div>
+
+            <button data-select-detour="A" class="select-detour-btn mt-5 w-full py-2.5 rounded-xl bg-emerald-900 hover:bg-emerald-800 text-white font-bold text-xs sm:text-sm transition">
+              ✓ Select Option A (Bio-Shield) for Our Team
+            </button>
+          </div>
+
+          <!-- Option B Card -->
+          <div id="detourCardB" class="rounded-2xl border-2 border-slate-200 bg-slate-50 p-5 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-2">
+                <span class="px-3 py-1 rounded-full text-xs font-extrabold bg-amber-700 text-white">
+                  OPTION B: THE "BONE &amp; OXYGEN ENGINE"
+                </span>
+                <span class="text-xs font-bold text-amber-900">Structural &amp; Aerobic Focus</span>
+              </div>
+              <h3 class="text-lg font-extrabold text-slate-900 mt-3">
+                Hemoglobin O<sub>2</sub> Transport &amp; Skeletal Density Matrix
+              </h3>
+              <p class="text-xs sm:text-sm text-slate-600 mt-1">
+                <strong>Best For Client Personas:</strong> Teenage hockey/basketball players in winter, female distance runners, strength athletes, or Saskatchewan farm/construction workers.
+              </p>
+
+              <div class="mt-4 space-y-2 text-xs sm:text-sm">
+                <div class="p-3 rounded-xl bg-white border border-slate-200">
+                  <strong>1. Key Micronutrients:</strong> Iron (12–15 mg), Vitamin C (75 mg to triple plant iron absorption), Calcium (400–600 mg), Vitamin D3 (600–1,000 IU), and Magnesium (150 mg).
+                </div>
+                <div class="p-3 rounded-xl bg-white border border-slate-200">
+                  <strong>2. Whole-Food &amp; Bioavailable Ingredients:</strong> Roasted <strong>pumpkin seed protein</strong> or red lentil flour (iron + magnesium), fortified oat/pea milk solids (calcium + Vit D3), and acerola/camu berry (Vitamin C).
+                </div>
+                <div class="p-3 rounded-xl bg-white border border-slate-200">
+                  <strong>3. Body-System Mechanism (For Q9b):</strong> Builds <strong>hemoglobin</strong> in red blood cells to carry O<sub>2</sub> to mitochondria, while Vitamin D3 unlocks intestinal Ca<sup>2+</sup> absorption to harden bone matrix and prevent stress fractures.
+                </div>
+              </div>
+            </div>
+
+            <button data-select-detour="B" class="select-detour-btn mt-5 w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs sm:text-sm transition">
+              Select Option B (Bone &amp; Oxygen Engine) for Our Team
+            </button>
+          </div>
+        </div>
+
+        <!-- Question 9 Sentence Builder Scaffold -->
+        <div id="detourScaffoldBox" class="mt-6 bg-amber-50 border border-amber-200 rounded-2xl p-5">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <div class="flex justify-between">
+        <button data-goto="roadblock" class="goto-btn px-4 py-2.5 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold text-sm transition">
+          ← Back to Roadblock #2
+        </button>
+        <button data-goto="pitstop" class="goto-btn px-5 py-3 rounded-xl bg-emerald-900 hover:bg-emerald-800 text-white font-bold text-sm shadow transition">
+          Next: Step 5 Pit Stop #2 Fortification Architect (Question 10) →
+        </button>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- TAB 6: STEP 5 PIT STOP #2 — FORTIFICATION ARCHITECT (QUESTION 10)   -->
+    <!-- =================================================================== -->
+    <section id="panel-pitstop" class="tab-panel hidden space-y-6">
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+        <span class="inline-block text-xs font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-md bg-emerald-100 text-emerald-900 mb-2">
+          Step 5 of 5 • Pit Stop #2 Deliverable • Builds Your Answer for Workbook Question 10
+        </span>
+        <h2 class="text-2xl font-extrabold text-slate-900">
+          Pit Stop #2: Supplement Micronutrient Fortification &amp; UL Safety Architect
+        </h2>
+        <p class="text-slate-600 mt-1 text-sm sm:text-base">
+          Choose <strong>3 micronutrients</strong> and <strong>1 plant phytochemical source</strong> for one serving of your product. Adjust the dose sliders below to calculate the exact <strong>% of Daily RDA</strong> and verify that every nutrient stays safely below Health Canada's <strong>Tolerable Upper Intake Level (UL)</strong>!
+        </p>
+
+        <!-- Client Age Group Toggle -->
+        <div class="mt-4 flex flex-wrap items-center gap-3 bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+          <span class="text-xs font-extrabold uppercase text-slate-600">Select Target Client Life-Stage Group:</span>
+          <button id="ageBtnTeen" class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-900 text-white">
+            Teens (14–18 Years)
+          </button>
+          <button id="ageBtnAdult" class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-white text-slate-700 border border-slate-300">
+            Adults (19–50 Years)
+          </button>
+        </div>
+
+        <!-- 3 Micronutrient Slot Builders -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 mt-5" id="fortificationSlotsContainer">
+          <!-- Slot 1, 2, 3 rendered by JS -->
+        </div>
+
+        <!-- Phytochemical & Safety Warning Builder -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-5">
+          <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200">
+            <label class="block text-xs font-extrabold uppercase text-emerald-900 mb-1">
+              Question 10c • Whole-Food Plant Phytochemical Source
+            </label>
+            <p class="text-xs text-slate-600 mb-3">
+              Select the colourful plant ingredient providing antioxidant phytochemicals in your formula:
+            </p>
+            <select id="phytoIngredientSelect" class="w-full p-2.5 rounded-xl border border-slate-300 text-xs sm:text-sm font-semibold bg-white">
+              <option value="Freeze-dried Saskatchewan Saskatoon Berry powder (500 mg) providing purple anthocyanin antioxidants">
+                Saskatchewan Saskatoon Berry Powder (Anthocyanins — Purple)
+              </option>
+              <option value="Wild Blueberry &amp; Tart Cherry extract (400 mg) providing anthocyanin &amp; flavonoid antioxidants">
+                Wild Blueberry &amp; Tart Cherry Extract (Anthocyanins — Blue/Red)
+              </button>
+              <option value="Organic Spinach &amp; Kale leaf powder (500 mg) providing lutein and zeaxanthin carotenoids">
+                Spinach &amp; Kale Leaf Powder (Lutein &amp; Carotenoids — Dark Green)
+              </option>
+              <option value="Roasted Carrot &amp; Pumpkin powder (450 mg) providing provitamin A beta-carotene">
+                Carrot &amp; Pumpkin Powder (Beta-Carotene — Bright Orange)
+              </option>
+              <option value="Tomato &amp; Watermelon extract (350 mg) providing lycopene antioxidants">
+                Tomato &amp; Watermelon Extract (Lycopene — Red)
+              </option>
+            </select>
+          </div>
+
+          <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200">
+            <label class="block text-xs font-extrabold uppercase text-amber-900 mb-1">
+              Question 10d • Package Medical Safety / Contraindication Warning
+            </label>
+            <p class="text-xs text-slate-600 mb-2">
+              Auto-generated warning based on your chosen nutrients (you can also edit or customize it):
+            </p>
+            <textarea id="safetyWarningInput" rows="3"
+                      class="w-full p-2.5 rounded-xl border border-slate-300 text-xs sm:text-sm bg-white text-slate-800"></textarea>
+          </div>
+        </div>
+
+        <!-- Generated Summary Box for Workbook Question 10 -->
+        <div class="mt-6 bg-emerald-950 text-white rounded-2xl p-5">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-white/15">
+            <div>
+              <span class="text-xs font-extrabold uppercase tracking-wider text-amber-300">Ready for Workbook Question 10</span>
+              <h3 class="text-lg font-extrabold">Your Pit Stop #2 Micronutrient Blueprint Summary</h3>
+            </div>
+            <div class="flex items-center gap-2">
+              <button id="copyBlueprintBtn" class="px-4 py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-xs sm:text-sm transition shadow">
+                📋 Copy Summary Text
+              </button>
+            </div>
+          </div>
+          <pre id="blueprintSummaryPre" class="mt-3 text-xs sm:text-sm font-mono whitespace-pre-wrap text-emerald-100 leading-relaxed"></pre>
+          <div id="copyToastMsg" class="mt-2 text-xs font-bold text-amber-300 hidden">
+            ✓ Copied to clipboard! Now write or paste your key points into Question 10 of your Leg 2 Workbook.
+          </div>
+        </div>
+      </div>
+
+      <!-- Practice 2-Minute Teacher Oral Defense Flashcards -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+        <span class="text-xs font-extrabold uppercase tracking-wider text-amber-800">Rehearse Before Approaching the Teacher Desk</span>
+        <h3 class="text-xl font-extrabold text-slate-900 mt-0.5">
+          🎤 Practice Pit Stop #2 Oral Defense Questions (Click Any Card to Flip)
+        </h3>
+        <p class="text-sm text-slate-600 mb-4">
+          Remember Leading Measure <strong>C3</strong> from your WIG sheet: rehearse your verbal defense out loud with your partner before asking for your Pit Stop stamp!
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="defenseCardsGrid">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-white border-t border-slate-200 mt-10 py-5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+      <div>
+        <strong>SK Health Science 20 • Unit 2: The Amazing Nutri-Race</strong> • Leg 2 Lab Assistant (Outcome HS20-NU1 b, g)
+      </div>
+      <div class="flex flex-wrap gap-4">
+        <a href="https://curriculum.gov.sk.ca/CurriculumOutcomeContent?id=74&oc=109142" target="_blank" rel="noopener noreferrer" class="hover:text-emerald-800 underline">
+          SK Curriculum HS20-NU1
+        </a>
+        <a href="https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/dietary-reference-intakes/tables.html" target="_blank" rel="noopener noreferrer" class="hover:text-emerald-800 underline">
+          Health Canada DRI Tables
+        </a>
+        <a href="https://loganpetlak.ca/nutrition/" target="_blank" rel="noopener noreferrer" class="hover:text-emerald-800 underline">
+          SK HS20 Nutrition Notes
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- APPLICATION SCRIPT -->
+  <script>
+    // =========================================================================
+    // 1. STATE & GROUNDED HEALTH CANADA DRI DATASET
+    // =========================================================================
+    const STORAGE_KEY = 'sk_hs20_leg2_progress_v1';
+
+    const WORKBOOK_QUESTIONS = [
+      { id: 'q1', num: 'Q1', stage: 'Route Info 2A', title: 'Fat-Soluble vs. Water-Soluble Toxicity & Lipid Absorption', tab: 'vitamins' },
+      { id: 'q2', num: 'Q2', stage: 'Route Info 2A', title: 'B-Complex Energy Coenzymes vs. Vitamin C Collagen/Immune Jobs', tab: 'vitamins' },
+      { id: 'q3', num: 'Q3', stage: 'Route Info 2B', title: 'Major (>100 mg) vs. Trace (<100 mg) Minerals: Calcium & Iron', tab: 'minerals' },
+      { id: 'q4', num: 'Q4', stage: 'Route Info 2B', title: 'Synergistic Nutrient Pairs (Vit D + Ca, Vit C + Plant Iron)', tab: 'minerals' },
+      { id: 'q5', num: 'Q5', stage: 'Route Info 2C', title: 'Plant Phytochemicals & Free Radical Antioxidant Defense', tab: 'minerals' },
+      { id: 'q6', num: 'Q6', stage: 'Roadblock #2', title: 'Clinical Case #1: 16yo Female Runner (Iron-Deficiency Anemia)', tab: 'roadblock' },
+      { id: 'q7', num: 'Q7', stage: 'Roadblock #2', title: 'Clinical Case #2: 22yo Weightlifter Mega-Dose Stack (Vit A/D/B6 Toxicity)', tab: 'roadblock' },
+      { id: 'q8', num: 'Q8', stage: 'Roadblock #2', title: 'Clinical Case #3: 17yo SK Winter Hockey Player (Vit D & Calcium Deficit)', tab: 'roadblock' },
+      { id: 'q9', num: 'Q9', stage: 'Step 4 Detour', title: 'Team Detour Choice (Option A Bio-Shield vs. Option B Bone & Oxygen)', tab: 'detour' },
+      { id: 'q10', num: 'Q10', stage: 'Step 5 Pit Stop', title: 'Supplement 3-Micronutrient Blueprint, UL Safety & Warning Label', tab: 'pitstop' }
+    ];
+
+    const SYSTEM_BRIDGE_DATA = {
+      circulatory: {
+        title: '🩸 Circulatory System + Micronutrients',
+        summary: 'Red blood cells (erythrocytes) cannot carry oxygen without Iron, Vitamin B12, and Folate (B9), while Vitamin C keeps blood vessel walls strong.',
+        bullets: [
+          '<strong>Iron (Fe — Trace Mineral):</strong> Forms the heme ring inside <strong>hemoglobin</strong> that binds O<sub>2</sub> in the lungs and delivers it to working muscles.',
+          '<strong>Vitamin B12 &amp; Folate (B9):</strong> Required inside bone marrow to divide and mature healthy red blood cells (deficiency causes megaloblastic anemia).',
+          '<strong>Vitamin C &amp; Anthocyanins:</strong> Cross-link collagen in artery/capillary walls and protect LDL cholesterol from oxidative free-radical damage.'
+        ]
+      },
+      skeletal: {
+        title: '🦴 Skeletal System + Micronutrients',
+        summary: 'Living bone tissue constantly remodels using a crystalline mineral matrix that depends on Vitamin D3 to cross the gut wall.',
+        bullets: [
+          '<strong>Calcium (Ca<sup>2+</sup>) &amp; Phosphorus (P):</strong> Major minerals (>100 mg/day) that crystallize into <strong>hydroxyapatite</strong> to give bones compressive strength.',
+          '<strong>Vitamin D3 (Cholecalciferol):</strong> Acts like a hormone that tells intestinal villi to build calcium transport proteins. Without Vitamin D, up to 85% of dietary calcium passes right through the gut unabsorbed!',
+          '<strong>Magnesium &amp; Vitamin K:</strong> Activate osteocalcin proteins that lock calcium ions into bone matrix instead of soft tissues.'
+        ]
+      },
+      muscular: {
+        title: '💪 Muscular System + Micronutrients',
+        summary: 'Skeletal &amp; cardiac muscle fibers need electrolytes to fire contractions and B-vitamins to unlock ATP energy.',
+        bullets: [
+          '<strong>Calcium (Ca<sup>2+</sup>) Ions:</strong> Released from the sarcoplasmic reticulum to unlock troponin/tropomyosin so actin and myosin filaments can slide and contract.',
+          '<strong>Magnesium (Mg<sup>2+</sup>) &amp; Potassium (K<sup>+</sup>):</strong> Allow muscle fibers to relax after contraction and prevent painful exercise cramps.',
+          '<strong>B-Complex Vitamins (B1, B2, B3, B6):</strong> Coenzymes inside muscle mitochondria that convert glucose and fatty acids into ATP.'
+        ]
+      },
+      nervous: {
+        title: '⚡ Nervous System + Micronutrients',
+        summary: 'Neurons fire electrical action potentials using mineral ions and synthesize neurotransmitters using B-vitamins.',
+        bullets: [
+          '<strong>Sodium (Na<sup>+</sup>) &amp; Potassium (K<sup>+</sup>):</strong> Power the Na<sup>+</sup>/K<sup>+</sup> pump that maintains resting membrane voltage and fires nerve impulses.',
+          '<strong>Vitamin B6 (Pyridoxine) &amp; B12:</strong> Maintain the insulating myelin sheath around nerve axons. (Warning: Mega-dosing Vitamin B6 above the 100 mg/day UL actually damages sensory nerves!)',
+          '<strong>Iron &amp; Iodine:</strong> Support brain oxygen delivery and thyroid hormones that regulate mental alertness.'
+        ]
+      },
+      digestive: {
+        title: '🧪 Digestive System + Micronutrients',
+        summary: 'Your small intestine uses two totally different absorption pathways depending on whether a micronutrient dissolves in water or fat.',
+        bullets: [
+          '<strong>Water-Soluble Absorption:</strong> Vitamin C and B-vitamins dissolve in water and absorb directly through intestinal villi capillaries into the hepatic portal blood.',
+          '<strong>Fat-Soluble Absorption (Vitamins A, D, E, K):</strong> Must be emulsified with <strong>dietary lipids (fats) and bile salts</strong> into micelles before entering intestinal lacteals.',
+          '<strong>Chemical Synergy in the Gut:</strong> Vitamin C chemically reduces plant non-heme iron (Fe<sup>3+</sup> → Fe<sup>2+</sup>) in the duodenum so enterocytes can absorb 3–4× more iron.'
+        ]
+      },
+      immune: {
+        title: '🛡️ Immune System + Micronutrients',
+        summary: 'White blood cells (leukocytes) generate reactive bursts to fight pathogens and rely on antioxidants to protect healthy host tissues.',
+        bullets: [
+          '<strong>Vitamin C &amp; Vitamin E:</strong> Neutralize reactive oxygen species (free radicals) in watery plasma (Vit C) and fatty cell membranes (Vit E).',
+          '<strong>Zinc (Zn) &amp; Vitamin D3:</strong> Essential for T-lymphocyte maturation, skin barrier repair, and regulating inflammatory cytokines.',
+          '<strong>Plant Phytochemicals (Anthocyanins, Carotenoids):</strong> Bioactive plant pigments that lower systemic inflammation after intense training.'
+        ]
+      }
+    };
+
+    const VITAMIN_SIM_DATA = {
+      vitC: {
+        name: 'Vitamin C (Ascorbic Acid)',
+        type: 'Water-Soluble Vitamin',
+        rda: '75 mg/day (Teens) / 90 mg/day (Adults)',
+        ul: '1,800–2,000 mg/day',
+        role: 'Collagen synthesis (blood vessels, tendons, gums), antioxidant defense, and boosting plant iron absorption.'
+      },
+      vitB12: {
+        name: 'Vitamin B12 (Cobalamin)',
+        type: 'Water-Soluble Vitamin',
+        rda: '2.4 mcg/day',
+        ul: 'No formal UL (excess excreted in urine)',
+        role: 'Coenzyme for red blood cell formation, DNA synthesis, and nerve myelin sheath maintenance.'
+      },
+      vitD: {
+        name: 'Vitamin D3 (Cholecalciferol)',
+        type: 'Fat-Soluble Vitamin',
+        rda: '15 mcg (600 IU)/day',
+        ul: '100 mcg (4,000 IU)/day',
+        role: 'Triggers small intestine villi to absorb Calcium (Ca²⁺) and Phosphorus for bone mineralization.'
+      },
+      vitA: {
+        name: 'Vitamin A (Preformed Retinol)',
+        type: 'Fat-Soluble Vitamin',
+        rda: '700–900 mcg RAE/day',
+        ul: '2,800–3,000 mcg RAE/day',
+        role: 'Retinal night vision pigments, epithelial skin/mucous barrier integrity, and immune cell signaling.'
+      }
+    };
+
+    const PHYTO_DATA = {
+      anthocyanin: {
+        name: '🫐 Anthocyanins (Purple, Blue &amp; Deep Red Pigments)',
+        sources: 'Saskatchewan Saskatoon Berries, Wild Blueberries, Blackcurrants, Tart Cherries, Purple Cabbage',
+        mechanism: 'Water-soluble flavonoid pigments that donate electrons to neutralize reactive oxygen species (free radicals) in blood vessels, improve nitric oxide blood flow, and reduce muscle soreness after heavy exercise.',
+        tip: 'In Workbook Question 5b, citing Saskatchewan Saskatoon berry anthocyanins is a great local example!'
+      },
+      carotenoid: {
+        name: '🥕 Beta-Carotene &amp; Alpha-Carotene (Orange &amp; Yellow Pigments)',
+        sources: 'Carrots, Sweet Potatoes, Butternut Squash, Pumpkin, Apricots',
+        mechanism: 'Fat-soluble provitamin A carotenoids that protect cell membrane lipids from oxidative damage. Unlike synthetic preformed Retinol pills, plant beta-carotene is only converted into Vitamin A as your body needs it, so it does not cause liver Vitamin A toxicity!',
+        tip: 'Because carotenoids are fat-soluble, pairing them with 5g of healthy seed/nut oils boosts absorption!'
+      },
+      lycopene: {
+        name: '🍅 Lycopene (Bright Red Carotenoid Pigment)',
+        sources: 'Tomatoes (especially cooked tomato paste/sauce), Watermelon, Pink Grapefruit, Rosehips',
+        mechanism: 'A potent singlet-oxygen quencher that protects cardiovascular endothelium (artery linings) and prostate/cellular DNA from oxidative stress.',
+        tip: 'Gentle heating with a small amount of healthy oil makes lycopene much more bioavailable.'
+      },
+      lutein: {
+        name: '🥬 Lutein, Zeaxanthin &amp; Quercetin (Dark Green &amp; Gold Pigments)',
+        sources: 'Spinach, Kale, Swiss Chard, Broccoli, Pea Shoots, Apples, Onions',
+        mechanism: 'Lutein and zeaxanthin concentrate in the macula of the human retina to filter high-energy blue light and prevent oxidative eye damage, while quercetin supports capillary and immune health.',
+        tip: 'Dark leafy greens pair lutein phytochemicals with Calcium, Magnesium, and Vitamin K!'
+      }
+    };
+
+    const CLINICAL_CASES = {
+      case1: {
+        qLabel: 'WORKBOOK QUESTION 6 • CLINICAL CASE #1',
+        title: 'The Fatigued Cross-Country Runner (16-Year-Old Female)',
+        chart: 'A 16-year-old female distance runner follows a strict plant-only diet and drinks black tea with every meal. She complains of extreme shortness of breath on hills, dizziness, pale skin (pallor), and constantly cold hands. Blood work shows low hemoglobin (98 g/L; normal is 120–160 g/L) and small, pale (microcytic) red blood cells.',
+        vitals: [
+          { label: 'Patient Hemoglobin', val: '98 g/L (LOW — Normal 120–160 g/L)', status: 'danger' },
+          { label: 'Estimated Iron Intake', val: '7 mg/day Non-Heme (Teen Female RDA = 15 mg/day)', status: 'danger' },
+          { label: 'Meal Beverage Habit', val: 'Black Tea with meals (High Tannins / Polyphenols)', status: 'warn' }
+        ],
+        options: [
+          { id: 'c1_a', text: 'Hypervitaminosis D (Vitamin D Toxicity)', correct: false, why: 'Incorrect. Excess Vitamin D causes high blood calcium (hypercalcemia), not low hemoglobin or small pale red blood cells.' },
+          { id: 'c1_b', text: 'Iron-Deficiency Anemia (Microcytic Anemia)', correct: true, why: 'Correct! Low dietary iron intake combined with poor non-heme absorption prevents bone marrow from synthesizing enough hemoglobin.' },
+          { id: 'c1_c', text: 'Scurvy (Severe Vitamin C Deficiency)', correct: false, why: 'Incorrect. Scurvy causes bleeding gums and capillary bruising due to failed collagen cross-linking, rather than low hemoglobin oxygen transport.' }
+        ],
+        scaffold: {
+          a: '<strong>a) Diagnosis &amp; Target Micronutrient:</strong> She has <strong>Iron-Deficiency Anemia</strong> caused by an inadequate intake and low absorption of the trace mineral <strong>Iron (Fe)</strong>.',
+          b: '<strong>b) Physiological Mechanism:</strong> Iron sits at the center of <strong>hemoglobin</strong> molecules inside red blood cells (erythrocytes). With hemoglobin at 98 g/L, her blood cannot carry enough oxygen (O<sub>2</sub>) to muscle mitochondria for cellular respiration (ATP production), causing shortness of breath and fatigue.',
+          c: '<strong>c) Formulation Fix:</strong> Teen females (14–18 y) need an <strong>RDA of 15 mg/day of Iron</strong> (staying well below the <strong>45 mg/day UL</strong>). Plant foods only contain <strong>non-heme iron (Fe<sup>3+</sup>)</strong>, and <strong>tannins in black tea</strong> bind iron in the gut and block absorption. Her supplement should provide ~12–15 mg of iron paired with <strong>75 mg of Vitamin C (ascorbic acid)</strong> to chemically reduce Fe<sup>3+</sup> → Fe<sup>2+</sup> and triple gut absorption (and drink tea between meals!).'
+        }
+      },
+      case2: {
+        qLabel: 'WORKBOOK QUESTION 7 • CLINICAL CASE #2',
+        title: "The 'Mega-Dose' Pre-Workout Overdose (22-Year-Old Weightlifter)",
+        chart: "A 22-year-old weightlifter stacks three different 'Extreme Pre-Workout & Liver King' supplements every day, consuming 18,000 mcg RAE/day of preformed Vitamin A (6× the UL), 12,000 IU (300 mcg)/day of Vitamin D (3× the UL), and 250 mg/day of Vitamin B6 (2.5× the UL). He presents with nausea, severe headaches, liver enzyme elevation, high blood calcium (hypercalcemia), and numbness/tingling in his hands.",
+        vitals: [
+          { label: 'Preformed Vitamin A Intake', val: '18,000 mcg RAE/day (UL = 3,000 mcg/day → 600% of UL!)', status: 'danger' },
+          { label: 'Vitamin D3 Intake', val: '12,000 IU / 300 mcg/day (UL = 4,000 IU / 100 mcg → 300% of UL!)', status: 'danger' },
+          { label: 'Vitamin B6 Intake', val: '250 mg/day (Adult UL = 100 mg/day → 250% of UL!)', status: 'danger' }
+        ],
+        options: [
+          { id: 'c2_a', text: 'Acute Iron & Calcium Deficiency', correct: false, why: 'Incorrect. His blood calcium is dangerously HIGH (hypercalcemia), caused by over-supplementing way past the Tolerable Upper Intake Levels.' },
+          { id: 'c2_b', text: 'Chronic Hypervitaminosis A & D + Vitamin B6 Sensory Neuropathy', correct: true, why: 'Correct! Fat-soluble Vitamins A and D accumulate in the liver and adipose tissue, while mega-dose Vitamin B6 (>100 mg/day UL) causes peripheral nerve numbness.' },
+          { id: 'c2_c', text: 'Simple Dehydration from Water-Soluble Vitamin C', correct: false, why: 'Incorrect. Vitamin A and D are fat-soluble so the kidneys cannot simply flush them out in urine.' }
+        ],
+        scaffold: {
+          a: '<strong>a) Toxicity Storage:</strong> <strong>Vitamin A and Vitamin D</strong> are both <strong>fat-soluble vitamins</strong>. Instead of dissolving in watery urine to be excreted by the kidneys, excess doses accumulate in <strong>liver and adipose (fat) tissue</strong>, causing chronic toxicity (<strong>hypervitaminosis</strong>) and liver inflammation.',
+          b: '<strong>b) Physiological Mechanism:</strong> Excess <strong>Vitamin D</strong> forces the gut to over-absorb calcium and pulls calcium into the blood, causing dangerous <strong>hypercalcemia</strong> (which can calcify kidneys and blood vessels). Meanwhile, taking 250 mg/day of water-soluble <strong>Vitamin B6</strong> (above the 100 mg UL) causes direct <strong>sensory nerve damage (neuropathy)</strong>, explaining the tingling/numbness in his hands.',
+          c: '<strong>c) Formulation Fix:</strong> Health Canada Adult ULs are <strong>3,000 mcg RAE/day for Vitamin A</strong>, <strong>4,000 IU (100 mcg)/day for Vitamin D</strong>, and <strong>100 mg/day for Vitamin B6</strong>. He must stop all three mega-dose supplements immediately and seek medical monitoring.'
+        }
+      },
+      case3: {
+        qLabel: 'WORKBOOK QUESTION 8 • CLINICAL CASE #3',
+        title: 'Winter Indoor Training & Stress Fractures (17-Year-Old SK Hockey Player)',
+        chart: 'A 17-year-old hockey player in Saskatchewan trains indoors all winter (November to March), avoids dairy products due to lactose intolerance, and drinks 3 cans of cola daily. After a minor check into the boards, X-rays reveal a tibial (shin) stress fracture and unusually low bone mineral density (osteopenia).',
+        vitals: [
+          { label: 'Dietary Calcium Intake', val: '380 mg/day (Teen 14–18 y RDA = 1,300 mg/day)', status: 'danger' },
+          { label: 'Winter Vitamin D Status', val: 'Low (<30 nmol/L) — Indoor training + Northern SK latitude', status: 'danger' },
+          { label: 'Skeletal X-Ray Finding', val: 'Tibial stress fracture & low bone density (Osteopenia)', status: 'warn' }
+        ],
+        options: [
+          { id: 'c3_a', text: 'Dual Vitamin D3 & Calcium Deficiency causing Osteopenia', correct: true, why: 'Correct! Avoiding dairy without fortified alternatives starved his diet of Calcium, while Saskatchewan winter sun angles halted skin Vitamin D synthesis.' },
+          { id: 'c3_b', text: 'Excessive Potassium & Magnesium Toxicity', correct: false, why: 'Incorrect. His bone mineral density is low because of insufficient Calcium and Vitamin D, not mineral excess.' },
+          { id: 'c3_c', text: 'Vitamin A Retinol Night-Blindness', correct: false, why: 'Incorrect. Tibial stress fractures and osteopenia are structural bone matrix deficits tied to Calcium, Phosphorus, and Vitamin D.' }
+        ],
+        scaffold: {
+          a: '<strong>a) Dual-Nutrient Deficit:</strong> He is deficient in both the fat-soluble vitamin <strong>Vitamin D3 (cholecalciferol)</strong> and the major mineral <strong>Calcium (Ca<sup>2+</sup>)</strong>.',
+          b: '<strong>b) Physiological Mechanism:</strong> From October to March in Saskatchewan (above 49°N latitude), the sun sits too low in the sky for UVB rays to trigger skin synthesis of Vitamin D. Without Vitamin D, his small intestine absorbs very little Calcium. When blood Ca<sup>2+</sup> drops, the parathyroid glands release <strong>parathyroid hormone (PTH)</strong>, which pulls Calcium out of his bones (<strong>bone resorption</strong>) to keep heart and nerve signals working—leaving his shin bone porous and prone to stress fractures.',
+          c: '<strong>c) Formulation Fix:</strong> Provide a <strong>lactose-free supplement</strong> (using calcium citrate or fortified pea/oat protein matrix) supplying <strong>500–600 mg Calcium per serving</strong> toward his <strong>1,300 mg/day Teen RDA</strong> (UL = 3,000 mg) paired with <strong>600–1,000 IU (15–25 mcg) of Vitamin D3</strong> (RDA = 600 IU; UL = 4,000 IU) plus a little healthy seed oil for lipid absorption.'
+        }
+      }
+    };
+
+    const DRI_TABLE_DATA = [
+      { id: 'iron', name: 'Iron (Fe)', unit: 'mg', type: 'Trace Mineral (<100 mg/d)', teenRda: 15, adultRda: 18, ul: 45, defaultDose: 12,
+        synergy: 'Pair with Vitamin C (ascorbic acid) to reduce non-heme Fe³⁺ to Fe²⁺ and triple gut absorption.',
+        warning: 'Accidental overdose of iron-containing products is a leading cause of poisoning in young children; do not exceed 45 mg/day UL.',
+        func: 'Core of hemoglobin (O₂ transport in blood) & myoglobin; deficiency causes microcytic anemia.' },
+      { id: 'calcium', name: 'Calcium (Ca)', unit: 'mg', type: 'Major Mineral (>100 mg/d)', teenRda: 1300, adultRda: 1000, ul: 2500, defaultDose: 450,
+        synergy: 'Requires Vitamin D3 (cholecalciferol) to synthesize intestinal calcium transport proteins.',
+        warning: 'Do not exceed 2,500 mg/day total calcium intake to avoid kidney stones (nephrolithiasis) and hypercalcemia.',
+        func: 'Builds bone/tooth hydroxyapatite matrix, triggers actin-myosin muscle contraction & blood clotting.' },
+      { id: 'vitd', name: 'Vitamin D3 (Cholecalciferol)', unit: 'mcg', type: 'Fat-Soluble Vitamin', teenRda: 15, adultRda: 15, ul: 100, defaultDose: 20,
+        synergy: 'Requires dietary lipids (fats) for micelle absorption; unlocks Calcium & Phosphorus bone mineralization.',
+        warning: 'Fat-soluble vitamin stored in liver/adipose tissue; do not exceed 100 mcg (4,000 IU)/day UL to prevent hypercalcemia.',
+        func: 'Regulates intestinal Ca²⁺ absorption, bone density, and immune T-cell signaling (15 mcg = 600 IU; 100 mcg = 4,000 IU).' },
+      { id: 'vitc', name: 'Vitamin C (Ascorbic Acid)', unit: 'mg', type: 'Water-Soluble Vitamin', teenRda: 75, adultRda: 90, ul: 1800, defaultDose: 120,
+        synergy: 'Boosts non-heme plant iron absorption 3–4× and regenerates oxidized Vitamin E in cell membranes.',
+        warning: 'Intakes above 1,800–2,000 mg/day UL may cause osmotic diarrhea and gastrointestinal cramping.',
+        func: 'Coenzyme for collagen synthesis (blood vessels, tendons, gums) & water-soluble antioxidant; deficiency causes Scurvy.' },
+      { id: 'magnesium', name: 'Magnesium (Mg)', unit: 'mg', type: 'Major Mineral (>100 mg/d)', teenRda: 400, adultRda: 400, ul: 350, defaultDose: 150,
+        synergy: 'Works alongside Calcium and Potassium to relax muscle fibers after contraction and stabilize ATP.',
+        warning: 'Supplemental magnesium above 350 mg/day UL can draw water into the bowel and cause osmotic GI distress.',
+        func: 'Cofactor in >300 enzyme reactions, ATP energy stabilization, muscle relaxation, and bone matrix structure.' },
+      { id: 'zinc', name: 'Zinc (Zn)', unit: 'mg', type: 'Trace Mineral (<100 mg/d)', teenRda: 11, adultRda: 11, ul: 34, defaultDose: 9,
+        synergy: 'Pairs with Vitamin C and protein amino acids for rapid tissue repair and immune cell production.',
+        warning: 'Chronic intake above 34–40 mg/day UL blocks intestinal copper absorption and lowers protective HDL.',
+        func: 'Catalytic cofactor for DNA synthesis, wound healing, taste perception, and immune T-cell function.' },
+      { id: 'vite', name: 'Vitamin E (Alpha-Tocopherol)', unit: 'mg', type: 'Fat-Soluble Vitamin', teenRda: 15, adultRda: 15, ul: 800, defaultDose: 15,
+        synergy: 'Requires dietary lipids for absorption; works with Vitamin C to stop free-radical lipid peroxidation.',
+        warning: 'High supplemental doses above 800–1,000 mg/day UL can interfere with Vitamin K blood clotting.',
+        func: 'Fat-soluble antioxidant that protects polyunsaturated fatty acids in cell membranes from oxidative damage.' },
+      { id: 'vitb6', name: 'Vitamin B6 (Pyridoxine)', unit: 'mg', type: 'Water-Soluble Vitamin', teenRda: 1.3, adultRda: 1.3, ul: 80, defaultDose: 2.0,
+        synergy: 'Works with B12, Folate, and Magnesium to metabolize amino acids and synthesize neurotransmitters.',
+        warning: 'Never mega-dose above 80–100 mg/day UL; chronic excess causes sensory nerve damage (peripheral neuropathy).',
+        func: 'Coenzyme in amino acid transamination, glycogen breakdown, and hemoglobin synthesis.' },
+      { id: 'vita', name: 'Vitamin A (Preformed Retinol)', unit: 'mcg', type: 'Fat-Soluble Vitamin', teenRda: 900, adultRda: 900, ul: 2800, defaultDose: 450,
+        synergy: 'Absorbed with dietary lipids; Zinc is required to synthesize retinol-binding protein in the liver.',
+        warning: 'Fat-soluble vitamin stored in the liver; exceeding 2,800–3,000 mcg RAE/day UL causes liver damage and birth defects.',
+        func: 'Retinal rhodopsin night vision, epithelial barrier integrity, and immune defense.' }
+    ];
+
+    const DEFENSE_CARDS = [
+      {
+        q: '1. "Why did your team include a small amount of healthy fat in your product to help with your Leg 2 vitamins?"',
+        a: 'Vitamins A, D, E, and K are non-polar, fat-soluble molecules. They require dietary lipids and bile salts in the small intestine to form micelles and cross the intestinal villi. Without fat, most of our Vitamin D3 or Vitamin E would pass through unabsorbed!'
+      },
+      {
+        q: '2. "What is the difference between an RDA and a UL, and why is exceeding the UL dangerous for fat-soluble vitamins?"',
+        a: 'The RDA is the daily target that meets 97–98% of healthy people’s needs, while the UL (Tolerable Upper Intake Level) is the maximum safe daily intake. While excess water-soluble vitamins (B, C) are filtered out in urine, excess fat-soluble vitamins (A, D) build up in the liver and adipose tissue, causing hypervitaminosis toxicity.'
+      },
+      {
+        q: '3. "Point to one synergistic nutrient pair in your formula and explain how they help each other inside the body."',
+        a: 'Example A: We paired plant non-heme Iron with Vitamin C because ascorbic acid chemically reduces Fe³⁺ to Fe²⁺ in the small intestine, increasing iron absorption 3–4× to build hemoglobin. Example B: We paired Calcium with Vitamin D3 because Vitamin D triggers intestinal villi to build calcium transport proteins.'
+      }
+    ];
+
+    let appState = {
+      activeTab: 'overview',
+      completedQuestions: {},
+      activeSystem: 'circulatory',
+      simVit: 'vitC',
+      simDose: 'normal',
+      simFat: 'withFat',
+      synCaWithD: true,
+      synIronMode: 'vitc',
+      activePhyto: 'anthocyanin',
+      activeCase: 'case1',
+      caseAnswers: {},
+      selectedDetour: 'A',
+      lifeStage: 'teen', // 'teen' | 'adult'
+      slots: [
+        { nutrientId: 'iron', dose: 12 },
+        { nutrientId: 'vitc', dose: 120 },
+        { nutrientId: 'vitd', dose: 20 }
+      ]
+    };
+
+    // Load saved progress safely
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed && typeof parsed === 'object') {
+          appState.completedQuestions = parsed.completedQuestions || {};
+          if (parsed.selectedDetour) appState.selectedDetour = parsed.selectedDetour;
+        }
+      }
+    } catch (err) {
+      // Ignore storage errors in sandboxed iframes
+    }
+
+    function saveProgress() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+          completedQuestions: appState.completedQuestions,
+          selectedDetour: appState.selectedDetour
+        }));
+      } catch (err) {}
+    }
+
+    // =========================================================================
+    // 2. TAB SWITCHING & PROGRESS CHECKLIST
+    // =========================================================================
+    function switchTab(tabId) {
+      appState.activeTab = tabId;
+      document.querySelectorAll('.tab-panel').forEach(panel => {
+        panel.classList.toggle('hidden', panel.id !== `panel-${tabId}`);
+      });
+      document.querySelectorAll('.tab-nav-btn').forEach(btn => {
+        const isTarget = btn.getAttribute('data-tab') === tabId;
+        btn.classList.toggle('tab-btn-active', isTarget);
+        btn.classList.toggle('tab-btn-inactive', !isTarget);
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function renderChecklist() {
+      const grid = document.getElementById('questionChecklistGrid');
+      const doneCount = WORKBOOK_QUESTIONS.filter(q => appState.completedQuestions[q.id]).length;
+      const pct = Math.round((doneCount / WORKBOOK_QUESTIONS.length) * 100);
+
+      document.getElementById('headerProgressBar').style.width = `${pct}%`;
+      document.getElementById('headerProgressText').textContent = `${doneCount}/${WORKBOOK_QUESTIONS.length}`;
+
+      grid.innerHTML = WORKBOOK_QUESTIONS.map(q => {
+        const checked = !!appState.completedQuestions[q.id];
+        return `
+          <div class="flex items-center justify-between gap-3 p-3 rounded-xl border transition ${
+            checked ? 'bg-emerald-50/80 border-emerald-300' : 'bg-slate-50 border-slate-200'
+          }">
+            <label class="flex items-start gap-3 cursor-pointer flex-1">
+              <input type="checkbox" data-qid="${q.id}" class="q-check-input mt-1 w-4 h-4 accent-emerald-800 rounded cursor-pointer" ${checked ? 'checked' : ''} />
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="text-xs font-extrabold px-2 py-0.5 rounded ${checked ? 'bg-emerald-800 text-white' : 'bg-amber-100 text-amber-900'}">${q.num}</span>
+                  <span class="text-xs font-bold text-slate-500">${q.stage}</span>
+                </div>
+                <div class="text-xs sm:text-sm font-bold text-slate-900 mt-0.5 ${checked ? 'line-through opacity-70' : ''}">
+                  ${q.title}
+                </div>
+              </div>
+            </label>
+            <button data-goto="${q.tab}" class="goto-btn text-xs font-bold text-emerald-800 hover:text-emerald-950 underline shrink-0">
+              Open Tool →
+            </button>
+          </div>
+        `;
+      }).join('');
+
+      grid.querySelectorAll('.q-check-input').forEach(input => {
+        input.addEventListener('change', e => {
+          const qid = e.target.getAttribute('data-qid');
+          appState.completedQuestions[qid] = e.target.checked;
+          saveProgress();
+          renderChecklist();
+        });
+      });
+
+      grid.querySelectorAll('.goto-btn').forEach(btn => {
+        btn.addEventListener('click', () => switchTab(btn.getAttribute('data-goto')));
+      });
+    }
+
+    // =========================================================================
+    // 3. BODY SYSTEMS BRIDGE (TAB 1)
+    // =========================================================================
+    function renderSystemBridge() {
+      const sysKey = appState.activeSystem;
+      const data = SYSTEM_BRIDGE_DATA[sysKey];
+      document.querySelectorAll('.sys-btn').forEach(btn => {
+        const active = btn.getAttribute('data-sys') === sysKey;
+        btn.className = `sys-btn px-3 py-3 rounded-xl border text-left transition ${
+          active
+            ? 'bg-emerald-900 text-white border-emerald-900 shadow-sm'
+            : 'bg-slate-50 hover:bg-slate-100 text-slate-800 border-slate-200'
+        }`;
+      });
+
+      const card = document.getElementById('systemDetailCard');
+      card.innerHTML = `
+        <h4 class="text-lg font-extrabold text-emerald-950">${data.title}</h4>
+        <p class="text-sm text-slate-700 mt-1 font-medium">${data.summary}</p>
+        <ul class="mt-3 space-y-2 text-xs sm:text-sm text-slate-800">
+          ${data.bullets.map(b => `<li class="bg-white/90 p-3 rounded-xl border border-emerald-200/80">${b}</li>`).join('')}
+        </ul>
+      `;
+    }
+
+    // =========================================================================
+    // 4. VITAMIN SOLUBILITY SIMULATOR (TAB 2)
+    // =========================================================================
+    function renderVitaminSimulator() {
+      const vKey = appState.simVit;
+      const dose = appState.simDose; // 'normal' | 'mega'
+      const fat = appState.simFat;   // 'withFat' | 'zeroFat'
+      const vInfo = VITAMIN_SIM_DATA[vKey];
+      const isWater = vKey === 'vitC' || vKey === 'vitB12';
+
+      // Update button active states
+      document.querySelectorAll('.sim-vit-btn').forEach(btn => {
+        const active = btn.getAttribute('data-vit') === vKey;
+        btn.className = `sim-vit-btn px-2.5 py-2 rounded-lg text-xs font-bold transition ${
+          active ? 'bg-emerald-900 text-white shadow' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+        }`;
+      });
+      document.querySelectorAll('.sim-dose-btn').forEach(btn => {
+        const active = btn.getAttribute('data-dose') === dose;
+        btn.className = `sim-dose-btn px-2.5 py-2 rounded-lg text-xs font-bold transition ${
+          active ? 'bg-emerald-900 text-white shadow' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+        }`;
+      });
+      document.querySelectorAll('.sim-fat-btn').forEach(btn => {
+        const active = btn.getAttribute('data-fat') === fat;
+        btn.className = `sim-fat-btn px-2.5 py-2 rounded-lg text-xs font-bold transition ${
+          active ? 'bg-emerald-900 text-white shadow' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+        }`;
+      });
+
+      // Compute physiological outcomes
+      let gutAbsorbPct = 90;
+      let gutMessage = '';
+      let kidneyExcretePct = 10;
+      let liverStorageStatus = 'Minimal / Transient';
+      let toxicityAlert = '';
+      let alertClass = 'bg-emerald-50 border-emerald-300 text-emerald-950';
+
+      if (isWater) {
+        gutAbsorbPct = 95;
+        gutMessage = 'Absorbs directly into watery blood capillaries in the small intestine—even with 0g of dietary fat!';
+        if (dose === 'normal') {
+          kidneyExcretePct = 15;
+          liverStorageStatus = 'Cells use what they need right now; tiny excess leaves in urine.';
+          toxicityAlert = '✅ SAFE DAILY BALANCE: Cells receive 100% of their coenzyme needs with zero toxicity buildup.';
+        } else {
+          kidneyExcretePct = 88;
+          liverStorageStatus = 'Not stored in fat tissue; kidneys rapidly flush excess into urine ("expensive urine").';
+          toxicityAlert = '⚠️ WATER-SOLUBLE MEGA-DOSE: Your kidneys filter out ~88% of this mega-dose into your urine within hours! (However, extreme doses above the UL can still cause stomach cramps or nerve issues like B6 neuropathy.)';
+          alertClass = 'bg-amber-50 border-amber-300 text-amber-950';
+        }
+      } else {
+        // Fat-soluble (Vit D or Vit A)
+        if (fat === 'zeroFat') {
+          gutAbsorbPct = 20;
+          gutMessage = '❌ POOR ABSORPTION! Because this is a non-polar FAT-SOLUBLE vitamin, taking it with 0g fat means bile micelles cannot form—80% passes straight out unabsorbed!';
+          kidneyExcretePct = 0;
+          liverStorageStatus = 'Very little reaches the bloodstream or liver because intestinal absorption failed without lipids.';
+          toxicityAlert = '💡 FORMULATION LESSON (For Q1c): Always include at least a small amount of healthy unsaturated lipid (like seed/nut oil) in your supplement so fat-soluble Vitamins A, D, E, and K can cross the small intestine!';
+          alertClass = 'bg-amber-50 border-amber-300 text-amber-950';
+        } else {
+          gutAbsorbPct = 88;
+          gutMessage = '✅ HIGH ABSORPTION! Dietary lipids + bile salts package this fat-soluble vitamin into micelles so it crosses the intestinal villi into the lymphatic system.';
+          kidneyExcretePct = 0;
+          if (dose === 'normal') {
+            liverStorageStatus = 'Safely stored in liver & adipose cells and released steadily as needed.';
+            toxicityAlert = '✅ OPTIMAL FAT-SOLUBLE DELIVERY: Healthy fats unlocked absorption, and the 100% RDA dose stays safely below Health Canada’s UL.';
+          } else {
+            liverStorageStatus = '🚨 DANGER: Trapped & accumulating inside Liver and Adipose (fat) tissues!';
+            toxicityAlert = '🚨 HYPERVITAMINOSIS TOXICITY RISK (For Q1b): Kidneys CANNOT flush fat-soluble vitamins into watery urine! Daily 10× mega-doses build up in the liver and fat tissue, causing hypercalcemia (Vit D) or liver damage (Vit A).';
+            alertClass = 'bg-red-50 border-red-300 text-red-950';
+          }
+        }
+      }
+
+      const container = document.getElementById('vitSimOutput');
+      container.innerHTML = `
+        <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-slate-100">
+          <div>
+            <span class="text-xs font-extrabold uppercase px-2.5 py-0.5 rounded ${isWater ? 'bg-sky-100 text-sky-900' : 'bg-amber-100 text-amber-900'}">
+              ${vInfo.type}
+            </span>
+            <h4 class="text-base sm:text-lg font-extrabold text-slate-900 mt-1">${vInfo.name}</h4>
+          </div>
+          <div class="text-xs text-slate-600">
+            <strong>Health Canada RDA:</strong> ${vInfo.rda} &nbsp;|&nbsp; <strong>Safety UL:</strong> ${vInfo.ul}
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+          <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+            <div class="flex justify-between text-xs font-bold text-slate-700 mb-1">
+              <span>1. Small Intestine Absorption</span>
+              <span>${gutAbsorbPct}%</span>
+            </div>
+            <div class="w-full h-2.5 bg-slate-200 rounded-full overflow-hidden">
+              <div class="h-full ${gutAbsorbPct > 50 ? 'bg-emerald-600' : 'bg-amber-500'} smooth-bar" style="width: ${gutAbsorbPct}%"></div>
+            </div>
+            <p class="text-xs text-slate-600 mt-2">${gutMessage}</p>
+          </div>
+
+          <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+            <div class="flex justify-between text-xs font-bold text-slate-700 mb-1">
+              <span>2. Kidney Urine Flush</span>
+              <span>${kidneyExcretePct}% Flushed</span>
+            </div>
+            <div class="w-full h-2.5 bg-slate-200 rounded-full overflow-hidden">
+              <div class="h-full bg-sky-500 smooth-bar" style="width: ${kidneyExcretePct}%"></div>
+            </div>
+            <p class="text-xs text-slate-600 mt-2">
+              ${isWater
+                ? 'Water-soluble vitamins dissolve in blood plasma; kidneys filter out any daily excess into urine.'
+                : '0% flushed in urine! Fat-soluble vitamins do not dissolve in watery urine.'}
+            </p>
+          </div>
+
+          <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+            <div class="text-xs font-bold text-slate-700 mb-1">3. Liver &amp; Fat Tissue Storage</div>
+            <p class="text-xs font-semibold text-slate-900 mt-1">${liverStorageStatus}</p>
+            <p class="text-xs text-slate-500 mt-1"><strong>Cellular Job:</strong> ${vInfo.role}</p>
+          </div>
+        </div>
+
+        <div class="mt-4 p-3.5 rounded-xl border text-xs sm:text-sm font-medium ${alertClass}">
+          ${toxicityAlert}
+        </div>
+      `;
+    }
+
+    // =========================================================================
+    // 5. MINERALS SYNERGY & PHYTOCHEMICALS LAB (TAB 3)
+    // =========================================================================
+    function renderSynergyLabs() {
+      // Calcium + Vit D readout
+      const caWithD = appState.synCaWithD;
+      const btnLowD = document.getElementById('synCaLowD');
+      const btnHighD = document.getElementById('synCaHighD');
+      btnLowD.className = `flex-1 py-2 px-3 rounded-xl text-xs font-bold transition ${
+        !caWithD ? 'bg-red-800 text-white shadow' : 'bg-slate-200 text-slate-800'
+      }`;
+      btnHighD.className = `flex-1 py-2 px-3 rounded-xl text-xs font-bold transition ${
+        caWithD ? 'bg-emerald-900 text-white shadow' : 'bg-slate-200 text-slate-800'
+      }`;
+
+      const caPct = caWithD ? 35 : 10;
+      const caMg = caWithD ? 175 : 50;
+      document.getElementById('synCaReadout').innerHTML = `
+        <div class="flex justify-between text-xs font-extrabold text-slate-800 mb-1">
+          <span>Intestinal Ca<sup>2+</sup> Absorbed into Blood:</span>
+          <span class="${caWithD ? 'text-emerald-800' : 'text-red-700'}">${caPct}% (${caMg} mg of 500 mg absorbed)</span>
+        </div>
+        <div class="w-full h-3 bg-slate-200 rounded-full overflow-hidden">
+          <div class="h-full ${caWithD ? 'bg-emerald-600' : 'bg-red-500'} smooth-bar" style="width: ${caPct * 2}%"></div>
+        </div>
+        <p class="text-xs text-slate-700 mt-2.5 leading-relaxed">
+          ${caWithD
+            ? '<strong>✅ SYNERGY ACTIVE (For Q4a):</strong> Active Vitamin D3 signals small intestine villi cells to build <strong>calcium-binding transport proteins (calbindin)</strong>, multiplying Calcium absorption so bones stay dense and strong!'
+            : '<strong>❌ SYNERGY MISSING (For Q4a):</strong> Without Vitamin D3, intestinal calcium channels stay closed. Up to 90% of the Calcium in the shake passes straight into the colon unabsorbed, forcing the body to steal Calcium from bones!'}
+        </p>
+      `;
+
+      // Plant Iron + Vit C vs Tea readout
+      const mode = appState.synIronMode;
+      document.querySelectorAll('.syn-iron-btn').forEach(btn => {
+        const active = btn.getAttribute('data-iron-mode') === mode;
+        btn.className = `syn-iron-btn py-2 px-2 rounded-xl text-xs font-bold transition ${
+          active ? 'bg-emerald-900 text-white shadow' : 'bg-slate-200 text-slate-800'
+        }`;
+      });
+
+      let ironPct = 6;
+      let ironColor = 'bg-amber-500';
+      let ironText = '';
+      if (mode === 'alone') {
+        ironPct = 6;
+        ironColor = 'bg-amber-500';
+        ironText = '<strong>⚠️ LOW BASELINE ABSORPTION:</strong> Plant foods contain <strong>non-heme iron (Fe<sup>3+</sup>)</strong>, which is tightly bound and poorly absorbed (~5–6%) on its own.';
+      } else if (mode === 'vitc') {
+        ironPct = 22;
+        ironColor = 'bg-emerald-600';
+        ironText = '<strong>✅ 3.5× SYNERGY BOOST (For Q4b):</strong> <strong>Vitamin C (ascorbic acid)</strong> donates an electron to chemically reduce plant iron from <strong>Fe<sup>3+</sup> to Fe<sup>2+</sup></strong>, forming a soluble chelate that small intestine cells absorb up to 3–4 times faster!';
+      } else {
+        ironPct = 2;
+        ironColor = 'bg-red-600';
+        ironText = '<strong>❌ BLOCKED BY TANNINS (Connects to Case #1):</strong> Polyphenol <strong>tannins in black tea or coffee</strong> bind non-heme iron into an insoluble complex in the gut, dropping absorption to ~2%!';
+      }
+
+      document.getElementById('synIronReadout').innerHTML = `
+        <div class="flex justify-between text-xs font-extrabold text-slate-800 mb-1">
+          <span>Gut Non-Heme Iron Bioavailability:</span>
+          <span>${ironPct}% Absorbed</span>
+        </div>
+        <div class="w-full h-3 bg-slate-200 rounded-full overflow-hidden">
+          <div class="h-full ${ironColor} smooth-bar" style="width: ${ironPct * 3.5}%"></div>
+        </div>
+        <p class="text-xs text-slate-700 mt-2.5 leading-relaxed">${ironText}</p>
+      `;
+    }
+
+    function renderPhytoExplorer() {
+      const pKey = appState.activePhyto;
+      const pData = PHYTO_DATA[pKey];
+
+      document.querySelectorAll('.phyto-btn').forEach(btn => {
+        const active = btn.getAttribute('data-phyto') === pKey;
+        btn.className = `phyto-btn p-3 rounded-xl border text-left transition ${
+          active
+            ? 'bg-emerald-900 text-white border-emerald-900 shadow-sm'
+            : 'bg-slate-50 hover:bg-slate-100 text-slate-800 border-slate-200'
+        }`;
+      });
+
+      document.getElementById('phytoDetailCard').innerHTML = `
+        <h4 class="text-base sm:text-lg font-extrabold text-slate-900">${pData.name}</h4>
+        <div class="text-xs sm:text-sm text-slate-700 mt-2 space-y-2">
+          <p><strong>Whole-Food Sources:</strong> ${pData.sources}</p>
+          <p><strong>How It Protects Human Cells (For Q5):</strong> ${pData.mechanism}</p>
+          <div class="p-2.5 rounded-lg bg-white border border-purple-200 text-xs font-semibold text-purple-950">
+            💡 <strong>Workbook Tip:</strong> ${pData.tip}
+          </div>
+        </div>
+      `;
+    }
+
+    // =========================================================================
+    // 6. ROADBLOCK #2 CLINICAL TRIAGE SIMULATOR (TAB 4)
+    // =========================================================================
+    function renderClinicalCase() {
+      const cKey = appState.activeCase;
+      const cData = CLINICAL_CASES[cKey];
+
+      document.querySelectorAll('.case-tab-btn').forEach(btn => {
+        const active = btn.getAttribute('data-case') === cKey;
+        btn.className = `case-tab-btn p-4 rounded-xl border text-left transition ${
+          active
+            ? 'bg-emerald-900 text-white border-emerald-900 shadow'
+            : 'bg-slate-50 hover:bg-slate-100 text-slate-800 border-slate-200'
+        }`;
+      });
+
+      const chosenOptId = appState.caseAnswers[cKey];
+      const chosenOpt = cData.options.find(o => o.id === chosenOptId);
+
+      const container = document.getElementById('activeCaseContainer');
+      container.innerHTML = `
+        <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-slate-200">
+          <div>
+            <span class="q-badge text-xs font-extrabold px-2.5 py-1 rounded-md">${cData.qLabel}</span>
+            <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mt-1">${cData.title}</h3>
+          </div>
+        </div>
+
+        <p class="mt-3 text-sm text-slate-700 bg-white p-4 rounded-xl border border-slate-200 leading-relaxed">
+          <strong>Patient Chart:</strong> ${cData.chart}
+        </p>
+
+        <!-- Lab Vitals & Biomarkers -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-4">
+          ${cData.vitals.map(v => `
+            <div class="p-3 rounded-xl bg-white border ${v.status === 'danger' ? 'border-red-300' : 'border-amber-300'}">
+              <div class="text-xs font-bold text-slate-500 uppercase">${v.label}</div>
+              <div class="text-xs sm:text-sm font-extrabold ${v.status === 'danger' ? 'text-red-700' : 'text-amber-800'} mt-0.5">${v.val}</div>
+            </div>
+          `).join('')}
+        </div>
+
+        <!-- Step 1: Select Primary Diagnosis -->
+        <div class="mt-5">
+          <div class="text-xs font-extrabold uppercase tracking-wider text-slate-600 mb-2">
+            Step 1: Click to Test Your Primary Clinical Diagnosis
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5">
+            ${cData.options.map(opt => {
+              const isSelected = chosenOptId === opt.id;
+              let btnStyle = 'bg-white hover:bg-slate-100 text-slate-800 border-slate-300';
+              if (isSelected) {
+                btnStyle = opt.correct
+                  ? 'bg-emerald-900 text-white border-emerald-900 shadow'
+                  : 'bg-red-700 text-white border-red-700';
+              }
+              return `
+                <button data-case-opt="${opt.id}" class="case-opt-btn p-3 rounded-xl border text-left text-xs sm:text-sm font-bold transition ${btnStyle}">
+                  ${opt.text}
+                </button>
+              `;
+            }).join('')}
+          </div>
+
+          ${chosenOpt ? `
+            <div class="mt-3 p-3.5 rounded-xl border text-xs sm:text-sm font-semibold ${
+              chosenOpt.correct ? 'bg-emerald-50 border-emerald-300 text-emerald-950' : 'bg-red-50 border-red-300 text-red-950'
+            }">
+              ${chosenOpt.why}
+            </div>
+          ` : ''}
+        </div>
+
+        <!-- Step 2: Structured Sub-Question Breakdown & Peer Coaching Card -->
+        <div class="mt-5 bg-white rounded-xl border border-slate-200 p-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-emerald-900">
+              Step 2: Supported Sub-Questions Guide &amp; Partner B Peer-Coaching Notes
+            </span>
+          </div>
+          <div class="space-y-2.5 text-xs sm:text-sm text-slate-800">
+            <div class="p-3 rounded-lg bg-slate-50 border border-slate-200">${cData.scaffold.a}</div>
+            <div class="p-3 rounded-lg bg-slate-50 border border-slate-200">${cData.scaffold.b}</div>
+            <div class="p-3 rounded-lg bg-slate-50 border border-slate-200">${cData.scaffold.c}</div>
+          </div>
+        </div>
+      `;
+
+      container.querySelectorAll('.case-opt-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          appState.caseAnswers[cKey] = btn.getAttribute('data-case-opt');
+          renderClinicalCase();
+        });
+      });
+    }
+
+    function renderDriTable(filterText = '') {
+      const q = filterText.trim().toLowerCase();
+      const tbody = document.getElementById('driTableBody');
+      const rows = DRI_TABLE_DATA.filter(n =>
+        !q ||
+        n.name.toLowerCase().includes(q) ||
+        n.type.toLowerCase().includes(q) ||
+        n.func.toLowerCase().includes(q)
+      );
+
+      tbody.innerHTML = rows.map(n => `
+        <tr class="hover:bg-slate-50">
+          <td class="p-3 font-extrabold text-slate-900">${n.name}</td>
+          <td class="p-3 text-slate-600">${n.type}</td>
+          <td class="p-3 font-bold text-emerald-900">${n.teenRda} ${n.unit}/day</td>
+          <td class="p-3 font-bold text-slate-800">${n.adultRda} ${n.unit}/day</td>
+          <td class="p-3 font-bold text-red-700">${n.ul} ${n.unit}/day</td>
+          <td class="p-3 text-slate-600 text-xs">${n.func}</td>
+        </tr>
+      `).join('');
+    }
+
+    // =========================================================================
+    // 7. DETOUR EXPLORER (TAB 5)
+    // =========================================================================
+    function renderDetourExplorer() {
+      const isA = appState.selectedDetour === 'A';
+      const cardA = document.getElementById('detourCardA');
+      const cardB = document.getElementById('detourCardB');
+
+      cardA.className = `rounded-2xl border-2 p-5 flex flex-col justify-between transition ${
+        isA ? 'border-emerald-800 bg-emerald-50/50 shadow-sm' : 'border-slate-200 bg-slate-50'
+      }`;
+      cardB.className = `rounded-2xl border-2 p-5 flex flex-col justify-between transition ${
+        !isA ? 'border-amber-700 bg-amber-50/50 shadow-sm' : 'border-slate-200 bg-slate-50'
+      }`;
+
+      const box = document.getElementById('detourScaffoldBox');
+      if (isA) {
+        box.innerHTML = `
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-emerald-900">
+              Workbook Question 9 Guide • Selected: OPTION A (THE BIO-SHIELD)
+            </span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm text-slate-800 mt-2">
+            <div class="bg-white p-3.5 rounded-xl border border-amber-200">
+              <strong>How to Answer Q9a (Ingredients):</strong><br/>
+              State that your team chose <strong>Option A: The Bio-Shield</strong>. Name two specific ingredients you are adding—such as <strong>freeze-dried Saskatchewan Saskatoon berry powder</strong> (rich in purple anthocyanins) plus <strong>acerola berry / citrus Vitamin C</strong> and <strong>sunflower seed Vitamin E</strong>.
+            </div>
+            <div class="bg-white p-3.5 rounded-xl border border-amber-200">
+              <strong>How to Answer Q9b (Body-System Mechanism):</strong><br/>
+              Explain that heavy exercise and stress create unstable <strong>free radicals</strong>. Your anthocyanins, Vitamin C, and Vitamin E donate electrons to neutralize these free radicals (<strong>antioxidant defense</strong>), protecting muscle cell membranes from lipid peroxidation and supporting <strong>Immune System</strong> white blood cells.
+            </div>
+          </div>
+        `;
+      } else {
+        box.innerHTML = `
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-amber-900">
+              Workbook Question 9 Guide • Selected: OPTION B (THE BONE &amp; OXYGEN ENGINE)
+            </span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm text-slate-800 mt-2">
+            <div class="bg-white p-3.5 rounded-xl border border-amber-200">
+              <strong>How to Answer Q9a (Ingredients):</strong><br/>
+              State that your team chose <strong>Option B: The Bone &amp; Oxygen Engine</strong>. Name two specific ingredients—such as <strong>roasted pumpkin seed / red lentil protein</strong> (providing Iron &amp; Magnesium) paired with <strong>Vitamin C</strong>, plus <strong>calcium citrate and Vitamin D3</strong>.
+            </div>
+            <div class="bg-white p-3.5 rounded-xl border border-amber-200">
+              <strong>How to Answer Q9b (Body-System Mechanism):</strong><br/>
+              Explain how <strong>Iron</strong> builds <strong>hemoglobin</strong> in the <strong>Circulatory System</strong> to carry O<sub>2</sub> to working muscles (with Vitamin C tripling plant iron absorption), while <strong>Vitamin D3</strong> unlocks small-intestine <strong>Calcium (Ca<sup>2+</sup>)</strong> absorption to harden the <strong>Skeletal System</strong> against winter stress fractures.
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    // =========================================================================
+    // 8. PIT STOP #2 FORTIFICATION ARCHITECT (TAB 6)
+    // =========================================================================
+    function renderPitStopArchitect() {
+      const isTeen = appState.lifeStage === 'teen';
+      document.getElementById('ageBtnTeen').className = `px-3.5 py-1.5 rounded-lg text-xs font-bold transition ${
+        isTeen ? 'bg-emerald-900 text-white shadow' : 'bg-white text-slate-700 border border-slate-300'
+      }`;
+      document.getElementById('ageBtnAdult').className = `px-3.5 py-1.5 rounded-lg text-xs font-bold transition ${
+        !isTeen ? 'bg-emerald-900 text-white shadow' : 'bg-white text-slate-700 border border-slate-300'
+      }`;
+
+      const slotsContainer = document.getElementById('fortificationSlotsContainer');
+      slotsContainer.innerHTML = appState.slots.map((slot, idx) => {
+        const nInfo = DRI_TABLE_DATA.find(n => n.id === slot.nutrientId) || DRI_TABLE_DATA[0];
+        const rdaVal = isTeen ? nInfo.teenRda : nInfo.adultRda;
+        const ulVal = nInfo.ul;
+        const maxSlider = Math.round(ulVal * 1.25);
+        const stepVal = nInfo.unit === 'mg' && rdaVal < 5 ? 0.5 : 1;
+
+        const rdaPct = Math.round((slot.dose / rdaVal) * 100);
+        const ulPct = Math.round((slot.dose / ulVal) * 100);
+        const isOverUl = slot.dose > ulVal;
+        const isLow = rdaPct < 15;
+
+        let badgeClass = 'bg-emerald-100 text-emerald-900 border-emerald-300';
+        let statusText = `✅ SAFE & EFFECTIVE (${rdaPct}% of RDA | ${ulPct}% of UL)`;
+        if (isOverUl) {
+          badgeClass = 'bg-red-100 text-red-900 border-red-400';
+          statusText = `🚨 EXCEEDS UL (${ulVal} ${nInfo.unit}) — TOXICITY RISK!`;
+        } else if (isLow) {
+          badgeClass = 'bg-amber-100 text-amber-900 border-amber-300';
+          statusText = `⚠️ Low Dose (${rdaPct}% RDA) — Increase slider for meaningful claim`;
+        }
+
+        return `
+          <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-extrabold uppercase text-emerald-900">Workbook Q10${String.fromCharCode(97 + idx)} • Micronutrient #${idx + 1}</span>
+                <span class="text-xs font-semibold text-slate-500">${nInfo.type.split(' ')[0]}</span>
+              </div>
+
+              <select data-slot-idx="${idx}" class="slot-select w-full p-2.5 rounded-xl border border-slate-300 bg-white text-xs sm:text-sm font-bold text-slate-900 mb-3">
+                ${DRI_TABLE_DATA.map(n => `
+                  <option value="${n.id}" ${n.id === slot.nutrientId ? 'selected' : ''}>${n.name}</option>
+                `).join('')}
+              </select>
+
+              <div class="flex items-center justify-between text-xs font-bold text-slate-700 mb-1">
+                <span>Dose per Serving: <strong class="text-sm text-slate-900">${slot.dose} ${nInfo.unit}</strong></span>
+                <span>RDA: ${rdaVal} ${nInfo.unit} | UL: ${ulVal} ${nInfo.unit}</span>
+              </div>
+
+              <input type="range" data-slot-slider="${idx}" min="0" max="${maxSlider}" step="${stepVal}" value="${slot.dose}"
+                     class="w-full accent-emerald-800 cursor-pointer" />
+
+              <div class="mt-2 p-2.5 rounded-xl border text-xs font-bold ${badgeClass}">
+                ${statusText}
+              </div>
+
+              <p class="mt-2.5 text-xs text-slate-600 leading-relaxed">
+                <strong>Synergy &amp; Role:</strong> ${nInfo.synergy}
+              </p>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Attach listeners to selects and sliders
+      slotsContainer.querySelectorAll('.slot-select').forEach(sel => {
+        sel.addEventListener('change', e => {
+          const i = parseInt(e.target.getAttribute('data-slot-idx'), 10);
+          const newId = e.target.value;
+          const found = DRI_TABLE_DATA.find(n => n.id === newId);
+          appState.slots[i].nutrientId = newId;
+          appState.slots[i].dose = found ? found.defaultDose : 10;
+          updateAutoWarningText();
+          renderPitStopArchitect();
+        });
+      });
+
+      slotsContainer.querySelectorAll('input[type="range"]').forEach(rng => {
+        rng.addEventListener('input', e => {
+          const i = parseInt(e.target.getAttribute('data-slot-slider'), 10);
+          appState.slots[i].dose = parseFloat(e.target.value);
+          renderPitStopArchitect();
+        });
+      });
+
+      updateBlueprintSummaryText();
+    }
+
+    function updateAutoWarningText() {
+      const warningEl = document.getElementById('safetyWarningInput');
+      const chosenNutrients = appState.slots.map(s => DRI_TABLE_DATA.find(n => n.id === s.nutrientId) || DRI_TABLE_DATA[0]);
+      const warnings = chosenNutrients.map(n => n.warning);
+      warningEl.value = `CAUTION: Formulated for active ${appState.lifeStage === 'teen' ? 'adolescents (14–18 y)' : 'adults'}. Do not exceed 2 servings per day. ${warnings[0]}`;
+    }
+
+    function updateBlueprintSummaryText() {
+      const isTeen = appState.lifeStage === 'teen';
+      const phytoText = document.getElementById('phytoIngredientSelect').value;
+      const warnText = document.getElementById('safetyWarningInput').value;
+
+      const lines = appState.slots.map((s, idx) => {
+        const n = DRI_TABLE_DATA.find(item => item.id === s.nutrientId) || DRI_TABLE_DATA[0];
+        const rda = isTeen ? n.teenRda : n.adultRda;
+        const rdaPct = Math.round((s.dose / rda) * 100);
+        const safetyStatus = s.dose <= n.ul ? `Safely below Health Canada UL (${n.ul} ${n.unit}/day)` : `WARNING: Exceeds UL (${n.ul} ${n.unit}/day)!`;
+        const letter = String.fromCharCode(97 + idx);
+        return `${letter}) Micronutrient #${idx + 1}: ${n.name} — Dose: ${s.dose} ${n.unit}/serving (${rdaPct}% of Daily RDA of ${rda} ${n.unit}). ${safetyStatus}. Synergy: ${n.synergy}`;
+      });
+
+      lines.push(`c) Plant Phytochemical Source: ${phytoText}.`);
+      lines.push(`d) Package Medical Safety Warning: "${warnText}"`);
+
+      document.getElementById('blueprintSummaryPre').textContent = lines.join('\n\n');
+    }
+
+    function renderDefenseFlashcards() {
+      const grid = document.getElementById('defenseCardsGrid');
+      grid.innerHTML = DEFENSE_CARDS.map((c, idx) => `
+        <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200 flex flex-col justify-between">
+          <div>
+            <span class="text-xs font-extrabold uppercase text-emerald-800">Oral Defense Prompt #${idx + 1}</span>
+            <p class="text-sm font-extrabold text-slate-900 mt-1">${c.q}</p>
+            <div id="defAns-${idx}" class="mt-3 p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-950 hidden leading-relaxed">
+              <strong>Model Talking Points:</strong> ${c.a}
+            </div>
+          </div>
+          <button data-def-idx="${idx}" class="def-toggle-btn mt-3 w-full py-2 rounded-xl bg-white hover:bg-slate-100 border border-slate-300 text-xs font-bold text-slate-800 transition">
+            Show Model Answer Talking Points
+          </button>
+        </div>
+      `).join('');
+
+      grid.querySelectorAll('.def-toggle-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const idx = btn.getAttribute('data-def-idx');
+          const ansEl = document.getElementById(`defAns-${idx}`);
+          const isHidden = ansEl.classList.contains('hidden');
+          ansEl.classList.toggle('hidden', !isHidden);
+          btn.textContent = isHidden ? 'Hide Talking Points' : 'Show Model Answer Talking Points';
+        });
+      });
+    }
+
+    // =========================================================================
+    // 9. INITIALIZATION & EVENT LISTENERS
+    // =========================================================================
+    window.addEventListener('DOMContentLoaded', () => {
+      // Top nav tab buttons
+      document.querySelectorAll('.tab-nav-btn').forEach(btn => {
+        btn.addEventListener('click', () => switchTab(btn.getAttribute('data-tab')));
+      });
+
+      // Goto buttons across panels
+      document.querySelectorAll('.goto-btn').forEach(btn => {
+        btn.addEventListener('click', () => switchTab(btn.getAttribute('data-goto')));
+      });
+
+      // Reset checklist button
+      document.getElementById('resetProgressBtn').addEventListener('click', () => {
+        appState.completedQuestions = {};
+        saveProgress();
+        renderChecklist();
+      });
+
+      // Body system selector buttons
+      document.querySelectorAll('.sys-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          appState.activeSystem = btn.getAttribute('data-sys');
+          renderSystemBridge();
+        });
+      });
+
+      // Vitamin simulator controls
+      document.querySelectorAll('.sim-vit-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          appState.simVit = btn.getAttribute('data-vit');
+          renderVitaminSimulator();
+        });
+      });
+      document.querySelectorAll('.sim-dose-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          appState.simDose = btn.getAttribute('data-dose');
+          renderVitaminSimulator();
+        });
+      });
+      document.querySelectorAll('.sim-fat-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          appState.simFat = btn.getAttribute('data-fat');
+          renderVitaminSimulator();
+        });
+      });
+
+      // Route 2A quick quiz buttons
+      document.querySelectorAll('.quiz-opt-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const qGroup = btn.getAttribute('data-quiz');
+          const isCorrect = btn.getAttribute('data-correct') === 'true';
+          const fb = document.getElementById(`quizFeedback-${qGroup}`);
+          fb.classList.remove('hidden');
+          if (isCorrect) {
+            fb.className = 'mt-2 text-xs font-bold text-amber-300';
+            fb.textContent = '✓ Spot on! You are ready to write this in your workbook.';
+          } else {
+            fb.className = 'mt-2 text-xs font-bold text-red-300';
+            fb.textContent = '✗ Not quite — test this scenario in the Vitamin Simulator above and try again!';
+          }
+        });
+      });
+
+      // Synergy lab buttons
+      document.getElementById('synCaLowD').addEventListener('click', () => {
+        appState.synCaWithD = false;
+        renderSynergyLabs();
+      });
+      document.getElementById('synCaHighD').addEventListener('click', () => {
+        appState.synCaWithD = true;
+        renderSynergyLabs();
+      });
+      document.querySelectorAll('.syn-iron-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          appState.synIronMode = btn.getAttribute('data-iron-mode');
+          renderSynergyLabs();
+        });
+      });
+
+      // Phytochemical buttons
+      document.querySelectorAll('.phyto-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          appState.activePhyto = btn.getAttribute('data-phyto');
+          renderPhytoExplorer();
+        });
+      });
+
+      // Clinical case selector buttons
+      document.querySelectorAll('.case-tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          appState.activeCase = btn.getAttribute('data-case');
+          renderClinicalCase();
+        });
+      });
+
+      // DRI search filter
+      document.getElementById('driSearchInput').addEventListener('input', e => {
+        renderDriTable(e.target.value);
+      });
+
+      // Detour selection buttons
+      document.querySelectorAll('.select-detour-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          appState.selectedDetour = btn.getAttribute('data-select-detour');
+          saveProgress();
+          renderDetourExplorer();
+        });
+      });
+
+      // Pit stop life-stage buttons
+      document.getElementById('ageBtnTeen').addEventListener('click', () => {
+        appState.lifeStage = 'teen';
+        updateAutoWarningText();
+        renderPitStopArchitect();
+      });
+      document.getElementById('ageBtnAdult').addEventListener('click', () => {
+        appState.lifeStage = 'adult';
+        updateAutoWarningText();
+        renderPitStopArchitect();
+      });
+
+      document.getElementById('phytoIngredientSelect').addEventListener('change', () => {
+        updateBlueprintSummaryText();
+      });
+      document.getElementById('safetyWarningInput').addEventListener('input', () => {
+        updateBlueprintSummaryText();
+      });
+
+      // Copy summary button
+      document.getElementById('copyBlueprintBtn').addEventListener('click', () => {
+        const text = document.getElementById('blueprintSummaryPre').textContent;
+        const toast = document.getElementById('copyToastMsg');
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).catch(() => {});
+        } else {
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand('copy'); } catch (e) {}
+          document.body.removeChild(ta);
+        }
+        toast.classList.remove('hidden');
+        setTimeout(() => toast.classList.add('hidden'), 4000);
+      });
+
+      // Initial renders
+      renderChecklist();
+      renderSystemBridge();
+      renderVitaminSimulator();
+      renderSynergyLabs();
+      renderPhytoExplorer();
+      renderClinicalCase();
+      renderDriTable();
+      renderDetourExplorer();
+      updateAutoWarningText();
+      renderPitStopArchitect();
+      renderDefenseFlashcards();
+    });
+  </script>
+</body>
+</html>

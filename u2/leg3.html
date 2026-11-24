@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leg 3 Lab Assistant: Energy Metabolism &amp; Canadian Labels | SK Health Science 20</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+    }
+    .emerald-gradient {
+      background: linear-gradient(135deg, #064e3b 0%, #1b4332 55%, #0f766e 100%);
+    }
+    .tab-btn-active {
+      background-color: #1b4332;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(27, 67, 50, 0.25);
+    }
+    .tab-btn-inactive {
+      background-color: #ffffff;
+      color: #334155;
+      border: 1px solid #cbd5e1;
+    }
+    .tab-btn-inactive:hover {
+      background-color: #f1f5f9;
+      color: #0f172a;
+    }
+    .q-badge {
+      background-color: #fef3c7;
+      color: #92400e;
+      border: 1px solid #f59e0b;
+    }
+    .smooth-bar {
+      transition: width 0.45s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
+    }
+    .nft-box {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      border: 2px solid #000000;
+      background: #ffffff;
+      color: #000000;
+    }
+    .nft-thick {
+      border-bottom: 8px solid #000000;
+    }
+    .nft-med {
+      border-bottom: 4px solid #000000;
+    }
+    .nft-thin {
+      border-bottom: 1px solid #000000;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- TOP NAVIGATION BAR -->
+  <header class="emerald-gradient text-white shadow-lg sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-400/40 flex items-center justify-center text-amber-300 font-extrabold text-lg">
+          L3
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-400/30">
+              SK Health Science 20 • Outcome HS20-NU2
+            </span>
+          </div>
+          <h1 class="text-lg sm:text-xl font-extrabold tracking-tight text-white">
+            Leg 3 Lab Assistant: Energy Metabolism &amp; Canadian Labels
+          </h1>
+        </div>
+      </div>
+
+      <!-- Workbook Q1-Q8 Progress Meter -->
+      <div class="flex items-center gap-3 bg-white/10 px-3.5 py-2 rounded-xl border border-white/15">
+        <div class="text-xs">
+          <div class="font-semibold text-emerald-100">Workbook Progress (Q1–Q8)</div>
+          <div class="w-36 sm:w-44 h-2 bg-emerald-950 rounded-full overflow-hidden mt-1">
+            <div id="headerProgressBar" class="h-full bg-amber-400 smooth-bar" style="width: 0%"></div>
+          </div>
+        </div>
+        <span id="headerProgressText" class="text-sm font-extrabold text-amber-300">0/8</span>
+      </div>
+
+      <!-- Quick External Links -->
+      <div class="flex items-center gap-2 text-xs font-semibold">
+        <a href="https://scareysci.github.io/hs20text/u2/index.html" target="_blank" rel="noopener noreferrer"
+           class="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 transition">
+          ← Race Hub
+        </a>
+        <a href="https://scareysci.github.io/hs20text/u2/leg2.html" target="_blank" rel="noopener noreferrer"
+           class="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 transition">
+          Leg 2 Lab
+        </a>
+        <a href="https://www.canada.ca/en/health-canada/services/technical-documents-labelling-requirements/table-daily-values/nutrition-labelling.html" target="_blank" rel="noopener noreferrer"
+           class="px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold transition">
+          Health Canada Daily Values ↗
+        </a>
+      </div>
+    </div>
+
+    <!-- 5-TAB NAVIGATION BAR -->
+    <div class="bg-slate-900/40 border-t border-white/10">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex flex-wrap gap-1.5" role="tablist">
+        <button id="tabBtn-overview" data-tab="overview" class="tab-nav-btn tab-btn-active px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition flex items-center gap-1.5">
+          <span>1. Start Here &amp; Checklist</span>
+        </button>
+        <button id="tabBtn-avatars" data-tab="avatars" class="tab-nav-btn tab-btn-inactive px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition flex items-center gap-1.5">
+          <span>2. 4 Avatars &amp; BMR/TDEE Calc (Q1–Q2)</span>
+        </button>
+        <button id="tabBtn-diet" data-tab="diet" class="tab-nav-btn tab-btn-inactive px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition flex items-center gap-1.5">
+          <span>3. 24-Hr Diet Log Helper (Q3–Q6)</span>
+        </button>
+        <button id="tabBtn-label" data-tab="label" class="tab-nav-btn tab-btn-inactive px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition flex items-center gap-1.5">
+          <span>4. Canadian Label Builder (Q7)</span>
+        </button>
+        <button id="tabBtn-comparable" data-tab="comparable" class="tab-nav-btn tab-btn-inactive px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition flex items-center gap-1.5">
+          <span>5. Market Comparable &amp; Pit Stop #3 (Q8)</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="max-w-7xl mx-auto w-full px-4 sm:px-6 py-6 flex-1 space-y-6">
+
+    <!-- =================================================================== -->
+    <!-- TAB 1: START HERE & WORKBOOK CHECKLIST                              -->
+    <!-- =================================================================== -->
+    <section id="panel-overview" class="tab-panel space-y-6">
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-100 pb-5">
+          <div>
+            <span class="inline-block text-xs font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-md bg-emerald-100 text-emerald-900 mb-2">
+              Step 1 of 4 • How to Use This Lab Assistant
+            </span>
+            <h2 class="text-2xl font-extrabold text-slate-900">
+              Welcome to Leg 3: Energy Metabolism &amp; Canadian Nutrition Labels
+            </h2>
+            <p class="text-slate-600 mt-1 text-sm sm:text-base max-w-3xl">
+              In Leg 1 and Leg 2, you built the <strong>macronutrients</strong> and <strong>micronutrients</strong> inside your supplement.
+              In Leg 3, you will calculate how much daily energy <strong>4 very different people</strong> actually burn, reflect on your own <strong>24-hour eating habits</strong>, and design a <strong>Canadian-compliant Nutrition Facts label</strong> to test against a real competitor on store shelves today.
+            </p>
+          </div>
+          <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 lg:w-80 shrink-0">
+            <div class="text-xs font-extrabold uppercase tracking-wider text-amber-900">Partner Roles in Leg 3</div>
+            <ul class="mt-2 space-y-1.5 text-xs sm:text-sm text-slate-800">
+              <li><strong>Step 2A (Q1–Q2):</strong> Both partners calculate the 4 Avatars' BMR &amp; TDEE together.</li>
+              <li><strong>Step 2B (Q3–Q6):</strong> Each partner completes their own linear 24-hour diet log &amp; reflection.</li>
+              <li><strong>Step 3 &amp; Pit Stop #3 (Q7–Q8):</strong> Both partners co-build the draft Nutrition Facts label and audit 1 real comparable product.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Linear Question Checklist (Q1 to Q8) -->
+        <div class="mt-5">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-base font-extrabold text-slate-900">
+              Your Linear Workbook Checklist (Check off each question as you type it in your Word document!)
+            </h3>
+            <button id="resetProgressBtn" class="text-xs font-semibold text-slate-500 hover:text-red-600 underline">
+              Reset Checkmarks
+            </button>
+          </div>
+          <div id="questionChecklistGrid" class="grid grid-cols-1 md:grid-cols-2 gap-2.5"></div>
+        </div>
+      </div>
+
+      <!-- Quick Science Bridge Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+          <div class="text-xs font-extrabold uppercase tracking-wider text-emerald-800">Step 2A • Q1–Q2</div>
+          <h3 class="text-lg font-extrabold text-slate-900 mt-1">BMR vs. TDEE</h3>
+          <p class="text-sm text-slate-600 mt-1.5">
+            <strong>BMR</strong> is the energy you burn just staying alive at rest. Multiply BMR by an <strong>Activity Factor (1.2 to 1.9)</strong> to get <strong>TDEE</strong>—total calories burned in a real day.
+          </p>
+          <button data-jump="avatars" class="jump-tab-btn mt-3 text-xs font-bold text-emerald-800 hover:text-emerald-600 underline">
+            Open 4 Avatars &amp; Calculator →
+          </button>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+          <div class="text-xs font-extrabold uppercase tracking-wider text-amber-800">Step 2B • Q3–Q6</div>
+          <h3 class="text-lg font-extrabold text-slate-900 mt-1">24-Hour Diet Reflection</h3>
+          <p class="text-sm text-slate-600 mt-1.5">
+            Log one normal day of eating in a simple linear list (no tables!), then check your balance against Health Canada's <strong>AMDR (45–65% Carbs, 10–35% Protein, 20–35% Fat)</strong>.
+          </p>
+          <button data-jump="diet" class="jump-tab-btn mt-3 text-xs font-bold text-amber-800 hover:text-amber-600 underline">
+            Open Diet Log Helper →
+          </button>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+          <div class="text-xs font-extrabold uppercase tracking-wider text-emerald-800">Step 3 &amp; Pit Stop #3 • Q7–Q8</div>
+          <h3 class="text-lg font-extrabold text-slate-900 mt-1">Canadian Label &amp; Rival Audit</h3>
+          <p class="text-sm text-slate-600 mt-1.5">
+            Use official Health Canada Daily Values and the <strong>5% / 15% Rule</strong> to draft your supplement's Nutrition Facts label, then compare it to 1 real product on Canadian shelves.
+          </p>
+          <button data-jump="label" class="jump-tab-btn mt-3 text-xs font-bold text-emerald-800 hover:text-emerald-600 underline">
+            Open Canadian Label Builder →
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- TAB 2: 4 AVATARS & INTERACTIVE BMR / TDEE CALCULATOR (Q1–Q2)        -->
+    <!-- =================================================================== -->
+    <section id="panel-avatars" class="tab-panel hidden space-y-6">
+      <!-- Science Primer 3A -->
+      <div class="bg-emerald-50/80 border-l-4 border-emerald-800 rounded-r-2xl p-5 shadow-sm">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <h2 class="text-lg font-extrabold text-emerald-950">Science Primer 3A: How the Mifflin-St Jeor Equation Works</h2>
+          <span class="q-badge text-xs font-extrabold px-2.5 py-0.5 rounded-full">Helps Answer Q1 &amp; Q2</span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3 text-sm text-slate-800">
+          <div class="bg-white rounded-xl p-3.5 border border-emerald-200">
+            <div class="font-bold text-emerald-900">1. Basal Metabolic Rate (BMR)</div>
+            <p class="mt-1">Minimum energy burned in 24 hours at total rest (heart, lungs, brain, body heat):</p>
+            <ul class="mt-1.5 space-y-1 text-xs sm:text-sm font-medium text-slate-700">
+              <li><strong>Male:</strong> (10 × weight in kg) + (6.25 × height in cm) − (5 × age) + 5</li>
+              <li><strong>Female:</strong> (10 × weight in kg) + (6.25 × height in cm) − (5 × age) − 161</li>
+            </ul>
+          </div>
+          <div class="bg-white rounded-xl p-3.5 border border-emerald-200">
+            <div class="font-bold text-emerald-900">2. Total Daily Energy Expenditure (TDEE)</div>
+            <p class="mt-1"><strong>TDEE = BMR × Activity Factor</strong></p>
+            <ul class="mt-1.5 space-y-0.5 text-xs text-slate-700">
+              <li><strong>1.2</strong> = Sedentary (desk/study, little exercise)</li>
+              <li><strong>1.375</strong> = Lightly Active (light exercise 1–3 days/wk)</li>
+              <li><strong>1.55</strong> = Moderately Active (moderate sports 3–5 days/wk)</li>
+              <li><strong>1.725</strong> = Very Active (hard sports/training 6–7 days/wk)</li>
+              <li><strong>1.9</strong> = Extra Active (heavy physical labour / 14-hr harvest shifts)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 Avatar Profiles -->
+      <div>
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+          <h3 class="text-xl font-extrabold text-slate-900">Meet Your 4 Avatars (Step 2A)</h3>
+          <p class="text-xs sm:text-sm text-slate-600">Read each bio, then click <strong>Load into Calculator</strong> (or type the numbers yourself) and record BMR &amp; TDEE in Q1.</p>
+        </div>
+        <div id="avatarCardsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+      </div>
+
+      <!-- Interactive BMR & TDEE Calculator + Saved Comparison Chart -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div class="lg:col-span-7 bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
+            <div>
+              <h3 class="text-lg font-extrabold text-slate-900">Mifflin-St Jeor BMR &amp; TDEE Calculator</h3>
+              <p id="calcActiveAvatarLabel" class="text-xs text-emerald-800 font-semibold mt-0.5">
+                Plug in an avatar's numbers below (or click "Load into Calculator" on any card above).
+              </p>
+            </div>
+            <button id="clearCalcBtn" class="text-xs font-semibold text-slate-500 hover:text-slate-800 underline">Clear</button>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="calcSex" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Biological Sex</label>
+              <select id="calcSex" class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-600">
+                <option value="female">Female (− 161)</option>
+                <option value="male">Male (+ 5)</option>
+              </select>
+            </div>
+            <div>
+              <label for="calcAge" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Age (years)</label>
+              <input id="calcAge" type="number" min="10" max="100" value="16" class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-600" />
+            </div>
+            <div>
+              <label for="calcHeight" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Height (cm)</label>
+              <input id="calcHeight" type="number" min="100" max="240" value="164" class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-600" />
+            </div>
+            <div>
+              <label for="calcWeight" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Weight (kg)</label>
+              <input id="calcWeight" type="number" min="30" max="200" value="58" class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-600" />
+            </div>
+            <div class="sm:col-span-2">
+              <label for="calcActivity" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Activity Factor</label>
+              <select id="calcActivity" class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-600">
+                <option value="1.2">1.2 — Sedentary (desk/study, little or no exercise)</option>
+                <option value="1.375">1.375 — Lightly Active (light exercise 1–3 days/wk)</option>
+                <option value="1.55">1.55 — Moderately Active (moderate sports 3–5 days/wk)</option>
+                <option value="1.725">1.725 — Very Active (hard sports/training 6–7 days/wk)</option>
+                <option value="1.9">1.9 — Extra Active (heavy physical labour / 14-hr harvest shifts)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Live Calculation Result -->
+          <div class="mt-5 grid grid-cols-2 gap-4">
+            <div class="rounded-xl bg-emerald-50 border border-emerald-200 p-4 text-center">
+              <div class="text-xs font-bold uppercase tracking-wider text-emerald-800">Basal Metabolic Rate (BMR)</div>
+              <div id="calcBmrOut" class="text-3xl font-black text-emerald-950 mt-1">1,364</div>
+              <div class="text-xs text-slate-600 font-medium">kcal / day (at rest)</div>
+            </div>
+            <div class="rounded-xl bg-amber-50 border border-amber-300 p-4 text-center">
+              <div class="text-xs font-bold uppercase tracking-wider text-amber-900">Total Daily Energy (TDEE)</div>
+              <div id="calcTdeeOut" class="text-3xl font-black text-amber-950 mt-1">1,637</div>
+              <div class="text-xs text-slate-600 font-medium">kcal / day (with activity)</div>
+            </div>
+          </div>
+
+          <div id="calcFormulaSteps" class="mt-4 bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs text-slate-700 font-mono"></div>
+
+          <div class="mt-4 flex flex-wrap items-center gap-3">
+            <button id="saveAvatarResultBtn" class="px-4 py-2.5 rounded-xl bg-emerald-800 hover:bg-emerald-700 text-white text-sm font-bold transition shadow-sm">
+              + Save to Comparison Chart
+            </button>
+            <span id="saveAvatarMsg" class="text-xs font-semibold text-emerald-700"></span>
+          </div>
+        </div>
+
+        <!-- Saved Avatar Comparison Visual (Helps Answer Q2) -->
+        <div class="lg:col-span-5 bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="text-lg font-extrabold text-slate-900">Avatar Energy Comparison (Q2)</h3>
+              <span class="q-badge text-xs font-extrabold px-2.5 py-0.5 rounded-full">For Q2</span>
+            </div>
+            <p class="text-xs text-slate-600 mb-4">
+              As you calculate each avatar and click <strong>Save to Comparison Chart</strong>, watch their BMR (dark green) vs. TDEE (amber) stack up side-by-side!
+            </p>
+            <div id="comparisonBarsContainer" class="space-y-4"></div>
+          </div>
+
+          <div class="mt-5 bg-amber-50 border border-amber-200 rounded-xl p-3.5 text-xs text-slate-800">
+            <div class="font-extrabold text-amber-900 mb-1">Big Clue for Question 2:</div>
+            <p>Notice how <strong>Age</strong> affects BMR (compare 17-year-old Liam vs. 54-year-old Dale), while <strong>Activity Factor</strong> drives TDEE! Think about which avatar has the biggest gap between BMR and TDEE.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- TAB 3: 24-HOUR DIET LOG HELPER & REFLECTION (Q3–Q6)                 -->
+    <!-- =================================================================== -->
+    <section id="panel-diet" class="tab-panel hidden space-y-6">
+      <!-- Science Primer 3B -->
+      <div class="bg-emerald-50/80 border-l-4 border-emerald-800 rounded-r-2xl p-5 shadow-sm">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <h2 class="text-lg font-extrabold text-emerald-950">Science Primer 3B: Calories (4–4–9) &amp; Health Canada's AMDR</h2>
+          <span class="q-badge text-xs font-extrabold px-2.5 py-0.5 rounded-full">Helps Answer Q3–Q6</span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-3 text-sm">
+          <div class="bg-white rounded-xl p-3.5 border border-emerald-200">
+            <div class="font-extrabold text-emerald-900">Carbohydrates • 4 kcal/g</div>
+            <div class="text-xs font-bold text-amber-800 mt-0.5">Health Canada AMDR: 45–65% of daily calories</div>
+            <p class="text-xs text-slate-600 mt-1">Main fuel for your brain and muscles. Whole grains, fruit, and oats add <strong>fibre</strong>; pop and candy are mostly <strong>simple sugars</strong>.</p>
+          </div>
+          <div class="bg-white rounded-xl p-3.5 border border-emerald-200">
+            <div class="font-extrabold text-emerald-900">Protein • 4 kcal/g</div>
+            <div class="text-xs font-bold text-amber-800 mt-0.5">Health Canada AMDR: 10–35% of daily calories</div>
+            <p class="text-xs text-slate-600 mt-1">Repairs muscles, builds enzymes/hormones, and keeps you full longer (eggs, chicken, beef, Greek yogurt, lentils, tofu).</p>
+          </div>
+          <div class="bg-white rounded-xl p-3.5 border border-emerald-200">
+            <div class="font-extrabold text-emerald-900">Fats • 9 kcal/g</div>
+            <div class="text-xs font-bold text-amber-800 mt-0.5">Health Canada AMDR: 20–35% of daily calories</div>
+            <p class="text-xs text-slate-600 mt-1">More than double the calories per gram! Needed for brain health and vitamins A, D, E, K (nuts, avocado, olive oil, salmon).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Quick Food Macro Lookup -->
+        <div class="lg:col-span-7 bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+            <div>
+              <h3 class="text-lg font-extrabold text-slate-900">Quick Common-Food Macro Lookup (For Q3)</h3>
+              <p class="text-xs text-slate-600">Not sure which macronutrient a food or drink mostly contains? Filter below to help fill in your linear 24-hour diet log!</p>
+            </div>
+          </div>
+
+          <input id="foodSearchInput" type="text" placeholder="Search a food or drink (e.g., eggs, pizza, iced capp, pop, yogurt)..."
+                 class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-600 mb-4" />
+
+          <div id="foodLookupList" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-h-96 overflow-y-auto pr-1"></div>
+        </div>
+
+        <!-- Reflection Sentence Starters (Q4–Q6) -->
+        <div class="lg:col-span-5 bg-white rounded-2xl shadow-sm border border-slate-200 p-6 space-y-4">
+          <h3 class="text-lg font-extrabold text-slate-900">Reflection Guide for Q4, Q5 &amp; Q6</h3>
+          <p class="text-xs text-slate-600">Use these quick checkpoints to write strong, honest Grade 10 answers in your Word document:</p>
+
+          <div class="rounded-xl bg-slate-50 border border-slate-200 p-3.5">
+            <div class="text-xs font-extrabold text-emerald-900 uppercase">Q4 • Does your log match your BMR / TDEE?</div>
+            <p class="text-xs text-slate-700 mt-1">
+              Compare your day to the closest student avatar (<strong>Maya ≈ 1,637 kcal</strong> or <strong>Liam ≈ 3,135 kcal</strong>). Did you skip meals (possible calorie deficit → afternoon crash) or eat large energy-dense snacks/drinks (possible surplus)?
+            </p>
+          </div>
+
+          <div class="rounded-xl bg-slate-50 border border-slate-200 p-3.5">
+            <div class="text-xs font-extrabold text-emerald-900 uppercase">Q5 • Over- or Under-Consuming Macros?</div>
+            <p class="text-xs text-slate-700 mt-1">
+              Look for patterns: Many students notice they are <strong>high in simple carbs/sugars</strong> (cereal, granola bars, pop, flavoured coffee) and <strong>low in protein or fibre</strong> at breakfast and lunch.
+            </p>
+          </div>
+
+          <div class="rounded-xl bg-amber-50 border border-amber-200 p-3.5">
+            <div class="text-xs font-extrabold text-amber-900 uppercase">Q6 • One Realistic Swap</div>
+            <p class="text-xs text-slate-800 mt-1">
+              Pick <strong>one specific, realistic swap</strong> you would actually do—e.g., <em>"Swap my afternoon can of pop for water plus a cheese string and apple to cut simple sugars and add protein + fibre."</em>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- TAB 4: CANADIAN NUTRITION FACTS LABEL BUILDER (Q7 — BOTH PARTNERS)  -->
+    <!-- =================================================================== -->
+    <section id="panel-label" class="tab-panel hidden space-y-6">
+      <!-- Science Primer 3C -->
+      <div class="bg-emerald-50/80 border-l-4 border-emerald-800 rounded-r-2xl p-5 shadow-sm">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <h2 class="text-lg font-extrabold text-emerald-950">Science Primer 3C: Official Health Canada Labelling Rules</h2>
+          <span class="q-badge text-xs font-extrabold px-2.5 py-0.5 rounded-full">Both Partners • Q7</span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-3 text-xs sm:text-sm text-slate-800">
+          <div class="bg-white rounded-xl p-3 border border-emerald-200">
+            <strong class="text-emerald-900">The 5% / 15% Rule:</strong>
+            <p class="mt-1"><strong>5% DV or less is a little</strong> (aim here for Sat Fat, Sugars, Sodium). <strong>15% DV or more is a lot</strong> (great for Fibre, Potassium, Calcium, Iron).</p>
+          </div>
+          <div class="bg-white rounded-xl p-3 border border-emerald-200">
+            <strong class="text-emerald-900">Front-of-Package Warning:</strong>
+            <p class="mt-1">In Canada, foods reaching <strong>≥15% DV</strong> for <strong>Saturated Fat, Sugars, or Sodium</strong> must show a black-and-white <strong>"High in..."</strong> symbol on the front!</p>
+          </div>
+          <div class="bg-white rounded-xl p-3 border border-emerald-200">
+            <strong class="text-emerald-900">Ingredients &amp; Allergens:</strong>
+            <p class="mt-1">List ingredients in <strong>descending order by weight</strong> (heaviest first) and declare priority allergens (milk, soy, wheat, peanuts, tree nuts, eggs).</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Preset Starter Buttons -->
+      <div class="bg-white rounded-2xl border border-slate-200 p-4 flex flex-wrap items-center justify-between gap-3">
+        <div class="text-xs sm:text-sm font-bold text-slate-800">
+          Need realistic starting numbers for your category? Load a starter template, then customize every value:
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <button data-preset="meal" class="preset-label-btn px-3 py-1.5 rounded-lg bg-emerald-100 hover:bg-emerald-200 text-emerald-950 text-xs font-bold transition">
+            Load Meal Replacement Shake
+          </button>
+          <button data-preset="drink" class="preset-label-btn px-3 py-1.5 rounded-lg bg-sky-100 hover:bg-sky-200 text-sky-950 text-xs font-bold transition">
+            Load Isotonic Sports Drink
+          </button>
+          <button data-preset="snack" class="preset-label-btn px-3 py-1.5 rounded-lg bg-amber-100 hover:bg-amber-200 text-amber-950 text-xs font-bold transition">
+            Load Performance Snack Bar
+          </button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <!-- Left: Label Form Inputs -->
+        <div class="lg:col-span-7 bg-white rounded-2xl shadow-sm border border-slate-200 p-6 space-y-4">
+          <h3 class="text-lg font-extrabold text-slate-900 border-b border-slate-100 pb-2">Enter Your Supplement's Per-Serving Recipe</h3>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            <div class="sm:col-span-2">
+              <label for="lblProductName" class="block text-xs font-bold text-slate-700 mb-1">Product Name &amp; Category</label>
+              <input id="lblProductName" type="text" value="Prairie Pulse Performance Bar (Performance Snack)"
+                     class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-600" />
+            </div>
+            <div>
+              <label for="lblServing" class="block text-xs font-bold text-slate-700 mb-1">Serving Size</label>
+              <input id="lblServing" type="text" value="1 bar (60 g)"
+                     class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-600" />
+            </div>
+            <div>
+              <label for="lblCholesterol" class="block text-xs font-bold text-slate-700 mb-1">Cholesterol (mg)</label>
+              <input id="lblCholesterol" type="number" min="0" step="1" value="5"
+                     class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-600" />
+            </div>
+
+            <div>
+              <label for="lblFat" class="block text-xs font-bold text-slate-700 mb-1">Total Fat (g) <span class="text-slate-400 font-normal">DV: 75 g</span></label>
+              <input id="lblFat" type="number" min="0" step="0.5" value="8"
+                     class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-600" />
+            </div>
+            <div>
+              <label for="lblSatTrans" class="block text-xs font-bold text-slate-700 mb-1">Saturated + Trans Fat (g) <span class="text-slate-400 font-normal">DV: 20 g</span></label>
+              <input id="lblSatTrans" type="number" min="0" step="0.5" value="2"
+                     class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-600" />
+            </div>
+
+            <div>
+              <label for="lblCarbs" class="block text-xs font-bold text-slate-700 mb-1">Total Carbohydrate (g) <span class="text-slate-400 font-normal">No % DV</span></label>
+              <input id="lblCarbs" type="number" min="0" step="1" value="28"
+                     class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-600" />
+            </div>
+            <div>
+              <label for="lblFibre" class="block text-xs font-bold text-slate-700 mb-1">Fibre (g) <span class="text-slate-400 font-normal">DV: 28 g</span></label>
+              <input id="lblFibre" type="number" min="0" step="1" value="6"
+                     class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-600" />
+            </div>
+
+            <div>
+              <label for="lblSugars" class="block text-xs font-bold text-slate-700 mb-1">Sugars (g) <span class="text-slate-400 font-normal">DV: 100 g</span></label>
+              <input id="lblSugars" type="number" min="0" step="1" value="8"
+                     class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-600" />
+            </div>
+            <div>
+              <label for="lblProtein" class="block text-xs font-bold text-slate-700 mb-1">Protein (g) <span class="text-slate-400 font-normal">No % DV</span></label>
+              <input id="lblProtein" type="number" min="0" step="1" value="16"
+                     class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-600" />
+            </div>
+
+            <div>
+              <label for="lblSodium" class="block text-xs font-bold text-slate-700 mb-1">Sodium (mg) <span class="text-slate-400 font-normal">DV: 2,300 mg</span></label>
+              <input id="lblSodium" type="number" min="0" step="10" value="180"
+                     class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-600" />
+            </div>
+            <div>
+              <label for="lblPotassium" class="block text-xs font-bold text-slate-700 mb-1">Potassium (mg) <span class="text-slate-400 font-normal">DV: 3,400 mg</span></label>
+              <input id="lblPotassium" type="number" min="0" step="10" value="350"
+                     class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-600" />
+            </div>
+
+            <div>
+              <label for="lblCalcium" class="block text-xs font-bold text-slate-700 mb-1">Calcium (mg) <span class="text-slate-400 font-normal">DV: 1,300 mg</span></label>
+              <input id="lblCalcium" type="number" min="0" step="10" value="150"
+                     class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-600" />
+            </div>
+            <div>
+              <label for="lblIron" class="block text-xs font-bold text-slate-700 mb-1">Iron (mg) <span class="text-slate-400 font-normal">DV: 18 mg</span></label>
+              <input id="lblIron" type="number" min="0" step="0.5" value="3.5"
+                     class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-600" />
+            </div>
+
+            <div class="sm:col-span-2">
+              <label for="lblIngredients" class="block text-xs font-bold text-slate-700 mb-1">Ingredient List (Descending Order by Weight — Heaviest First)</label>
+              <textarea id="lblIngredients" rows="2" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-600">Rolled oats, whey protein isolate, Saskatchewan honey, roasted almonds, ground flaxseed, freeze-dried Saskatoon berries, sea salt.</textarea>
+            </div>
+            <div class="sm:col-span-2">
+              <label for="lblAllergens" class="block text-xs font-bold text-slate-700 mb-1">Contains (Priority Allergens)</label>
+              <input id="lblAllergens" type="text" value="Milk, Tree nuts (almonds)."
+                     class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-600" />
+            </div>
+          </div>
+
+          <div class="pt-2 flex flex-wrap items-center gap-3">
+            <button id="copyLinearLabelBtn" class="px-4 py-2.5 rounded-xl bg-emerald-800 hover:bg-emerald-700 text-white text-sm font-bold transition shadow-sm">
+              Copy Linear Q7 Summary for Word
+            </button>
+            <span id="copyLinearMsg" class="text-xs font-semibold text-emerald-700"></span>
+          </div>
+        </div>
+
+        <!-- Right: Live Canadian Nutrition Facts Table + FOP Warning -->
+        <div class="lg:col-span-5 space-y-4">
+          <!-- Front of Package Warning Simulator -->
+          <div id="fopWarningBox" class="rounded-2xl border p-4 transition"></div>
+
+          <!-- Official-Style Canadian Nutrition Facts Table -->
+          <div class="nft-box p-4 rounded-sm shadow-md max-w-sm mx-auto">
+            <div class="text-2xl font-black leading-none tracking-tight">Nutrition Facts</div>
+            <div class="text-base font-bold leading-tight mt-0.5">Valeur nutritive</div>
+            <div class="text-sm mt-1 pb-1.5 nft-thick">
+              Per <span id="nftServing" class="font-bold">1 bar (60 g)</span>
+            </div>
+
+            <div class="flex items-baseline justify-between py-1.5 nft-med">
+              <div class="text-2xl font-black">Calories <span id="nftCalories">250</span></div>
+              <div class="text-xs font-bold text-right">% Daily Value*<br /><span class="font-normal">% valeur quotidienne*</span></div>
+            </div>
+
+            <div class="text-sm">
+              <div class="flex justify-between py-1 nft-thin">
+                <span><strong>Fat / Lipides</strong> <span id="nftFat">8</span> g</span>
+                <strong id="nftFatDv">11%</strong>
+              </div>
+              <div class="flex justify-between py-1 pl-4 nft-thin text-xs">
+                <span>Saturated + Trans / saturés + trans <span id="nftSatTrans">2</span> g</span>
+                <strong id="nftSatTransDv">10%</strong>
+              </div>
+              <div class="flex justify-between py-1 nft-thin">
+                <span><strong>Carbohydrate / Glucides</strong> <span id="nftCarbs">28</span> g</span>
+                <span class="text-xs text-slate-500">—</span>
+              </div>
+              <div class="flex justify-between py-1 pl-4 nft-thin text-xs">
+                <span>Fibre / Fibres <span id="nftFibre">6</span> g</span>
+                <strong id="nftFibreDv">21%</strong>
+              </div>
+              <div class="flex justify-between py-1 pl-4 nft-thin text-xs">
+                <span>Sugars / Sucres <span id="nftSugars">8</span> g</span>
+                <strong id="nftSugarsDv">8%</strong>
+              </div>
+              <div class="flex justify-between py-1 nft-thin">
+                <span><strong>Protein / Protéines</strong> <span id="nftProtein">16</span> g</span>
+                <span class="text-xs text-slate-500">—</span>
+              </div>
+              <div class="flex justify-between py-1 nft-thin">
+                <span><strong>Cholesterol / Cholestérol</strong> <span id="nftCholesterol">5</span> mg</span>
+                <span class="text-xs text-slate-500">—</span>
+              </div>
+              <div class="flex justify-between py-1 nft-med">
+                <span><strong>Sodium</strong> <span id="nftSodium">180</span> mg</span>
+                <strong id="nftSodiumDv">8%</strong>
+              </div>
+              <div class="flex justify-between py-1 nft-thin text-xs">
+                <span>Potassium <span id="nftPotassium">350</span> mg</span>
+                <strong id="nftPotassiumDv">10%</strong>
+              </div>
+              <div class="flex justify-between py-1 nft-thin text-xs">
+                <span>Calcium <span id="nftCalcium">150</span> mg</span>
+                <strong id="nftCalciumDv">12%</strong>
+              </div>
+              <div class="flex justify-between py-1 nft-med text-xs">
+                <span>Iron / Fer <span id="nftIron">3.5</span> mg</span>
+                <strong id="nftIronDv">19%</strong>
+              </div>
+            </div>
+
+            <div class="text-[11px] leading-snug mt-2">
+              *5% or less is <strong>a little</strong>, 15% or more is <strong>a lot</strong>.<br />
+              *5 % ou moins c'est <strong>peu</strong>, 15 % ou plus c'est <strong>beaucoup</strong>.
+            </div>
+            <div class="mt-2.5 pt-2 border-t border-slate-300 text-xs leading-snug">
+              <div><strong>Ingredients:</strong> <span id="nftIngredients"></span></div>
+              <div class="mt-1"><strong>Contains:</strong> <span id="nftAllergens"></span></div>
+            </div>
+          </div>
+
+          <div id="calorieMathNote" class="text-xs text-slate-600 text-center max-w-sm mx-auto"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- TAB 5: MARKET COMPARABLE AUDITOR & PIT STOP #3 PREP (Q8)            -->
+    <!-- =================================================================== -->
+    <section id="panel-comparable" class="tab-panel hidden space-y-6">
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-4 mb-4">
+          <div>
+            <span class="inline-block text-xs font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-md bg-amber-100 text-amber-900 mb-1">
+              Step 3 &amp; Pit Stop #3 • Both Partners • Question 8
+            </span>
+            <h2 class="text-xl font-extrabold text-slate-900">Real Market Comparable Auditor</h2>
+            <p class="text-sm text-slate-600 mt-0.5">
+              Find <strong>ONE real product sold in Canada today</strong> in your supplement's category, enter its label stats below, and compare it live against your Tab 4 draft label!
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <button data-comp="clif" class="comp-preset-btn px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition">
+              Sample: Clif Bar
+            </button>
+            <button data-comp="gatorade" class="comp-preset-btn px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition">
+              Sample: Gatorade (591 mL)
+            </button>
+            <button data-comp="premier" class="comp-preset-btn px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition">
+              Sample: Premier Protein Shake
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <!-- Competitor Input Form -->
+          <div class="lg:col-span-5 space-y-3">
+            <div>
+              <label for="compName" class="block text-xs font-bold text-slate-700 mb-1">Real Comparable Product Name &amp; Brand</label>
+              <input id="compName" type="text" value="Clif Bar — Chocolate Chip (68 g)"
+                     class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-600" />
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label for="compCalories" class="block text-xs font-bold text-slate-700 mb-1">Calories (kcal)</label>
+                <input id="compCalories" type="number" min="0" value="250" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm font-semibold" />
+              </div>
+              <div>
+                <label for="compProtein" class="block text-xs font-bold text-slate-700 mb-1">Protein (g)</label>
+                <input id="compProtein" type="number" min="0" value="10" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm font-semibold" />
+              </div>
+              <div>
+                <label for="compSugars" class="block text-xs font-bold text-slate-700 mb-1">Sugars (g)</label>
+                <input id="compSugars" type="number" min="0" value="17" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm font-semibold" />
+              </div>
+              <div>
+                <label for="compFibre" class="block text-xs font-bold text-slate-700 mb-1">Fibre (g)</label>
+                <input id="compFibre" type="number" min="0" value="4" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm font-semibold" />
+              </div>
+              <div>
+                <label for="compSatTrans" class="block text-xs font-bold text-slate-700 mb-1">Sat + Trans Fat (g)</label>
+                <input id="compSatTrans" type="number" min="0" step="0.5" value="2" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm font-semibold" />
+              </div>
+              <div>
+                <label for="compSodium" class="block text-xs font-bold text-slate-700 mb-1">Sodium (mg)</label>
+                <input id="compSodium" type="number" min="0" step="10" value="240" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm font-semibold" />
+              </div>
+            </div>
+            <p class="text-xs text-slate-500">
+              Tip: Always double-check the actual Canadian Nutrition Facts label on a store website (e.g., Walmart.ca, Real Canadian Superstore, or the brand's Canadian site) and record your source in Q8!
+            </p>
+          </div>
+
+          <!-- Live Head-to-Head Comparison -->
+          <div class="lg:col-span-7 bg-slate-50 rounded-2xl border border-slate-200 p-5">
+            <h3 class="text-base font-extrabold text-slate-900 mb-3">Head-to-Head Audit: Your Draft vs. Market Comparable</h3>
+            <div id="compAuditRows" class="space-y-3"></div>
+            <div id="compTakeawayBox" class="mt-4 bg-white border border-emerald-200 rounded-xl p-3.5 text-xs sm:text-sm text-slate-800"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pit Stop #3 Oral Defense Flashcards -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+          <div>
+            <h3 class="text-lg font-extrabold text-slate-900">Pit Stop #3 Oral Defense Practice (Teacher Check-In)</h3>
+            <p class="text-xs sm:text-sm text-slate-600">Before asking for your teacher's signature, click each question to test whether both partners can answer it out loud!</p>
+          </div>
+          <span class="q-badge text-xs font-extrabold px-2.5 py-0.5 rounded-full">Click Cards to Reveal</span>
+        </div>
+        <div id="flashcardsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-900 text-slate-300 py-5 mt-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-wrap items-center justify-between gap-3 text-xs">
+      <div>
+        <strong class="text-white">Saskatchewan Health Science 20</strong> • The Amazing Nutri-Race (Leg 3: Energy Metabolism &amp; Canadian Labels)
+      </div>
+      <div class="flex flex-wrap gap-4">
+        <a href="https://curriculum.gov.sk.ca/CurriculumOutcomeContent?id=74&oc=109157" target="_blank" rel="noopener noreferrer" class="hover:text-amber-300 underline">
+          SK Curriculum HS20-NU2
+        </a>
+        <a href="https://www.canada.ca/en/health-canada/services/food-nutrition/nutrition-labelling/nutrition-facts-tables.html" target="_blank" rel="noopener noreferrer" class="hover:text-amber-300 underline">
+          Health Canada Nutrition Facts Guide
+        </a>
+        <a href="https://loganpetlak.ca/nutrition/" target="_blank" rel="noopener noreferrer" class="hover:text-amber-300 underline">
+          SK HS20 Open Notes
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // =========================================================================
+    // 1. DATA DEFINITIONS (Verified Health Canada 2022 Daily Values & 4 Avatars)
+    // =========================================================================
+    const QUESTIONS = [
+      { id: 'q1', label: 'Q1: Calculate BMR & TDEE for all 4 Avatars', tab: 'avatars', role: 'Both' },
+      { id: 'q2', label: 'Q2: Compare 4 Avatars & pick target customer', tab: 'avatars', role: 'Both' },
+      { id: 'q3', label: 'Q3: Record linear 24-hour diet log (no table)', tab: 'diet', role: 'Individual' },
+      { id: 'q4', label: 'Q4: Does your diet log match your BMR/TDEE?', tab: 'diet', role: 'Individual' },
+      { id: 'q5', label: 'Q5: Over/under-consuming any macronutrients?', tab: 'diet', role: 'Individual' },
+      { id: 'q6', label: 'Q6: One realistic diet change & why', tab: 'diet', role: 'Individual' },
+      { id: 'q7', label: 'Q7: Draft Canadian Nutrition Facts label', tab: 'label', role: 'Both' },
+      { id: 'q8', label: 'Q8: Real market comparable & Pit Stop #3 sign-off', tab: 'comparable', role: 'Both' }
+    ];
+
+    const AVATARS = [
+      {
+        id: 'maya',
+        name: 'Maya Patel',
+        role: 'Academic Student (No Extra-Curriculars)',
+        badge: 'Avatar 1 • Sedentary',
+        badgeColor: 'bg-indigo-100 text-indigo-900',
+        bio: 'Grade 11 honour roll student taking AP Biology, Chemistry 30, and Pre-Calc 30 while tutoring online. Sits at a desk for 6+ hours of classes, studies 3 hours every night, and has little time for sports or gym workouts.',
+        sex: 'female',
+        age: 16,
+        height: 164,
+        weight: 58,
+        activity: 1.2,
+        activityText: '1.2 (Sedentary)'
+      },
+      {
+        id: 'liam',
+        name: 'Liam Kowalski',
+        role: 'Multi-Sport Student Athlete',
+        badge: 'Avatar 2 • Very Active',
+        badgeColor: 'bg-emerald-100 text-emerald-900',
+        bio: 'Grade 12 athlete playing senior basketball, volleyball, and spring track, plus lifting weights 6 days a week. Between morning practices, evening games, and weekend tournaments across Saskatchewan, he burns fuel nonstop.',
+        sex: 'male',
+        age: 17,
+        height: 182,
+        weight: 76,
+        activity: 1.725,
+        activityText: '1.725 (Very Active)'
+      },
+      {
+        id: 'jordan',
+        name: 'Jordan Tremblay',
+        role: '30-ish Office Worker',
+        badge: 'Avatar 3 • Lightly Active',
+        badgeColor: 'bg-sky-100 text-sky-900',
+        bio: '32-year-old project coordinator working 8:30 AM to 4:30 PM at a desk answering emails and running video meetings. Walks the dog 30 minutes most evenings and attends a rec fitness class twice a week.',
+        sex: 'female',
+        age: 32,
+        height: 168,
+        weight: 70,
+        activity: 1.375,
+        activityText: '1.375 (Lightly Active)'
+      },
+      {
+        id: 'dale',
+        name: 'Dale Henderson',
+        role: '50-ish Saskatchewan Farmer at Harvest',
+        badge: 'Avatar 4 • Extra Active',
+        badgeColor: 'bg-amber-100 text-amber-900',
+        bio: '54-year-old west-central Saskatchewan grain & cattle farmer during September harvest. Works 14-hour days climbing combines, moving heavy auger pipes, lifting 25 kg mineral bags, and repairing machinery 7 days a week.',
+        sex: 'male',
+        age: 54,
+        height: 180,
+        weight: 92,
+        activity: 1.9,
+        activityText: '1.9 (Extra Active)'
+      }
+    ];
+
+    const COMMON_FOODS = [
+      { name: '2 Scrambled Eggs', macros: 'Protein + Fat', note: '~12 g protein, 10 g fat, ~150 kcal' },
+      { name: '2 Slices Whole Wheat Toast', macros: 'Carbs + Fibre', note: '~28 g carbs, 4 g fibre, ~160 kcal' },
+      { name: 'Bowl of Sugary Cereal + Milk', macros: 'Simple Carbs + Some Protein', note: '~35 g carbs (high sugar), 8 g protein' },
+      { name: 'Greek Yogurt (175 g) + Berries', macros: 'Protein + Carbs + Fibre', note: '~15 g protein, 14 g carbs, ~140 kcal' },
+      { name: 'Chicken & Veggie Wrap', macros: 'Carbs + Protein + Fat', note: '~38 g carbs, 24 g protein, 10 g fat' },
+      { name: '2 Slices Pepperoni Pizza', macros: 'Carbs + Fat + Protein', note: '~68 g carbs, 24 g fat, 24 g protein, high sodium' },
+      { name: 'Medium Iced Capp (Tim Hortons)', macros: 'Simple Sugars + Fat', note: '~48 g carbs (43 g sugar), 15 g fat, ~350 kcal' },
+      { name: '1 Can Regular Pop (355 mL)', macros: 'Simple Sugars only', note: '~39 g sugars, 0 g protein, 0 g fibre, ~150 kcal' },
+      { name: 'Sports Drink (591 mL)', macros: 'Simple Sugars + Electrolytes', note: '~34 g sugars, ~270 mg sodium, ~140 kcal' },
+      { name: 'Handful of Almonds (30 g)', macros: 'Healthy Fats + Protein + Fibre', note: '15 g fat, 6 g protein, 3.5 g fibre' },
+      { name: 'Apple + 2 tbsp Peanut Butter', macros: 'Carbs/Fibre + Healthy Fat + Protein', note: '~31 g carbs, 16 g fat, 8 g protein' },
+      { name: 'Spaghetti with Meat Sauce', macros: 'Carbs + Protein + Fat', note: '~55 g carbs, 22 g protein, 12 g fat' },
+      { name: 'Grilled Steak + Baked Potato + Broccoli', macros: 'Protein + Complex Carbs + Fibre', note: 'Balanced meal with iron, potassium & vitamin C' },
+      { name: 'Bag of Potato Chips (50 g)', macros: 'Refined Carbs + Fat', note: '~27 g carbs, 17 g fat, high sodium, ~270 kcal' }
+    ];
+
+    // Official Health Canada 2022 Table of Daily Values (children >=4 & adults)
+    const HC_DV = {
+      fat: 75,
+      satTrans: 20,
+      fibre: 28,
+      sugars: 100,
+      sodium: 2300,
+      potassium: 3400,
+      calcium: 1300,
+      iron: 18
+    };
+
+    const LABEL_PRESETS = {
+      meal: {
+        name: 'Prairie Fuel Complete Shake (Meal Replacement)',
+        serving: '1 bottle (350 mL)',
+        fat: 9, satTrans: 1.5, carbs: 36, fibre: 7, sugars: 9, protein: 24,
+        cholesterol: 10, sodium: 260, potassium: 520, calcium: 350, iron: 4.5,
+        ingredients: 'Filtered water, whey protein isolate, oat flour, canola oil, chicory root fibre, maple syrup, cocoa powder, vitamin and mineral blend, natural flavour, sea salt.',
+        allergens: 'Milk.'
+      },
+      drink: {
+        name: 'SaskCharge Isotonic Hydration (Sports Drink)',
+        serving: '1 bottle (500 mL)',
+        fat: 0, satTrans: 0, carbs: 24, fibre: 0, sugars: 14, protein: 0,
+        cholesterol: 0, sodium: 320, potassium: 420, calcium: 60, iron: 0,
+        ingredients: 'Filtered water, cane sugar, dextrose, citric acid, potassium citrate, sea salt, natural Saskatoon berry flavour, magnesium lactate, vitamin B6.',
+        allergens: 'None.'
+      },
+      snack: {
+        name: 'Prairie Pulse Performance Bar (Performance Snack)',
+        serving: '1 bar (60 g)',
+        fat: 8, satTrans: 2, carbs: 28, fibre: 6, sugars: 8, protein: 16,
+        cholesterol: 5, sodium: 180, potassium: 350, calcium: 150, iron: 3.5,
+        ingredients: 'Rolled oats, whey protein isolate, Saskatchewan honey, roasted almonds, ground flaxseed, freeze-dried Saskatoon berries, sea salt.',
+        allergens: 'Milk, Tree nuts (almonds).'
+      }
+    };
+
+    const COMP_PRESETS = {
+      clif: { name: 'Clif Bar — Chocolate Chip (68 g)', calories: 250, protein: 10, sugars: 17, fibre: 4, satTrans: 2, sodium: 240 },
+      gatorade: { name: 'Gatorade Thirst Quencher (591 mL)', calories: 140, protein: 0, sugars: 34, fibre: 0, satTrans: 0, sodium: 270 },
+      premier: { name: 'Premier Protein Shake — Chocolate (325 mL)', calories: 160, protein: 30, sugars: 1, fibre: 3, satTrans: 0.5, sodium: 290 }
+    };
+
+    const FLASHCARDS = [
+      {
+        q: '1. Why does 54-year-old farmer Dale have a LOWER BMR than 17-year-old Liam, yet a HIGHER TDEE?',
+        a: 'BMR naturally decreases with age (the − 5 × age term in Mifflin-St Jeor), so Dale\'s resting BMR (1,780 kcal) is slightly below Liam\'s (1,818 kcal). However, Dale\'s 14-hour harvest labour gives him an Extra Active factor of 1.9, pushing his TDEE to 3,382 kcal—above Liam\'s 3,135 kcal!'
+      },
+      {
+        q: '2. Explain Health Canada\'s 5% / 15% Rule and why it matters for your product.',
+        a: '5% DV or less is "a little" (best for saturated fat, sugars, and sodium), while 15% DV or more is "a lot" (great for fibre, potassium, calcium, and iron). If saturated fat, sugars, or sodium hit 15% DV or higher, Canada requires a front-of-package "High in..." warning symbol.'
+      },
+      {
+        q: '3. Why do Protein and Total Carbohydrate NOT have a % Daily Value on Canadian Nutrition Facts tables?',
+        a: 'Health Canada does not set a % DV for protein because most Canadians already meet protein needs, and carbohydrate % DV was removed so consumers focus on Fibre (% DV) and Sugars (% DV) instead.'
+      },
+      {
+        q: '4. What is the legal rule for ordering ingredients on a Canadian food label?',
+        a: 'Ingredients must be listed in descending order by weight—the heaviest ingredient appears first and the lightest appears last—followed by a "Contains:" statement for priority allergens.'
+      }
+    ];
+
+    // =========================================================================
+    // 2. STATE & LOCALSTORAGE
+    // =========================================================================
+    const STORAGE_KEY = 'hs20_leg3_progress_v1';
+    let completedQs = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    let savedAvatars = {};
+    let currentAvatarName = 'Maya Patel';
+
+    function saveProgress() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(completedQs));
+      updateProgressUI();
+    }
+
+    function updateProgressUI() {
+      const doneCount = QUESTIONS.filter(q => completedQs[q.id]).length;
+      const pct = Math.round((doneCount / QUESTIONS.length) * 100);
+      document.getElementById('headerProgressBar').style.width = `${pct}%`;
+      document.getElementById('headerProgressText').textContent = `${doneCount}/${QUESTIONS.length}`;
+    }
+
+    // =========================================================================
+    // 3. TAB SWITCHING
+    // =========================================================================
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-panel').forEach(panel => {
+        panel.classList.toggle('hidden', panel.id !== `panel-${tabId}`);
+      });
+      document.querySelectorAll('.tab-nav-btn').forEach(btn => {
+        const active = btn.dataset.tab === tabId;
+        btn.classList.toggle('tab-btn-active', active);
+        btn.classList.toggle('tab-btn-inactive', !active);
+      });
+      if (tabId === 'comparable') {
+        renderComparableAudit();
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.querySelectorAll('.tab-nav-btn').forEach(btn => {
+      btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+    });
+
+    document.querySelectorAll('.jump-tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => switchTab(btn.dataset.jump));
+    });
+
+    // =========================================================================
+    // 4. CHECKLIST RENDERER (TAB 1)
+    // =========================================================================
+    function renderChecklist() {
+      const grid = document.getElementById('questionChecklistGrid');
+      grid.innerHTML = '';
+      QUESTIONS.forEach(q => {
+        const checked = !!completedQs[q.id];
+        const card = document.createElement('div');
+        card.className = `flex items-center justify-between gap-2 p-3 rounded-xl border transition ${
+          checked ? 'bg-emerald-50 border-emerald-300' : 'bg-slate-50 border-slate-200 hover:border-slate-300'
+        }`;
+        card.innerHTML = `
+          <label class="flex items-center gap-2.5 cursor-pointer flex-1">
+            <input type="checkbox" data-qid="${q.id}" ${checked ? 'checked' : ''}
+                   class="w-4 h-4 rounded text-emerald-700 focus:ring-emerald-600 cursor-pointer" />
+            <span class="text-xs sm:text-sm font-semibold ${checked ? 'line-through text-emerald-900' : 'text-slate-800'}">
+              ${q.label}
+            </span>
+          </label>
+          <div class="flex items-center gap-2 shrink-0">
+            <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-600">${q.role}</span>
+            <button data-goto="${q.tab}" class="text-xs font-bold text-emerald-800 hover:underline">Open →</button>
+          </div>
+        `;
+        card.querySelector('input').addEventListener('change', (e) => {
+          completedQs[q.id] = e.target.checked;
+          saveProgress();
+          renderChecklist();
+        });
+        card.querySelector('button').addEventListener('click', () => switchTab(q.tab));
+        grid.appendChild(card);
+      });
+      updateProgressUI();
+    }
+
+    document.getElementById('resetProgressBtn').addEventListener('click', () => {
+      completedQs = {};
+      saveProgress();
+      renderChecklist();
+    });
+
+    // =========================================================================
+    // 5. 4 AVATARS & BMR/TDEE CALCULATOR (TAB 2)
+    // =========================================================================
+    function renderAvatarCards() {
+      const grid = document.getElementById('avatarCardsGrid');
+      grid.innerHTML = '';
+      AVATARS.forEach(av => {
+        const card = document.createElement('div');
+        card.className = 'bg-white rounded-2xl border border-slate-200 p-5 shadow-sm flex flex-col justify-between hover:border-emerald-400 transition';
+        card.innerHTML = `
+          <div>
+            <div class="flex items-center justify-between gap-2">
+              <span class="text-xs font-extrabold px-2.5 py-0.5 rounded-full ${av.badgeColor}">${av.badge}</span>
+              <span class="text-xs font-bold text-slate-500">Activity: ${av.activityText}</span>
+            </div>
+            <h4 class="text-lg font-extrabold text-slate-900 mt-2">${av.name}</h4>
+            <div class="text-xs font-bold text-emerald-800">${av.role}</div>
+            <p class="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">${av.bio}</p>
+            <div class="grid grid-cols-4 gap-2 mt-3 bg-slate-50 rounded-xl p-2.5 border border-slate-200 text-center">
+              <div><div class="text-[10px] font-bold text-slate-500 uppercase">Sex</div><div class="text-xs font-extrabold capitalize">${av.sex}</div></div>
+              <div><div class="text-[10px] font-bold text-slate-500 uppercase">Age</div><div class="text-xs font-extrabold">${av.age} yrs</div></div>
+              <div><div class="text-[10px] font-bold text-slate-500 uppercase">Height</div><div class="text-xs font-extrabold">${av.height} cm</div></div>
+              <div><div class="text-[10px] font-bold text-slate-500 uppercase">Weight</div><div class="text-xs font-extrabold">${av.weight} kg</div></div>
+            </div>
+          </div>
+          <button data-avatar-id="${av.id}" class="load-avatar-btn mt-4 w-full py-2 rounded-xl bg-emerald-800 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold transition">
+            Load ${av.name.split(' ')[0]}'s Stats into Calculator ↓
+          </button>
+        `;
+        card.querySelector('button').addEventListener('click', () => {
+          currentAvatarName = av.name;
+          document.getElementById('calcSex').value = av.sex;
+          document.getElementById('calcAge').value = av.age;
+          document.getElementById('calcHeight').value = av.height;
+          document.getElementById('calcWeight').value = av.weight;
+          document.getElementById('calcActivity').value = String(av.activity);
+          document.getElementById('calcActiveAvatarLabel').textContent = `Loaded: ${av.name} (${av.role})`;
+          document.getElementById('saveAvatarMsg').textContent = '';
+          calculateBmrTdee();
+          document.getElementById('calcBmrOut').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+        grid.appendChild(card);
+      });
+    }
+
+    function calculateBmrTdee() {
+      const sex = document.getElementById('calcSex').value;
+      const age = parseFloat(document.getElementById('calcAge').value) || 0;
+      const height = parseFloat(document.getElementById('calcHeight').value) || 0;
+      const weight = parseFloat(document.getElementById('calcWeight').value) || 0;
+      const activity = parseFloat(document.getElementById('calcActivity').value) || 1.2;
+
+      const base = (10 * weight) + (6.25 * height) - (5 * age);
+      const bmrExact = sex === 'male' ? base + 5 : base - 161;
+      const bmr = Math.max(0, Math.round(bmrExact));
+      const tdee = Math.max(0, Math.round(bmrExact * activity));
+
+      document.getElementById('calcBmrOut').textContent = bmr.toLocaleString();
+      document.getElementById('calcTdeeOut').textContent = tdee.toLocaleString();
+
+      const offsetStr = sex === 'male' ? '+ 5' : '− 161';
+      document.getElementById('calcFormulaSteps').innerHTML =
+        `<div><strong>BMR:</strong> (10 × ${weight}) + (6.25 × ${height}) − (5 × ${age}) ${offsetStr} = <strong>${bmr.toLocaleString()} kcal/day</strong></div>` +
+        `<div class="mt-1"><strong>TDEE:</strong> ${bmrExact.toFixed(1)} × ${activity} = <strong>${tdee.toLocaleString()} kcal/day</strong></div>`;
+
+      return { bmr, tdee, activity };
+    }
+
+    function renderComparisonBars() {
+      const container = document.getElementById('comparisonBarsContainer');
+      const keys = Object.keys(savedAvatars);
+      if (keys.length === 0) {
+        container.innerHTML = `<div class="text-xs text-slate-500 italic bg-slate-50 border border-dashed border-slate-300 rounded-xl p-4 text-center">No avatars saved yet. Load an avatar above and click <strong>+ Save to Comparison Chart</strong>!</div>`;
+        return;
+      }
+      const maxVal = 3600;
+      container.innerHTML = '';
+      keys.forEach(name => {
+        const d = savedAvatars[name];
+        const bmrPct = Math.min(100, Math.round((d.bmr / maxVal) * 100));
+        const tdeePct = Math.min(100, Math.round((d.tdee / maxVal) * 100));
+        const row = document.createElement('div');
+        row.className = 'space-y-1';
+        row.innerHTML = `
+          <div class="flex justify-between text-xs font-bold text-slate-800">
+            <span>${name} <span class="font-normal text-slate-500">(×${d.activity})</span></span>
+            <span>BMR ${d.bmr.toLocaleString()} | <span class="text-amber-800">TDEE ${d.tdee.toLocaleString()}</span></span>
+          </div>
+          <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
+            <div class="h-full bg-emerald-800 rounded-full smooth-bar" style="width: ${bmrPct}%"></div>
+          </div>
+          <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
+            <div class="h-full bg-amber-500 rounded-full smooth-bar" style="width: ${tdeePct}%"></div>
+          </div>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    ['calcSex', 'calcAge', 'calcHeight', 'calcWeight', 'calcActivity'].forEach(id => {
+      document.getElementById(id).addEventListener('input', calculateBmrTdee);
+      document.getElementById(id).addEventListener('change', calculateBmrTdee);
+    });
+
+    document.getElementById('saveAvatarResultBtn').addEventListener('click', () => {
+      const res = calculateBmrTdee();
+      savedAvatars[currentAvatarName] = res;
+      renderComparisonBars();
+      document.getElementById('saveAvatarMsg').textContent = `Saved ${currentAvatarName} (${res.tdee.toLocaleString()} kcal/day)!`;
+    });
+
+    document.getElementById('clearCalcBtn').addEventListener('click', () => {
+      currentAvatarName = 'Custom Profile';
+      document.getElementById('calcActiveAvatarLabel').textContent = 'Custom entry mode (type any stats below).';
+      document.getElementById('calcAge').value = 17;
+      document.getElementById('calcHeight').value = 170;
+      document.getElementById('calcWeight').value = 65;
+      document.getElementById('calcActivity').value = '1.55';
+      document.getElementById('saveAvatarMsg').textContent = '';
+      calculateBmrTdee();
+    });
+
+    // =========================================================================
+    // 6. COMMON FOOD LOOKUP (TAB 3)
+    // =========================================================================
+    function renderFoodLookup(query = '') {
+      const list = document.getElementById('foodLookupList');
+      const q = query.trim().toLowerCase();
+      const filtered = COMMON_FOODS.filter(f =>
+        f.name.toLowerCase().includes(q) || f.macros.toLowerCase().includes(q) || f.note.toLowerCase().includes(q)
+      );
+      if (filtered.length === 0) {
+        list.innerHTML = `<div class="col-span-2 text-xs text-slate-500 italic p-3">No matching foods found. Try searching "eggs", "pizza", "pop", or "yogurt".</div>`;
+        return;
+      }
+      list.innerHTML = filtered.map(f => `
+        <div class="rounded-xl border border-slate-200 bg-slate-50 p-3">
+          <div class="text-sm font-extrabold text-slate-900">${f.name}</div>
+          <div class="text-xs font-bold text-emerald-800 mt-0.5">${f.macros}</div>
+          <div class="text-xs text-slate-600 mt-0.5">${f.note}</div>
+        </div>
+      `).join('');
+    }
+
+    document.getElementById('foodSearchInput').addEventListener('input', (e) => renderFoodLookup(e.target.value));
+
+    // =========================================================================
+    // 7. CANADIAN NUTRITION FACTS LABEL BUILDER (TAB 4)
+    // =========================================================================
+    function roundCfiaCalories(rawCal) {
+      if (rawCal < 5) return Math.round(rawCal);
+      if (rawCal <= 50) return Math.round(rawCal / 5) * 5;
+      return Math.round(rawCal / 10) * 10;
+    }
+
+    function getDraftLabelState() {
+      const fat = parseFloat(document.getElementById('lblFat').value) || 0;
+      const satTrans = parseFloat(document.getElementById('lblSatTrans').value) || 0;
+      const carbs = parseFloat(document.getElementById('lblCarbs').value) || 0;
+      const fibre = parseFloat(document.getElementById('lblFibre').value) || 0;
+      const sugars = parseFloat(document.getElementById('lblSugars').value) || 0;
+      const protein = parseFloat(document.getElementById('lblProtein').value) || 0;
+      const cholesterol = parseFloat(document.getElementById('lblCholesterol').value) || 0;
+      const sodium = parseFloat(document.getElementById('lblSodium').value) || 0;
+      const potassium = parseFloat(document.getElementById('lblPotassium').value) || 0;
+      const calcium = parseFloat(document.getElementById('lblCalcium').value) || 0;
+      const iron = parseFloat(document.getElementById('lblIron').value) || 0;
+
+      const rawCalories = (carbs * 4) + (protein * 4) + (fat * 9);
+      const calories = roundCfiaCalories(rawCalories);
+
+      const dv = {
+        fat: Math.round((fat / HC_DV.fat) * 100),
+        satTrans: Math.round((satTrans / HC_DV.satTrans) * 100),
+        fibre: Math.round((fibre / HC_DV.fibre) * 100),
+        sugars: Math.round((sugars / HC_DV.sugars) * 100),
+        sodium: Math.round((sodium / HC_DV.sodium) * 100),
+        potassium: Math.round((potassium / HC_DV.potassium) * 100),
+        calcium: Math.round((calcium / HC_DV.calcium) * 100),
+        iron: Math.round((iron / HC_DV.iron) * 100)
+      };
+
+      const fopFlags = [];
+      if (dv.satTrans >= 15) fopFlags.push(`Sat Fat (${dv.satTrans}% DV)`);
+      if (dv.sugars >= 15) fopFlags.push(`Sugars (${dv.sugars}% DV)`);
+      if (dv.sodium >= 15) fopFlags.push(`Sodium (${dv.sodium}% DV)`);
+
+      return {
+        name: document.getElementById('lblProductName').value.trim() || 'Your Draft Supplement',
+        serving: document.getElementById('lblServing').value.trim() || '1 serving',
+        ingredients: document.getElementById('lblIngredients').value.trim(),
+        allergens: document.getElementById('lblAllergens').value.trim() || 'None',
+        fat, satTrans, carbs, fibre, sugars, protein, cholesterol, sodium, potassium, calcium, iron,
+        rawCalories, calories, dv, fopFlags
+      };
+    }
+
+    function updateLabelPreview() {
+      const s = getDraftLabelState();
+      document.getElementById('nftServing').textContent = s.serving;
+      document.getElementById('nftCalories').textContent = s.calories;
+      document.getElementById('nftFat').textContent = s.fat;
+      document.getElementById('nftFatDv').textContent = `${s.dv.fat}%`;
+      document.getElementById('nftSatTrans').textContent = s.satTrans;
+      document.getElementById('nftSatTransDv').textContent = `${s.dv.satTrans}%`;
+      document.getElementById('nftCarbs').textContent = s.carbs;
+      document.getElementById('nftFibre').textContent = s.fibre;
+      document.getElementById('nftFibreDv').textContent = `${s.dv.fibre}%`;
+      document.getElementById('nftSugars').textContent = s.sugars;
+      document.getElementById('nftSugarsDv').textContent = `${s.dv.sugars}%`;
+      document.getElementById('nftProtein').textContent = s.protein;
+      document.getElementById('nftCholesterol').textContent = s.cholesterol;
+      document.getElementById('nftSodium').textContent = s.sodium;
+      document.getElementById('nftSodiumDv').textContent = `${s.dv.sodium}%`;
+      document.getElementById('nftPotassium').textContent = s.potassium;
+      document.getElementById('nftPotassiumDv').textContent = `${s.dv.potassium}%`;
+      document.getElementById('nftCalcium').textContent = s.calcium;
+      document.getElementById('nftCalciumDv').textContent = `${s.dv.calcium}%`;
+      document.getElementById('nftIron').textContent = s.iron;
+      document.getElementById('nftIronDv').textContent = `${s.dv.iron}%`;
+      document.getElementById('nftIngredients').textContent = s.ingredients;
+      document.getElementById('nftAllergens').textContent = s.allergens;
+
+      document.getElementById('calorieMathNote').textContent =
+        `4–4–9 Math Check: (${s.carbs}×4) + (${s.protein}×4) + (${s.fat}×9) = ${Math.round(s.rawCalories)} kcal → CFIA rounded to ${s.calories} Calories.`;
+
+      const fopBox = document.getElementById('fopWarningBox');
+      if (s.fopFlags.length > 0) {
+        fopBox.className = 'rounded-2xl border-2 border-red-600 bg-red-50 p-4';
+        fopBox.innerHTML = `
+          <div class="flex items-center gap-2 text-red-900 font-extrabold text-sm">
+            <span class="px-2 py-0.5 rounded bg-black text-white text-xs font-black">HIGH IN</span>
+            <span>Front-of-Package Warning Triggered!</span>
+          </div>
+          <p class="text-xs text-red-800 mt-1">
+            Health Canada requires a black-and-white warning symbol because your recipe hits ≥15% DV for: <strong>${s.fopFlags.join(', ')}</strong>. Lower these if you want a cleaner label!
+          </p>
+        `;
+      } else {
+        fopBox.className = 'rounded-2xl border border-emerald-300 bg-emerald-50 p-4';
+        fopBox.innerHTML = `
+          <div class="text-emerald-900 font-extrabold text-sm">✓ No Front-of-Package "High in..." Warning Needed!</div>
+          <p class="text-xs text-emerald-800 mt-1">
+            Your Saturated Fat (${s.dv.satTrans}% DV), Sugars (${s.dv.sugars}% DV), and Sodium (${s.dv.sodium}% DV) are all safely under Canada's 15% DV threshold.
+          </p>
+        `;
+      }
+    }
+
+    ['lblProductName', 'lblServing', 'lblFat', 'lblSatTrans', 'lblCarbs', 'lblFibre', 'lblSugars',
+      'lblProtein', 'lblCholesterol', 'lblSodium', 'lblPotassium', 'lblCalcium', 'lblIron',
+      'lblIngredients', 'lblAllergens'].forEach(id => {
+      document.getElementById(id).addEventListener('input', updateLabelPreview);
+    });
+
+    document.querySelectorAll('.preset-label-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const p = LABEL_PRESETS[btn.dataset.preset];
+        document.getElementById('lblProductName').value = p.name;
+        document.getElementById('lblServing').value = p.serving;
+        document.getElementById('lblFat').value = p.fat;
+        document.getElementById('lblSatTrans').value = p.satTrans;
+        document.getElementById('lblCarbs').value = p.carbs;
+        document.getElementById('lblFibre').value = p.fibre;
+        document.getElementById('lblSugars').value = p.sugars;
+        document.getElementById('lblProtein').value = p.protein;
+        document.getElementById('lblCholesterol').value = p.cholesterol;
+        document.getElementById('lblSodium').value = p.sodium;
+        document.getElementById('lblPotassium').value = p.potassium;
+        document.getElementById('lblCalcium').value = p.calcium;
+        document.getElementById('lblIron').value = p.iron;
+        document.getElementById('lblIngredients').value = p.ingredients;
+        document.getElementById('lblAllergens').value = p.allergens;
+        updateLabelPreview();
+      });
+    });
+
+    document.getElementById('copyLinearLabelBtn').addEventListener('click', () => {
+      const s = getDraftLabelState();
+      const text = [
+        `Product Name & Category: ${s.name}`,
+        `Serving Size: ${s.serving}`,
+        `Calories: ${s.calories} kcal`,
+        `Fat: ${s.fat} g (${s.dv.fat}% DV) | Saturated + Trans Fat: ${s.satTrans} g (${s.dv.satTrans}% DV)`,
+        `Carbohydrate: ${s.carbs} g (no % DV) | Fibre: ${s.fibre} g (${s.dv.fibre}% DV) | Sugars: ${s.sugars} g (${s.dv.sugars}% DV)`,
+        `Protein: ${s.protein} g (no % DV) | Cholesterol: ${s.cholesterol} mg`,
+        `Sodium: ${s.sodium} mg (${s.dv.sodium}% DV) | Potassium: ${s.potassium} mg (${s.dv.potassium}% DV)`,
+        `Calcium: ${s.calcium} mg (${s.dv.calcium}% DV) | Iron: ${s.iron} mg (${s.dv.iron}% DV)`,
+        `Front-of-Package Warning Triggered?: ${s.fopFlags.length ? 'Yes — ' + s.fopFlags.join(', ') : 'No'}`,
+        `Ingredient List: ${s.ingredients}`,
+        `Contains: ${s.allergens}`
+      ].join('\n');
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          document.getElementById('copyLinearMsg').textContent = 'Copied! Paste directly into Question 7 of your Word document.';
+        });
+      } else {
+        document.getElementById('copyLinearMsg').textContent = 'Copy ready — transfer the values from the preview box into Q7.';
+      }
+    });
+
+    // =========================================================================
+    // 8. MARKET COMPARABLE AUDITOR & FLASHCARDS (TAB 5)
+    // =========================================================================
+    function renderComparableAudit() {
+      const ours = getDraftLabelState();
+      const comp = {
+        name: document.getElementById('compName').value.trim() || 'Market Comparable',
+        calories: parseFloat(document.getElementById('compCalories').value) || 0,
+        protein: parseFloat(document.getElementById('compProtein').value) || 0,
+        sugars: parseFloat(document.getElementById('compSugars').value) || 0,
+        fibre: parseFloat(document.getElementById('compFibre').value) || 0,
+        satTrans: parseFloat(document.getElementById('compSatTrans').value) || 0,
+        sodium: parseFloat(document.getElementById('compSodium').value) || 0
+      };
+
+      const metrics = [
+        { label: 'Calories', ours: `${ours.calories} kcal`, theirs: `${comp.calories} kcal`, better: null },
+        { label: 'Protein (Higher = Better)', ours: `${ours.protein} g`, theirs: `${comp.protein} g`, better: ours.protein > comp.protein ? 'ours' : (ours.protein < comp.protein ? 'theirs' : 'tie') },
+        { label: 'Sugars (Lower = Better)', ours: `${ours.sugars} g (${ours.dv.sugars}% DV)`, theirs: `${comp.sugars} g (${Math.round((comp.sugars / HC_DV.sugars) * 100)}% DV)`, better: ours.sugars < comp.sugars ? 'ours' : (ours.sugars > comp.sugars ? 'theirs' : 'tie') },
+        { label: 'Fibre (Higher = Better)', ours: `${ours.fibre} g (${ours.dv.fibre}% DV)`, theirs: `${comp.fibre} g (${Math.round((comp.fibre / HC_DV.fibre) * 100)}% DV)`, better: ours.fibre > comp.fibre ? 'ours' : (ours.fibre < comp.fibre ? 'theirs' : 'tie') },
+        { label: 'Sat + Trans Fat (Lower = Better)', ours: `${ours.satTrans} g (${ours.dv.satTrans}% DV)`, theirs: `${comp.satTrans} g (${Math.round((comp.satTrans / HC_DV.satTrans) * 100)}% DV)`, better: ours.satTrans < comp.satTrans ? 'ours' : (ours.satTrans > comp.satTrans ? 'theirs' : 'tie') },
+        { label: 'Sodium (Lower = Better*)', ours: `${ours.sodium} mg (${ours.dv.sodium}% DV)`, theirs: `${comp.sodium} mg (${Math.round((comp.sodium / HC_DV.sodium) * 100)}% DV)`, better: ours.sodium < comp.sodium ? 'ours' : (ours.sodium > comp.sodium ? 'theirs' : 'tie') }
+      ];
+
+      let wins = [];
+      let watchOuts = [];
+      const container = document.getElementById('compAuditRows');
+      container.innerHTML = metrics.map(m => {
+        let badge = '<span class="text-[11px] font-bold px-2 py-0.5 rounded bg-slate-200 text-slate-700">Compare</span>';
+        if (m.better === 'ours') {
+          wins.push(m.label.split(' (')[0]);
+          badge = '<span class="text-[11px] font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-900">Your Product Leads ✓</span>';
+        } else if (m.better === 'theirs') {
+          watchOuts.push(m.label.split(' (')[0]);
+          badge = '<span class="text-[11px] font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-900">Competitor Leads</span>';
+        } else if (m.better === 'tie') {
+          badge = '<span class="text-[11px] font-bold px-2 py-0.5 rounded bg-slate-200 text-slate-700">Tie</span>';
+        }
+        return `
+          <div class="bg-white rounded-xl border border-slate-200 p-3 flex flex-wrap items-center justify-between gap-2 text-xs sm:text-sm">
+            <div class="font-bold text-slate-900 w-44">${m.label}</div>
+            <div class="flex items-center gap-4">
+              <div><span class="text-slate-400 text-xs">Yours:</span> <strong class="text-emerald-900">${m.ours}</strong></div>
+              <div><span class="text-slate-400 text-xs">Rival:</span> <strong class="text-slate-800">${m.theirs}</strong></div>
+            </div>
+            <div>${badge}</div>
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById('compTakeawayBox').innerHTML = `
+        <div class="font-extrabold text-emerald-900 mb-1">Quick Q8 Audit Summary (${ours.name} vs. ${comp.name})</div>
+        <div><strong>Where your draft beats the competitor:</strong> ${wins.length ? wins.join(', ') : 'None yet — adjust your Tab 4 recipe to stand out!'}</div>
+        <div class="mt-1"><strong>Area to consider improving:</strong> ${watchOuts.length ? watchOuts.join(', ') : 'Strong across the board!'} <span class="text-xs text-slate-500">(*Note: Isotonic sports drinks intentionally include moderate sodium for sweat replacement.)</span></div>
+      `;
+    }
+
+    ['compName', 'compCalories', 'compProtein', 'compSugars', 'compFibre', 'compSatTrans', 'compSodium'].forEach(id => {
+      document.getElementById(id).addEventListener('input', renderComparableAudit);
+    });
+
+    document.querySelectorAll('.comp-preset-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const c = COMP_PRESETS[btn.dataset.comp];
+        document.getElementById('compName').value = c.name;
+        document.getElementById('compCalories').value = c.calories;
+        document.getElementById('compProtein').value = c.protein;
+        document.getElementById('compSugars').value = c.sugars;
+        document.getElementById('compFibre').value = c.fibre;
+        document.getElementById('compSatTrans').value = c.satTrans;
+        document.getElementById('compSodium').value = c.sodium;
+        renderComparableAudit();
+      });
+    });
+
+    function renderFlashcards() {
+      const grid = document.getElementById('flashcardsGrid');
+      grid.innerHTML = '';
+      FLASHCARDS.forEach(fc => {
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.className = 'text-left bg-slate-50 hover:bg-emerald-50/60 border border-slate-200 rounded-2xl p-4 transition';
+        card.innerHTML = `
+          <div class="text-sm font-extrabold text-slate-900">${fc.q}</div>
+          <div class="fc-answer hidden mt-2.5 pt-2.5 border-t border-slate-200 text-xs sm:text-sm text-emerald-950 leading-relaxed">${fc.a}</div>
+          <div class="fc-hint mt-2 text-xs font-bold text-amber-800">Click to reveal sample answer ▾</div>
+        `;
+        card.addEventListener('click', () => {
+          const ans = card.querySelector('.fc-answer');
+          const hint = card.querySelector('.fc-hint');
+          const isHidden = ans.classList.toggle('hidden');
+          hint.textContent = isHidden ? 'Click to reveal sample answer ▾' : 'Click to hide answer ▴';
+        });
+        grid.appendChild(card);
+      });
+    }
+
+    // =========================================================================
+    // 9. INITIALIZE ON LOAD
+    // =========================================================================
+    renderChecklist();
+    renderAvatarCards();
+    calculateBmrTdee();
+    renderComparisonBars();
+    renderFoodLookup();
+    updateLabelPreview();
+    renderComparableAudit();
+    renderFlashcards();
+  </script>
+</body>
+</html>

@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leg 4 Lab Assistant: Cultural Crossroads &amp; Diet Claims | SK Health Science 20</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+    }
+    .emerald-gradient {
+      background: linear-gradient(135deg, #064e3b 0%, #1b4332 55%, #0f766e 100%);
+    }
+    .tab-btn-active {
+      background-color: #1b4332;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(27, 67, 50, 0.25);
+    }
+    .tab-btn-inactive {
+      background-color: #ffffff;
+      color: #334155;
+      border: 1px solid #cbd5e1;
+    }
+    .tab-btn-inactive:hover {
+      background-color: #f1f5f9;
+      color: #0f172a;
+    }
+    .q-badge {
+      background-color: #fef3c7;
+      color: #92400e;
+      border: 1px solid #f59e0b;
+    }
+    .smooth-bar {
+      transition: width 0.45s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- TOP NAVIGATION BAR -->
+  <header class="emerald-gradient text-white shadow-lg sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-400/40 flex items-center justify-center text-amber-300 font-extrabold text-lg">
+          L4
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-400/30">
+              SK Health Science 20 • Outcome HS20-NU2 (b, g, h)
+            </span>
+          </div>
+          <h1 class="text-lg sm:text-xl font-extrabold tracking-tight text-white">
+            Leg 4 Lab Assistant: Cultural Crossroads &amp; Diet Claims
+          </h1>
+        </div>
+      </div>
+
+      <!-- Workbook Q1-Q8 Progress Meter -->
+      <div class="flex items-center gap-3 bg-white/10 px-3.5 py-2 rounded-xl border border-white/15">
+        <div class="text-xs">
+          <div class="font-semibold text-emerald-100">Workbook Progress (Q1–Q8)</div>
+          <div class="w-36 sm:w-44 h-2 bg-emerald-950 rounded-full overflow-hidden mt-1">
+            <div id="headerProgressBar" class="h-full bg-amber-400 smooth-bar" style="width: 0%"></div>
+          </div>
+        </div>
+        <span id="headerProgressText" class="text-sm font-extrabold text-amber-300">0/8</span>
+      </div>
+
+      <!-- Quick External Links -->
+      <div class="flex items-center gap-2 text-xs font-semibold">
+        <a href="https://scareysci.github.io/hs20text/u2/index.html" target="_blank" rel="noopener noreferrer"
+           class="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 transition">
+          ← Race Hub
+        </a>
+        <a href="https://scareysci.github.io/hs20text/u2/leg3.html" target="_blank" rel="noopener noreferrer"
+           class="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 transition">
+          Leg 3 Lab
+        </a>
+        <a href="https://food-guide.canada.ca/en/" target="_blank" rel="noopener noreferrer"
+           class="px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold transition">
+          Canada's Food Guide ↗
+        </a>
+      </div>
+    </div>
+
+    <!-- 5-TAB NAVIGATION BAR -->
+    <div class="bg-slate-900/40 border-t border-white/10">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex flex-wrap gap-1.5" role="tablist">
+        <button id="tabBtn-overview" data-tab="overview" class="tab-nav-btn tab-btn-active px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition">
+          1. Start Here &amp; Checklist
+        </button>
+        <button id="tabBtn-guides" data-tab="guides" class="tab-nav-btn tab-btn-inactive px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition">
+          2. Food Guides &amp; SK Foodways (Q1–Q3)
+        </button>
+        <button id="tabBtn-roadblock" data-tab="roadblock" class="tab-nav-btn tab-btn-inactive px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition">
+          3. Roadblock #4: Diet Auditor (Q4–Q5)
+        </button>
+        <button id="tabBtn-detour" data-tab="detour" class="tab-nav-btn tab-btn-inactive px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition">
+          4. Detour #4: Reformulation Lab (Q6–Q7)
+        </button>
+        <button id="tabBtn-pitstop" data-tab="pitstop" class="tab-nav-btn tab-btn-inactive px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition">
+          5. Pit Stop #4: Claim &amp; Defense (Q8)
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="max-w-7xl mx-auto w-full px-4 sm:px-6 py-6 flex-1 space-y-6">
+
+    <!-- =================================================================== -->
+    <!-- TAB 1: START HERE & LINEAR CHECKLIST                                -->
+    <!-- =================================================================== -->
+    <section id="panel-overview" class="tab-panel space-y-6">
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-100 pb-5">
+          <div>
+            <span class="inline-block text-xs font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-md bg-emerald-100 text-emerald-900 mb-2">
+              Step 1 of 5 • How to Use This Lab Assistant
+            </span>
+            <h2 class="text-2xl font-extrabold text-slate-900">
+              Welcome to Leg 4: Cultural Crossroads &amp; Diet Claims
+            </h2>
+            <p class="text-slate-600 mt-1 text-sm sm:text-base max-w-3xl">
+              Nutrition science is shaped by <strong>Indigenous land traditions</strong>, <strong>cultural food guides</strong>, <strong>religious beliefs</strong>, and <strong>popular diet trends</strong>.
+              In Leg 4, you will compare national, Indigenous, and global food guides, audit two contrasting dietary practices, and upgrade your supplement so it celebrates Saskatchewan foodways or meets strict allergen/religious standards.
+            </p>
+          </div>
+          <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 lg:w-80 shrink-0">
+            <div class="text-xs font-extrabold uppercase tracking-wider text-amber-900">Partner Roles in Leg 4</div>
+            <ul class="mt-2 space-y-1.5 text-xs sm:text-sm text-slate-800">
+              <li><strong>Step 2 (Q1–Q3):</strong> Both partners explore Food Guides, SK Indigenous foods &amp; pemmican.</li>
+              <li><strong>Step 3 (Q4–Q5):</strong> <strong>Partner B leads</strong> Roadblock #4 (2 contrasting diets), then coaches Partner A!</li>
+              <li><strong>Step 4 &amp; 5 (Q6–Q8):</strong> Both partners choose a Detour upgrade &amp; draft their Pit Stop #4 claim.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Linear Question Checklist (Q1 to Q8) -->
+        <div class="mt-5">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-base font-extrabold text-slate-900">
+              Your Linear Workbook Checklist (Check off each question as you type it in your Word document!)
+            </h3>
+            <button id="resetProgressBtn" class="text-xs font-semibold text-slate-500 hover:text-red-600 underline">
+              Reset Checkmarks
+            </button>
+          </div>
+          <div id="questionChecklistGrid" class="grid grid-cols-1 md:grid-cols-2 gap-2.5"></div>
+        </div>
+      </div>
+
+      <!-- Quick Bridge Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+          <div class="text-xs font-extrabold uppercase tracking-wider text-emerald-800">Step 2 • Q1–Q3</div>
+          <h3 class="text-lg font-extrabold text-slate-900 mt-1">Tri-Guide &amp; SK Foodways</h3>
+          <p class="text-sm text-slate-600 mt-1.5">
+            Compare Canada's 2019 Plate, the First Nations, Inuit &amp; Métis circle guide, and a global guide—plus discover why traditional <strong>pemmican</strong> beats modern bars.
+          </p>
+          <button data-jump="guides" class="jump-tab-btn mt-3 text-xs font-bold text-emerald-800 hover:text-emerald-600 underline">
+            Open Food Guides Explorer →
+          </button>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+          <div class="text-xs font-extrabold uppercase tracking-wider text-amber-800">Step 3 • Q4–Q5 (Partner B)</div>
+          <h3 class="text-lg font-extrabold text-slate-900 mt-1">Scientific Diet Auditor</h3>
+          <p class="text-sm text-slate-600 mt-1.5">
+            Compare two contrasting eating practices (like Keto vs. Carb Loading, or Veganism vs. Energy Drinks) on nutrients, blood glucose, glycogen, and long-term safety.
+          </p>
+          <button data-jump="roadblock" class="jump-tab-btn mt-3 text-xs font-bold text-amber-800 hover:text-amber-600 underline">
+            Open Diet Auditor →
+          </button>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+          <div class="text-xs font-extrabold uppercase tracking-wider text-emerald-800">Step 4 &amp; 5 • Q6–Q8</div>
+          <h3 class="text-lg font-extrabold text-slate-900 mt-1">Detour Upgrade &amp; Claim</h3>
+          <p class="text-sm text-slate-600 mt-1.5">
+            Reformulate with local Saskatchewan / Indigenous ingredients (Option A) OR Vegan/Halal/Kosher/Allergen-free swaps (Option B), then build your Q8 claim.
+          </p>
+          <button data-jump="detour" class="jump-tab-btn mt-3 text-xs font-bold text-emerald-800 hover:text-emerald-600 underline">
+            Open Reformulation Lab →
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- TAB 2: FOOD GUIDES, SK INDIGENOUS FOODWAYS & PEMMICAN (Q1–Q3)       -->
+    <!-- =================================================================== -->
+    <section id="panel-guides" class="tab-panel hidden space-y-6">
+      <!-- Tri-Guide Explorer (Helps Answer Q1) -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+          <div>
+            <span class="q-badge text-xs font-extrabold px-2.5 py-0.5 rounded-full">Helps Answer Q1</span>
+            <h2 class="text-xl font-extrabold text-slate-900 mt-1">Tri-Guide Comparison Explorer</h2>
+            <p class="text-xs sm:text-sm text-slate-600">Compare Canada's 2019 Plate, the FNIM Guide, and pick ONE international guide below to see its visual shape, #1 rule, and cultural staples.</p>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <button data-global="japan" class="global-guide-btn px-3 py-1.5 rounded-lg bg-emerald-800 text-white text-xs font-bold transition">Japan (Spinning Top)</button>
+            <button data-global="brazil" class="global-guide-btn px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition">Brazil (NOVA Guide)</button>
+            <button data-global="med" class="global-guide-btn px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition">Mediterranean Pyramid</button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <!-- Canada 2019 -->
+          <div class="rounded-2xl border border-emerald-200 bg-emerald-50/50 p-4 flex flex-col justify-between">
+            <div>
+              <div class="text-xs font-extrabold uppercase tracking-wider text-emerald-800">Guide 1 • National</div>
+              <h3 class="text-base font-extrabold text-slate-900 mt-1">Canada's 2019 Food Guide</h3>
+              <div class="text-xs font-bold text-amber-800 mt-1">Shape: Proportional Plate (50 / 25 / 25)</div>
+              <ul class="mt-2.5 space-y-1.5 text-xs text-slate-700">
+                <li><strong>50%</strong> Vegetables &amp; Fruits</li>
+                <li><strong>25%</strong> Whole Grains (oats, brown rice, quinoa)</li>
+                <li><strong>25%</strong> Protein Foods (plant-based beans/lentils/tofu emphasized)</li>
+                <li><strong>Drink of Choice:</strong> Water</li>
+                <li><strong>Eating Habits:</strong> Cook more often, eat with others, be mindful of food marketing, limit ultra-processed foods.</li>
+              </ul>
+            </div>
+            <a href="https://food-guide.canada.ca/en/" target="_blank" rel="noopener noreferrer" class="mt-3 text-xs font-bold text-emerald-800 underline">Official Canada's Food Guide ↗</a>
+          </div>
+
+          <!-- FNIM Guide -->
+          <div class="rounded-2xl border border-amber-200 bg-amber-50/50 p-4 flex flex-col justify-between">
+            <div>
+              <div class="text-xs font-extrabold uppercase tracking-wider text-amber-900">Guide 2 • Indigenous</div>
+              <h3 class="text-base font-extrabold text-slate-900 mt-1">First Nations, Inuit &amp; Métis Guide</h3>
+              <div class="text-xs font-bold text-emerald-800 mt-1">Shape: Holistic Circle of Land &amp; Seasons</div>
+              <ul class="mt-2.5 space-y-1.5 text-xs text-slate-700">
+                <li><strong>Why a Circle?</strong> Reflects seasonal cycles, interconnection with the Land, Elders' knowledge, and community sharing.</li>
+                <li><strong>4-Part Wellness:</strong> Hunting, fishing, and berry harvesting nourish <strong>physical, mental, emotional, and spiritual</strong> health—not just calories.</li>
+                <li><strong>Food Sovereignty:</strong> Honours traditional country foods alongside healthy store-bought options.</li>
+              </ul>
+            </div>
+            <a href="https://www.canada.ca/en/indigenous-services-canada.html" target="_blank" rel="noopener noreferrer" class="mt-3 text-xs font-bold text-amber-900 underline">Indigenous Services Canada ↗</a>
+          </div>
+
+          <!-- Dynamic Global Guide -->
+          <div id="globalGuideCard" class="rounded-2xl border border-sky-200 bg-sky-50/50 p-4 flex flex-col justify-between"></div>
+        </div>
+      </div>
+
+      <!-- Traditional SK Indigenous Foods Explorer (Helps Answer Q2) -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+          <div>
+            <span class="q-badge text-xs font-extrabold px-2.5 py-0.5 rounded-full">Helps Answer Q2</span>
+            <h2 class="text-xl font-extrabold text-slate-900 mt-1">Traditional Saskatchewan Indigenous Foods Nutrient Vault</h2>
+            <p class="text-xs sm:text-sm text-slate-600">Click any traditional food to inspect its macro &amp; micronutrient superpowers for Question 2.</p>
+          </div>
+        </div>
+        <div id="skFoodsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3"></div>
+        <div id="skFoodDetailBox" class="mt-4 rounded-xl bg-emerald-50 border border-emerald-200 p-4 text-sm text-slate-800"></div>
+      </div>
+
+      <!-- Pemmican vs Modern Energy Bar (Helps Answer Q3) -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+          <div>
+            <span class="q-badge text-xs font-extrabold px-2.5 py-0.5 rounded-full">Helps Answer Q3</span>
+            <h2 class="text-xl font-extrabold text-slate-900 mt-1">R&amp;D Showdown: Traditional Pemmican vs. Modern Store Energy Bar</h2>
+            <p class="text-xs sm:text-sm text-slate-600">Use this side-by-side breakdown to explain why pemmican sustained voyageurs and hunters for months without spoiling.</p>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="rounded-2xl border-2 border-emerald-700 bg-emerald-50/40 p-5">
+            <div class="text-xs font-extrabold uppercase tracking-wider text-emerald-800">Indigenous Endurance Innovation</div>
+            <h3 class="text-lg font-extrabold text-slate-900 mt-0.5">Traditional Pemmican</h3>
+            <ul class="mt-3 space-y-2 text-xs sm:text-sm text-slate-800">
+              <li><strong>Ingredients:</strong> Sun/smoke-dried pounded <strong>bison meat</strong> + rendered <strong>tallow (fat)</strong> + crushed <strong>saskatoon berries / chokecherries</strong>.</li>
+              <li><strong>Why It Lasted Months:</strong> Drying removes moisture (ultra-low <strong>water activity</strong>), and rendered fat seals out oxygen—stopping bacteria and mould without chemical preservatives!</li>
+              <li><strong>Macros &amp; Micros:</strong> Complete protein + dense 9 kcal/g endurance fat + <strong>heme iron, Vitamin B12, Vitamin C, and anthocyanin antioxidants</strong> from wild berries.</li>
+            </ul>
+          </div>
+          <div class="rounded-2xl border border-slate-300 bg-slate-50 p-5">
+            <div class="text-xs font-extrabold uppercase tracking-wider text-slate-500">Ultra-Processed Store Alternative</div>
+            <h3 class="text-lg font-extrabold text-slate-900 mt-0.5">Typical Modern Commercial Bar</h3>
+            <ul class="mt-3 space-y-2 text-xs sm:text-sm text-slate-700">
+              <li><strong>Ingredients:</strong> Brown rice syrup, cane sugar, palm kernel oil, soy protein isolate, artificial flavours, and preservatives.</li>
+              <li><strong>Why It Spikes &amp; Crashes:</strong> High refined sugars (15–22 g per bar) spike blood glucose fast, followed by an energy crash 60 minutes later.</li>
+              <li><strong>Takeaway for Your Team's Product:</strong> Swap refined syrups &amp; palm oil for whole-food binders, SK berries, nuts/seeds, and lean/plant protein!</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- TAB 3: ROADBLOCK #4 — SCIENTIFIC DIET AUDITOR (Q4–Q5, PARTNER B)    -->
+    <!-- =================================================================== -->
+    <section id="panel-roadblock" class="tab-panel hidden space-y-6">
+      <div class="bg-amber-50 border-l-4 border-amber-600 rounded-r-2xl p-5 shadow-sm">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <span class="text-xs font-extrabold uppercase tracking-wider text-amber-900">Roadblock #4 • Partner B Leads, Then Coaches Partner A</span>
+            <h2 class="text-xl font-extrabold text-slate-900 mt-0.5">Scientific Audit of Two Contrasting Dietary Practices</h2>
+          </div>
+          <span class="q-badge text-xs font-extrabold px-2.5 py-0.5 rounded-full">Helps Answer Q4 &amp; Q5</span>
+        </div>
+        <p class="text-xs sm:text-sm text-slate-700 mt-1">
+          Pick <strong>TWO contrasting practices</strong> below to compare their rules, nutrient gaps/excesses, and physiological effects on blood glucose, glycogen, cholesterol, and hydration.
+        </p>
+        <div class="flex flex-wrap gap-2 mt-3">
+          <button data-pair="keto,carbload" class="diet-pair-btn px-3 py-1.5 rounded-lg bg-white hover:bg-amber-100 border border-amber-300 text-xs font-bold text-slate-800 transition">
+            Pair 1: Keto vs. Carb Loading
+          </button>
+          <button data-pair="vegan,energy" class="diet-pair-btn px-3 py-1.5 rounded-lg bg-white hover:bg-amber-100 border border-amber-300 text-xs font-bold text-slate-800 transition">
+            Pair 2: Veganism vs. Energy Drinks / Fast Food
+          </button>
+          <button data-pair="local100,keto" class="diet-pair-btn px-3 py-1.5 rounded-lg bg-white hover:bg-amber-100 border border-amber-300 text-xs font-bold text-slate-800 transition">
+            Pair 3: 100-Mile / Ramadan Fasting vs. Keto
+          </button>
+        </div>
+      </div>
+
+      <!-- Selectors -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="bg-white rounded-2xl border border-slate-200 p-4">
+          <label for="dietSelect1" class="block text-xs font-extrabold uppercase tracking-wider text-emerald-900 mb-1.5">Selected Practice #1 (For Q4)</label>
+          <select id="dietSelect1" class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-emerald-600"></select>
+        </div>
+        <div class="bg-white rounded-2xl border border-slate-200 p-4">
+          <label for="dietSelect2" class="block text-xs font-extrabold uppercase tracking-wider text-amber-900 mb-1.5">Contrasting Practice #2 (For Q5)</label>
+          <select id="dietSelect2" class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-amber-600"></select>
+        </div>
+      </div>
+
+      <!-- Side-by-Side Scientific Audit Cards -->
+      <div id="dietAuditComparison" class="grid grid-cols-1 lg:grid-cols-2 gap-6"></div>
+
+      <!-- Peer Coaching Box -->
+      <div class="bg-white rounded-2xl border border-slate-200 p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <div class="text-xs font-extrabold uppercase tracking-wider text-amber-800">Stop &amp; Coach Your Partner</div>
+          <h3 class="text-base font-extrabold text-slate-900 mt-0.5">Partner B Teaching Checklist</h3>
+          <p class="text-xs sm:text-sm text-slate-600 mt-0.5">Before getting Partner A's signature in the workbook, explain: (1) one nutrient risk in Practice #1, (2) one physiological effect in Practice #2, and (3) which practice is safer long-term.</p>
+        </div>
+        <button data-jump="detour" class="jump-tab-btn shrink-0 px-4 py-2.5 rounded-xl bg-emerald-800 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold transition">
+          Coached! Move to Detour #4 →
+        </button>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- TAB 4: DETOUR #4 — INCLUSIVE / LOCAL REFORMULATION LAB (Q6–Q7)      -->
+    <!-- =================================================================== -->
+    <section id="panel-detour" class="tab-panel hidden space-y-6">
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4 mb-5">
+          <div>
+            <span class="q-badge text-xs font-extrabold px-2.5 py-0.5 rounded-full">Both Partners • Helps Answer Q6 &amp; Q7</span>
+            <h2 class="text-xl font-extrabold text-slate-900 mt-1">Detour #4: Choose Your Product Upgrade Path</h2>
+            <p class="text-xs sm:text-sm text-slate-600">Pick <strong>EITHER Option A OR Option B</strong> below, test your ingredient swaps, and use the science readout to answer Q6 &amp; Q7.</p>
+          </div>
+          <div class="flex gap-2">
+            <button id="detourBtnA" class="px-4 py-2 rounded-xl bg-emerald-800 text-white text-xs sm:text-sm font-bold transition shadow-sm">
+              Option A: SK 100-Mile &amp; Indigenous
+            </button>
+            <button id="detourBtnB" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs sm:text-sm font-bold transition">
+              Option B: Vegan / Halal / Kosher / Allergen
+            </button>
+          </div>
+        </div>
+
+        <!-- OPTION A PANEL -->
+        <div id="detourPanelA" class="space-y-5">
+          <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-4 text-xs sm:text-sm text-emerald-950">
+            <strong>Option A Challenge:</strong> Select at least <strong>3 Saskatchewan / Indigenous-grown ingredients</strong> below to swap into your supplement. Watch how your nutrient density and food-mile score improve!
+          </div>
+          <div id="skSwapGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+          <div id="skSwapSummary" class="rounded-2xl bg-slate-50 border border-slate-200 p-4 text-xs sm:text-sm text-slate-800"></div>
+        </div>
+
+        <!-- OPTION B PANEL -->
+        <div id="detourPanelB" class="hidden space-y-5">
+          <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-xs sm:text-sm text-amber-950">
+            <strong>Option B Challenge:</strong> Check off any restricted ingredients currently in your recipe to see the exact <strong>Vegan, Halal, Kosher, Celiac-safe, and Nut/Dairy-Free</strong> swaps—and how to keep all 9 essential amino acids + Iron/B12/Calcium bioavailability!
+          </div>
+          <div id="allergenSwapGrid" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+          <div class="rounded-2xl bg-emerald-50 border border-emerald-200 p-4 text-xs sm:text-sm text-slate-800">
+            <div class="font-extrabold text-emerald-900 mb-1">Bioavailability &amp; Complete Protein Guarantee (For Q7):</div>
+            <ul class="space-y-1">
+              <li>• <strong>All 9 Essential Amino Acids without Whey/Meat:</strong> Pair <strong>SK yellow pea protein</strong> (high lysine, lower methionine) with <strong>brown rice or GF oat protein</strong> (high methionine) for a complete amino acid profile!</li>
+              <li>• <strong>Non-Heme Iron Bioavailability:</strong> Plant iron absorbs much better when paired with <strong>Vitamin C</strong> (e.g., freeze-dried saskatoon berries or acerola).</li>
+              <li>• <strong>Vitamin B12 &amp; Calcium:</strong> Fortify with vegan <strong>methylcobalamin / cyanocobalamin (B12)</strong> and <strong>calcium carbonate or fortified oat/soy base</strong>.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- TAB 5: PIT STOP #4 — CLAIM BUILDER & ORAL DEFENSE (Q8)              -->
+    <!-- =================================================================== -->
+    <section id="panel-pitstop" class="tab-panel hidden space-y-6">
+      <!-- Claim Statement Builder -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-4 mb-4">
+          <div>
+            <span class="q-badge text-xs font-extrabold px-2.5 py-0.5 rounded-full">Both Partners • Helps Answer Q8</span>
+            <h2 class="text-xl font-extrabold text-slate-900 mt-1">Pit Stop #4: Cultural &amp; Inclusive Claim Statement Builder</h2>
+            <p class="text-xs sm:text-sm text-slate-600">Draft your 2–3 sentence Leg 5 packaging claim below, then copy it directly into Question 8 of your Word document.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div class="lg:col-span-6 space-y-3">
+            <div>
+              <label for="claimProduct" class="block text-xs font-bold text-slate-700 mb-1">Your Product Name</label>
+              <input id="claimProduct" type="text" value="Prairie Pulse Performance Bar" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm font-semibold" />
+            </div>
+            <div>
+              <label for="claimPath" class="block text-xs font-bold text-slate-700 mb-1">Chosen Detour Focus</label>
+              <select id="claimPath" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm font-semibold">
+                <option value="optionA">Option A — Saskatchewan 100-Mile &amp; Indigenous Foodways</option>
+                <option value="optionB">Option B — 100% Vegan, Halal, Kosher, Celiac &amp; Allergen-Free</option>
+              </select>
+            </div>
+            <div>
+              <label for="claimAudience" class="block text-xs font-bold text-slate-700 mb-1">Who Does It Safely Serve?</label>
+              <input id="claimAudience" type="text" value="Saskatchewan student-athletes, busy families, and harvest workers" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm font-semibold" />
+            </div>
+            <div>
+              <label for="claimFact1" class="block text-xs font-bold text-slate-700 mb-1">Scientific / Nutritional Proof #1</label>
+              <input id="claimFact1" type="text" value="Saskatchewan yellow pea protein and rolled oats deliver complete complementary amino acids with low food miles" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm" />
+            </div>
+            <div>
+              <label for="claimFact2" class="block text-xs font-bold text-slate-700 mb-1">Scientific / Nutritional Proof #2</label>
+              <input id="claimFact2" type="text" value="freeze-dried saskatoon berries and cold-pressed flaxseed oil add Vitamin C, anthocyanins, and heart-healthy Omega-3s" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm" />
+            </div>
+          </div>
+
+          <div class="lg:col-span-6 flex flex-col justify-between bg-emerald-50/70 border border-emerald-200 rounded-2xl p-5">
+            <div>
+              <div class="text-xs font-extrabold uppercase tracking-wider text-emerald-800 mb-2">Live Packaging Claim Preview (For Q8)</div>
+              <p id="claimPreviewText" class="text-sm sm:text-base text-slate-900 leading-relaxed font-medium bg-white rounded-xl p-4 border border-emerald-200 shadow-sm"></p>
+            </div>
+            <div class="mt-4 flex flex-wrap items-center gap-3">
+              <button id="copyClaimBtn" class="px-4 py-2.5 rounded-xl bg-emerald-800 hover:bg-emerald-700 text-white text-sm font-bold transition shadow-sm">
+                Copy Claim Statement for Q8
+              </button>
+              <span id="copyClaimMsg" class="text-xs font-semibold text-emerald-700"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pit Stop #4 Oral Defense Flashcards -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+          <div>
+            <h3 class="text-lg font-extrabold text-slate-900">Pit Stop #4 Oral Defense Practice (Teacher Check-In)</h3>
+            <p class="text-xs sm:text-sm text-slate-600">Click each card to practice what both partners need to explain to earn your Pit Stop #4 signature and unlock Leg 5!</p>
+          </div>
+          <span class="q-badge text-xs font-extrabold px-2.5 py-0.5 rounded-full">Click Cards to Reveal</span>
+        </div>
+        <div id="flashcardsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-900 text-slate-300 py-5 mt-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-wrap items-center justify-between gap-3 text-xs">
+      <div>
+        <strong class="text-white">Saskatchewan Health Science 20</strong> • The Amazing Nutri-Race (Leg 4: Cultural Crossroads &amp; Diet Claims)
+      </div>
+      <div class="flex flex-wrap gap-4">
+        <a href="https://curriculum.gov.sk.ca/CurriculumOutcomeContent?id=74&oc=109157" target="_blank" rel="noopener noreferrer" class="hover:text-amber-300 underline">
+          SK Curriculum HS20-NU2
+        </a>
+        <a href="https://food-guide.canada.ca/en/" target="_blank" rel="noopener noreferrer" class="hover:text-amber-300 underline">
+          Canada's Food Guide
+        </a>
+        <a href="https://loganpetlak.ca/nutrition/" target="_blank" rel="noopener noreferrer" class="hover:text-amber-300 underline">
+          SK HS20 Open Notes
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // =========================================================================
+    // 1. DATA DEFINITIONS
+    // =========================================================================
+    const QUESTIONS = [
+      { id: 'q1', label: 'Q1: Compare Canada 2019, FNIM & 1 Global Guide', tab: 'guides', role: 'Both' },
+      { id: 'q2', label: 'Q2: 3 SK Indigenous foods & global staples', tab: 'guides', role: 'Both' },
+      { id: 'q3', label: 'Q3: Pemmican R&D lesson for your supplement', tab: 'guides', role: 'Both' },
+      { id: 'q4', label: 'Q4: Scientific audit of Dietary Practice #1', tab: 'roadblock', role: 'Partner B' },
+      { id: 'q5', label: 'Q5: Audit Practice #2 & coach Partner A', tab: 'roadblock', role: 'Partner B' },
+      { id: 'q6', label: 'Q6: Detour Option A or B ingredient swaps', tab: 'detour', role: 'Both' },
+      { id: 'q7', label: 'Q7: Nutrition / bioavailability science of swaps', tab: 'detour', role: 'Both' },
+      { id: 'q8', label: 'Q8: Cultural & Inclusive Claim + Pit Stop #4', tab: 'pitstop', role: 'Both' }
+    ];
+
+    const GLOBAL_GUIDES = {
+      japan: {
+        title: "Japan's Food Guide Spinning Top",
+        shape: 'Inverted Spinning Top (balance + daily motion)',
+        rule: 'Keep the top spinning by balancing water/tea, grain dishes, vegetable dishes, fish/soy/meat, and daily physical activity.',
+        staples: 'Steamed rice, miso/tofu (fermented soy), oily fish (omega-3s), seaweed, green tea, and small portion sizes.',
+        whyHealthy: 'Low in saturated fat and added sugar, rich in omega-3 fatty acids, iodine, and gut-friendly fermented foods.'
+      },
+      brazil: {
+        title: "Brazil's NOVA Food Guide",
+        shape: '4-Level Food Processing Scale (not nutrient groups)',
+        rule: 'Make natural or minimally processed foods the base of your diet and strictly avoid ultra-processed foods.',
+        staples: 'Rice and beans (complementary amino acids!), fresh tropical fruits, cassava, leafy greens, and home-cooked family meals.',
+        whyHealthy: 'Targets industrial processing directly—cutting excess sodium, emulsifiers, and refined sugars linked to chronic disease.'
+      },
+      med: {
+        title: 'Mediterranean Diet Pyramid',
+        shape: 'Lifestyle Pyramid (base = social meals & movement)',
+        rule: 'Build every meal around plants, whole grains, legumes, and extra-virgin olive oil, with fish twice a week and red meat rarely.',
+        staples: 'Extra-virgin olive oil (monounsaturated fat), chickpeas/lentils, tomatoes, herbs/spices, whole-grain bread, and fish.',
+        whyHealthy: 'Rich in antioxidants, fibre, and anti-inflammatory fats—one of the most studied patterns for lowering heart disease risk.'
+      }
+    };
+
+    const SK_FOODS = [
+      {
+        id: 'bison',
+        name: 'Bison / Moose / Elk',
+        tag: 'Lean Complete Protein',
+        nutrients: 'Complete protein (all 9 essential amino acids), highly bioavailable heme iron, Vitamin B12, and zinc—with far less saturated fat than feedlot beef.',
+        useTip: 'Traditional foundation of pemmican; inspires lean, iron-rich endurance recovery.'
+      },
+      {
+        id: 'fish',
+        name: 'Walleye, Pike & Whitefish',
+        tag: 'Omega-3 + Vitamin D',
+        nutrients: 'High-quality protein plus EPA/DHA Omega-3 fatty acids (brain & heart health) and Vitamin D (crucial during long Saskatchewan winters!).',
+        useTip: 'Shows why pairing protein with anti-inflammatory fats supports long-term wellness.'
+      },
+      {
+        id: 'wildrice',
+        name: 'Saskatchewan Wild Rice',
+        tag: 'Complex Carb + Fibre',
+        nutrients: 'Actually an aquatic grass seed! Higher in protein, dietary fibre, folate, and zinc than white rice, with a lower glycemic impact.',
+        useTip: 'Great whole-grain base for sustained energy without a blood sugar crash.'
+      },
+      {
+        id: 'threesisters',
+        name: 'Three Sisters (Corn, Beans, Squash)',
+        tag: 'Complementary Proteins',
+        nutrients: 'Corn supplies methionine, beans supply lysine (together = complete protein!), and squash adds beta-carotene (Vitamin A) and potassium.',
+        useTip: 'Classic Indigenous agricultural and nutritional science working together.'
+      },
+      {
+        id: 'berries',
+        name: 'Saskatoon Berries & Chokecherries',
+        tag: 'Vitamin C + Anthocyanins',
+        nutrients: 'Packed with Vitamin C (boosts iron absorption), dietary fibre, manganese, and deep-purple anthocyanin antioxidants that fight cell stress.',
+        useTip: 'Natural flavour, colour, and antioxidant boost for bars, shakes, or sports drinks!'
+      }
+    ];
+
+    const DIET_PRACTICES = {
+      carbload: {
+        name: 'Carbohydrate Loading (Endurance Athletics)',
+        rules: 'Endurance athletes increase complex carb intake to 8–10 g/kg/day while tapering workouts 2–3 days before a >90-minute event (marathon, cross-country ski race).',
+        abundant: 'Complex carbohydrates, B-vitamins, muscle and liver glycogen stores.',
+        risks: 'Useless for short sprints (<60 min); can cause temporary bloating/water weight because every 1 g of glycogen binds ~3 g of water.',
+        verdict: 'Scientifically sound ONLY for targeted endurance events—not an everyday diet for sedentary people.'
+      },
+      keto: {
+        name: 'Ketogenic / Extreme Low-Carb Fad Diet (<50 g carbs/day)',
+        rules: 'Cuts out grains, most fruits, and legumes while eating ~70–80% calories from fat so the liver produces ketone bodies (ketosis).',
+        abundant: 'Dietary fats and fat-soluble vitamins (if whole-food fats are chosen).',
+        risks: 'Severe fibre deficiency (constipation), low B-vitamins, Vitamin C & magnesium, elevated LDL cholesterol (if high in saturated fat), and poor high-intensity sprint power.',
+        verdict: 'Clinically used for drug-resistant epilepsy, but as a general teen/athlete fad diet it restricts nutrient-dense plant foods and hurts anaerobic performance.'
+      },
+      vegan: {
+        name: 'Vegetarianism & Strict Veganism',
+        rules: 'Eliminates meat (vegetarian) or all animal products including dairy, eggs, and honey (vegan) for ethical, environmental, or health reasons.',
+        abundant: 'Dietary fibre, Vitamin C, folate, magnesium, potassium, and protective plant phytochemicals.',
+        risks: 'Without planning/fortification, high risk of Vitamin B12, Vitamin D, Calcium, Omega-3 (EPA/DHA), and low-bioavailability non-heme Iron gaps.',
+        verdict: 'Scientifically sound and heart-protective (lowers LDL cholesterol) WHEN vegans pair complementary plant proteins and fortify/supplement B12, D, and iron + Vitamin C.'
+      },
+      energy: {
+        name: 'Fast-Food & Commercial Energy Drinks',
+        rules: 'Relying on ultra-processed drive-thru meals and high-caffeine, high-sugar energy drinks for quick convenience or late-night studying.',
+        abundant: 'Excess sodium (>2,300 mg/day), refined sugars, saturated/trans fats, and high caffeine (160–300 mg per can).',
+        risks: 'Very low fibre, potassium, and micronutrients; risks rapid heart rate (tachycardia), anxiety, poor sleep, dehydration, and reactive hypoglycemia (sugar crash).',
+        verdict: 'Not scientifically sound—drives chronic inflammation, blood pressure spikes, and erratic energy levels.'
+      },
+      local100: {
+        name: '100-Mile Diet & Religious/Cultural Fasting (Ramadan, Halal, Kosher)',
+        rules: '100-Mile Diet sources food within 100 miles to cut food miles and support local SK farms. Religious practices like Ramadan involve daytime fasting from dawn to sunset.',
+        abundant: 'Fresh seasonal local produce/pulses (100-Mile); mindful eating and community meals (Ramadan/cultural traditions).',
+        risks: '100-Mile requires winter preservation/Vitamin D planning in Saskatchewan. Ramadan daytime fasting risks dehydration and low blood glucose if pre-dawn Suhoor lacks complex carbs, protein, and electrolytes.',
+        verdict: 'Both can be very healthy and sustainable when planned thoughtfully with winter storage (SK) or balanced pre-dawn/post-sunset hydration and slow-release carbs.'
+      }
+    };
+
+    const SK_SWAPS = [
+      { id: 'pea', name: 'SK Yellow Pea Protein Isolate', cat: 'Local Protein', boost: 'Complete protein base (high lysine), grown right across Saskatchewan!' },
+      { id: 'lentils', name: 'SK Red Lentils', cat: 'Local Protein + Fibre', boost: 'Slow-release complex carbs, plant iron, folate, and 8+ g fibre.' },
+      { id: 'oats', name: 'SK Rolled Oats', cat: 'Local Whole Grain', boost: 'Beta-glucan soluble fibre that lowers LDL cholesterol and stabilizes blood glucose.' },
+      { id: 'hemp', name: 'SK Hemp Hearts', cat: 'Local Lipid + Protein', boost: 'Complete plant protein plus Omega-3 & Omega-6 healthy fats and magnesium.' },
+      { id: 'flax', name: 'Cold-Pressed SK Flax / Camelina Oil', cat: 'Local Healthy Fat', boost: 'Plant-based ALA Omega-3s replacing imported palm oil.' },
+      { id: 'saskatoon', name: 'Freeze-Dried Saskatoon Berries', cat: 'Indigenous Berry', boost: 'Anthocyanin antioxidants, Vitamin C (boosts iron absorption!), and fibre.' },
+      { id: 'wildrice', name: 'Northern SK Wild Rice', cat: 'Indigenous Grain', boost: 'Nutrient-dense complex carbohydrate honouring Northern SK harvesting traditions.' },
+      { id: 'chokecherry', name: 'Chokecherries / Sea Buckthorn', cat: 'Indigenous / SK Berry', boost: 'High Vitamin C and polyphenols for natural tart flavour without artificial dyes.' },
+      { id: 'bisoncol', name: 'SK Bison Collagen / Dried Bison', cat: 'Indigenous Protein', boost: 'Traditional prairie protein with heme iron and Vitamin B12.' }
+    ];
+
+    const ALLERGEN_SWAPS = [
+      { id: 'gelatin', bad: 'Porcine / Bovine Gelatin', violates: 'Vegan, Halal, Kosher', swap: 'Plant-based Agar-Agar or Citrus Pectin', why: '100% plant-derived binder safe for Vegan, Halal, and Kosher diets.' },
+      { id: 'whey', bad: 'Whey / Casein (Milk Dairy)', violates: 'Vegan, Dairy Allergy, Kosher meat-mixing', swap: 'SK Yellow Pea + Brown Rice Protein Blend', why: 'Dairy-free, vegan, and delivers all 9 essential amino acids.' },
+      { id: 'gluten', bad: 'Wheat Flour / Barley Malt', violates: 'Celiac Disease (Gluten)', swap: 'Certified Gluten-Free SK Oats or Buckwheat', why: 'Zero gluten peptides to protect Celiac intestinal villi.' },
+      { id: 'nuts', bad: 'Peanuts / Almonds / Tree Nuts', violates: 'Priority Nut Allergies (School-Safe!)', swap: 'Roasted Sunflower Seeds, Pumpkin Seeds & Hemp Hearts', why: 'Provides crunchy healthy fats, zinc, and magnesium without priority nut allergens.' }
+    ];
+
+    const FLASHCARDS = [
+      {
+        q: "1. What is one major difference between Canada's 2019 Food Guide and the FNIM Food Guide?",
+        a: "Canada's 2019 guide uses a proportional plate (50% veg/fruit, 25% whole grains, 25% protein) and emphasizes eating habits, while the FNIM guide uses a holistic circle representing seasonal cycles, connection to the Land, and physical, mental, emotional, and spiritual wellness."
+      },
+      {
+        q: '2. Why was traditional pemmican able to last for months without spoiling?',
+        a: 'Drying the bison meat removed water (low water activity) and sealing it in rendered fat blocked oxygen—preventing bacterial and mould growth naturally while packing dense protein, fat, iron, and berry Vitamin C.'
+      },
+      {
+        q: '3. Give one physiological risk of an extreme Keto fad diet OR commercial energy drinks.',
+        a: 'Keto (<50 g carbs/day) strips out fibre and whole-grain/fruit micronutrients while hurting high-intensity sprint power. Energy drinks combine 160–300 mg caffeine with simple sugars, risking rapid heart rate, dehydration, and blood sugar crashes.'
+      },
+      {
+        q: '4. How do your Detour #4 swaps make your supplement more inclusive or locally sustainable?',
+        a: 'Option A swaps cut food miles and honour Saskatchewan/Indigenous foodways (like pea protein, flaxseed, and saskatoon berries). Option B removes gelatin, dairy, gluten, and nuts while pairing complementary plant proteins (pea + rice/oats) and Vitamin C + iron for full bioavailability.'
+      }
+    ];
+
+    // =========================================================================
+    // 2. STATE & LOCALSTORAGE
+    // =========================================================================
+    const STORAGE_KEY = 'hs20_leg4_progress_v1';
+    let completedQs = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    let selectedSkSwaps = new Set(['pea', 'flax', 'saskatoon']);
+
+    function saveProgress() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(completedQs));
+      updateProgressUI();
+    }
+
+    function updateProgressUI() {
+      const doneCount = QUESTIONS.filter(q => completedQs[q.id]).length;
+      const pct = Math.round((doneCount / QUESTIONS.length) * 100);
+      document.getElementById('headerProgressBar').style.width = `${pct}%`;
+      document.getElementById('headerProgressText').textContent = `${doneCount}/${QUESTIONS.length}`;
+    }
+
+    // =========================================================================
+    // 3. TAB SWITCHING
+    // =========================================================================
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-panel').forEach(panel => {
+        panel.classList.toggle('hidden', panel.id !== `panel-${tabId}`);
+      });
+      document.querySelectorAll('.tab-nav-btn').forEach(btn => {
+        const active = btn.dataset.tab === tabId;
+        btn.classList.toggle('tab-btn-active', active);
+        btn.classList.toggle('tab-btn-inactive', !active);
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.querySelectorAll('.tab-nav-btn').forEach(btn => {
+      btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+    });
+    document.querySelectorAll('.jump-tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => switchTab(btn.dataset.jump));
+    });
+
+    // =========================================================================
+    // 4. CHECKLIST (TAB 1)
+    // =========================================================================
+    function renderChecklist() {
+      const grid = document.getElementById('questionChecklistGrid');
+      grid.innerHTML = '';
+      QUESTIONS.forEach(q => {
+        const checked = !!completedQs[q.id];
+        const card = document.createElement('div');
+        card.className = `flex items-center justify-between gap-2 p-3 rounded-xl border transition ${
+          checked ? 'bg-emerald-50 border-emerald-300' : 'bg-slate-50 border-slate-200 hover:border-slate-300'
+        }`;
+        card.innerHTML = `
+          <label class="flex items-center gap-2.5 cursor-pointer flex-1">
+            <input type="checkbox" ${checked ? 'checked' : ''} class="w-4 h-4 rounded text-emerald-700 cursor-pointer" />
+            <span class="text-xs sm:text-sm font-semibold ${checked ? 'line-through text-emerald-900' : 'text-slate-800'}">${q.label}</span>
+          </label>
+          <div class="flex items-center gap-2 shrink-0">
+            <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-600">${q.role}</span>
+            <button class="text-xs font-bold text-emerald-800 hover:underline">Open →</button>
+          </div>
+        `;
+        card.querySelector('input').addEventListener('change', (e) => {
+          completedQs[q.id] = e.target.checked;
+          saveProgress();
+          renderChecklist();
+        });
+        card.querySelector('button').addEventListener('click', () => switchTab(q.tab));
+        grid.appendChild(card);
+      });
+      updateProgressUI();
+    }
+
+    document.getElementById('resetProgressBtn').addEventListener('click', () => {
+      completedQs = {};
+      saveProgress();
+      renderChecklist();
+    });
+
+    // =========================================================================
+    // 5. FOOD GUIDES & SK FOODS (TAB 2)
+    // =========================================================================
+    function renderGlobalGuide(key) {
+      const g = GLOBAL_GUIDES[key];
+      document.getElementById('globalGuideCard').innerHTML = `
+        <div>
+          <div class="text-xs font-extrabold uppercase tracking-wider text-sky-900">Guide 3 • Chosen International</div>
+          <h3 class="text-base font-extrabold text-slate-900 mt-1">${g.title}</h3>
+          <div class="text-xs font-bold text-emerald-800 mt-1">Shape: ${g.shape}</div>
+          <ul class="mt-2.5 space-y-1.5 text-xs text-slate-700">
+            <li><strong>#1 Rule:</strong> ${g.rule}</li>
+            <li><strong>Signature Staples (For Q2):</strong> ${g.staples}</li>
+            <li><strong>Why Healthy:</strong> ${g.whyHealthy}</li>
+          </ul>
+        </div>
+      `;
+      document.querySelectorAll('.global-guide-btn').forEach(btn => {
+        const active = btn.dataset.global === key;
+        btn.className = active
+          ? 'global-guide-btn px-3 py-1.5 rounded-lg bg-emerald-800 text-white text-xs font-bold transition'
+          : 'global-guide-btn px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition';
+      });
+    }
+
+    document.querySelectorAll('.global-guide-btn').forEach(btn => {
+      btn.addEventListener('click', () => renderGlobalGuide(btn.dataset.global));
+    });
+
+    function renderSkFoods(activeId = 'bison') {
+      const grid = document.getElementById('skFoodsGrid');
+      grid.innerHTML = '';
+      SK_FOODS.forEach(f => {
+        const isSelected = f.id === activeId;
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `text-left p-3.5 rounded-xl border transition ${
+          isSelected ? 'bg-emerald-800 text-white border-emerald-900 shadow-sm' : 'bg-slate-50 hover:bg-emerald-50 border-slate-200 text-slate-900'
+        }`;
+        btn.innerHTML = `
+          <div class="text-xs font-bold ${isSelected ? 'text-amber-300' : 'text-emerald-800'}">${f.tag}</div>
+          <div class="text-sm font-extrabold mt-0.5">${f.name}</div>
+        `;
+        btn.addEventListener('click', () => renderSkFoods(f.id));
+        grid.appendChild(btn);
+      });
+      const current = SK_FOODS.find(f => f.id === activeId);
+      document.getElementById('skFoodDetailBox').innerHTML = `
+        <div class="font-extrabold text-emerald-950 text-base">${current.name} — ${current.tag}</div>
+        <p class="mt-1"><strong>Key Nutrients (For Q2):</strong> ${current.nutrients}</p>
+        <p class="mt-1 text-xs text-emerald-900"><strong>Supplement Idea:</strong> ${current.useTip}</p>
+      `;
+    }
+
+    // =========================================================================
+    // 6. ROADBLOCK #4: DIET AUDITOR (TAB 3)
+    // =========================================================================
+    function initDietSelectors() {
+      const s1 = document.getElementById('dietSelect1');
+      const s2 = document.getElementById('dietSelect2');
+      const opts = Object.entries(DIET_PRACTICES).map(([k, v]) => `<option value="${k}">${v.name}</option>`).join('');
+      s1.innerHTML = opts;
+      s2.innerHTML = opts;
+      s1.value = 'keto';
+      s2.value = 'carbload';
+      s1.addEventListener('change', renderDietAudit);
+      s2.addEventListener('change', renderDietAudit);
+    }
+
+    function renderDietAudit() {
+      const k1 = document.getElementById('dietSelect1').value;
+      const k2 = document.getElementById('dietSelect2').value;
+      const d1 = DIET_PRACTICES[k1];
+      const d2 = DIET_PRACTICES[k2];
+
+      const makeCard = (d, badgeText, borderCls) => `
+        <div class="bg-white rounded-2xl border-2 ${borderCls} p-5 shadow-sm space-y-3">
+          <div class="text-xs font-extrabold uppercase tracking-wider text-slate-500">${badgeText}</div>
+          <h3 class="text-lg font-extrabold text-slate-900">${d.name}</h3>
+          <div class="rounded-xl bg-slate-50 p-3 text-xs sm:text-sm">
+            <div class="font-extrabold text-slate-900">1. Core Rules &amp; Motivation</div>
+            <p class="text-slate-700 mt-1">${d.rules}</p>
+          </div>
+          <div class="rounded-xl bg-emerald-50/70 p-3 text-xs sm:text-sm">
+            <div class="font-extrabold text-emerald-900">2. Abundant Nutrients</div>
+            <p class="text-slate-800 mt-1">${d.abundant}</p>
+          </div>
+          <div class="rounded-xl bg-red-50/70 p-3 text-xs sm:text-sm">
+            <div class="font-extrabold text-red-900">3. Deficiency / Excess Risks</div>
+            <p class="text-slate-800 mt-1">${d.risks}</p>
+          </div>
+          <div class="rounded-xl bg-amber-50 p-3 text-xs sm:text-sm">
+            <div class="font-extrabold text-amber-900">4. Physiological Verdict (Long-Term Health)</div>
+            <p class="text-slate-800 mt-1">${d.verdict}</p>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('dietAuditComparison').innerHTML =
+        makeCard(d1, 'Selected Practice #1 • Question 4', 'border-emerald-700') +
+        makeCard(d2, 'Contrasting Practice #2 • Question 5', 'border-amber-500');
+    }
+
+    document.querySelectorAll('.diet-pair-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const [p1, p2] = btn.dataset.pair.split(',');
+        document.getElementById('dietSelect1').value = p1;
+        document.getElementById('dietSelect2').value = p2;
+        renderDietAudit();
+      });
+    });
+
+    // =========================================================================
+    // 7. DETOUR #4 REFORMULATION LAB (TAB 4)
+    // =========================================================================
+    const detourBtnA = document.getElementById('detourBtnA');
+    const detourBtnB = document.getElementById('detourBtnB');
+    const detourPanelA = document.getElementById('detourPanelA');
+    const detourPanelB = document.getElementById('detourPanelB');
+
+    function setDetourMode(mode) {
+      const isA = mode === 'A';
+      detourPanelA.classList.toggle('hidden', !isA);
+      detourPanelB.classList.toggle('hidden', isA);
+      detourBtnA.className = isA
+        ? 'px-4 py-2 rounded-xl bg-emerald-800 text-white text-xs sm:text-sm font-bold transition shadow-sm'
+        : 'px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs sm:text-sm font-bold transition';
+      detourBtnB.className = !isA
+        ? 'px-4 py-2 rounded-xl bg-amber-600 text-white text-xs sm:text-sm font-bold transition shadow-sm'
+        : 'px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs sm:text-sm font-bold transition';
+    }
+
+    detourBtnA.addEventListener('click', () => setDetourMode('A'));
+    detourBtnB.addEventListener('click', () => setDetourMode('B'));
+
+    function renderSkSwaps() {
+      const grid = document.getElementById('skSwapGrid');
+      grid.innerHTML = '';
+      SK_SWAPS.forEach(item => {
+        const checked = selectedSkSwaps.has(item.id);
+        const card = document.createElement('label');
+        card.className = `cursor-pointer rounded-xl border p-3.5 block transition ${
+          checked ? 'bg-emerald-50 border-emerald-500 shadow-sm' : 'bg-white border-slate-200 hover:border-slate-300'
+        }`;
+        card.innerHTML = `
+          <div class="flex items-start gap-2.5">
+            <input type="checkbox" ${checked ? 'checked' : ''} class="mt-0.5 w-4 h-4 rounded text-emerald-700" />
+            <div>
+              <div class="text-[11px] font-bold uppercase tracking-wider text-emerald-800">${item.cat}</div>
+              <div class="text-sm font-extrabold text-slate-900">${item.name}</div>
+              <div class="text-xs text-slate-600 mt-1">${item.boost}</div>
+            </div>
+          </div>
+        `;
+        card.querySelector('input').addEventListener('change', (e) => {
+          if (e.target.checked) selectedSkSwaps.add(item.id);
+          else selectedSkSwaps.delete(item.id);
+          renderSkSwaps();
+        });
+        grid.appendChild(card);
+      });
+
+      const chosen = SK_SWAPS.filter(s => selectedSkSwaps.has(s.id));
+      const metGoal = chosen.length >= 3;
+      document.getElementById('skSwapSummary').innerHTML = `
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="font-extrabold ${metGoal ? 'text-emerald-900' : 'text-amber-900'}">
+            ${metGoal ? '✓ Challenge Met!' : 'Select at least 3 local ingredients'} (${chosen.length} selected)
+          </div>
+        </div>
+        <p class="mt-1.5"><strong>Selected SK / Indigenous Ingredients for Q6:</strong> ${chosen.length ? chosen.map(c => c.name).join(', ') : 'None selected yet.'}</p>
+        <p class="mt-1 text-xs text-slate-600"><strong>Q7 Talking Points:</strong> Sourcing these locally cuts long-haul transport emissions (food miles), supports Saskatchewan growers, honours Indigenous food sovereignty, and boosts fresh antioxidant/fibre density.</p>
+      `;
+    }
+
+    function renderAllergenSwaps() {
+      const grid = document.getElementById('allergenSwapGrid');
+      grid.innerHTML = ALLERGEN_SWAPS.map(a => `
+        <div class="rounded-xl border border-slate-200 bg-slate-50 p-4 space-y-1.5">
+          <div class="flex items-center justify-between gap-2">
+            <span class="text-xs font-extrabold text-red-700">REMOVE: ${a.bad}</span>
+            <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-red-100 text-red-900">${a.violates}</span>
+          </div>
+          <div class="text-sm font-extrabold text-emerald-900">✓ SWAP IN: ${a.swap}</div>
+          <p class="text-xs text-slate-700">${a.why}</p>
+        </div>
+      `).join('');
+    }
+
+    // =========================================================================
+    // 8. PIT STOP #4 CLAIM BUILDER & FLASHCARDS (TAB 5)
+    // =========================================================================
+    function updateClaimPreview() {
+      const prod = document.getElementById('claimProduct').value.trim() || 'Our Supplement';
+      const path = document.getElementById('claimPath').value;
+      const aud = document.getElementById('claimAudience').value.trim() || 'our target community';
+      const f1 = document.getElementById('claimFact1').value.trim();
+      const f2 = document.getElementById('claimFact2').value.trim();
+
+      const badge = path === 'optionA'
+        ? 'proudly crafted with Saskatchewan 100-mile and Indigenous-inspired ingredients'
+        : 'engineered to be 100% Vegan, Halal, Kosher, Celiac-safe, and nut/dairy-free';
+
+      document.getElementById('claimPreviewText').textContent =
+        `${prod} is ${badge}, designed to safely fuel ${aud}. Scientifically, ${f1}. In addition, ${f2}.`;
+    }
+
+    ['claimProduct', 'claimPath', 'claimAudience', 'claimFact1', 'claimFact2'].forEach(id => {
+      document.getElementById(id).addEventListener('input', updateClaimPreview);
+      document.getElementById(id).addEventListener('change', updateClaimPreview);
+    });
+
+    document.getElementById('copyClaimBtn').addEventListener('click', () => {
+      const txt = document.getElementById('claimPreviewText').textContent;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(txt).then(() => {
+          document.getElementById('copyClaimMsg').textContent = 'Copied! Paste into Question 8 of your Word document.';
+        });
+      } else {
+        document.getElementById('copyClaimMsg').textContent = 'Ready to copy into Question 8!';
+      }
+    });
+
+    function renderFlashcards() {
+      const grid = document.getElementById('flashcardsGrid');
+      grid.innerHTML = '';
+      FLASHCARDS.forEach(fc => {
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.className = 'text-left bg-slate-50 hover:bg-emerald-50/60 border border-slate-200 rounded-2xl p-4 transition';
+        card.innerHTML = `
+          <div class="text-sm font-extrabold text-slate-900">${fc.q}</div>
+          <div class="fc-answer hidden mt-2.5 pt-2.5 border-t border-slate-200 text-xs sm:text-sm text-emerald-950 leading-relaxed">${fc.a}</div>
+          <div class="fc-hint mt-2 text-xs font-bold text-amber-800">Click to reveal sample answer ▾</div>
+        `;
+        card.addEventListener('click', () => {
+          const ans = card.querySelector('.fc-answer');
+          const hint = card.querySelector('.fc-hint');
+          const isHidden = ans.classList.toggle('hidden');
+          hint.textContent = isHidden ? 'Click to reveal sample answer ▾' : 'Click to hide answer ▴';
+        });
+        grid.appendChild(card);
+      });
+    }
+
+    // =========================================================================
+    // 9. INITIALIZE ON LOAD
+    // =========================================================================
+    renderChecklist();
+    renderGlobalGuide('japan');
+    renderSkFoods('bison');
+    initDietSelectors();
+    renderDietAudit();
+    renderSkSwaps();
+    renderAllergenSwaps();
+    updateClaimPreview();
+    renderFlashcards();
+  </script>
+</body>
+</html>
